@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "id": "wave_right_primitive_c3",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 1.4,
+  "channels": [
+    "rightArm",
+    "head",
+    "torso"
+  ],
+  "phases": {
+    "prepareEnd": 0.3,
+    "strokeEnd": 1.2,
+    "recoverEnd": 1.4
+  },
+  "curves": [
+    {
+      "role": "arm.upper.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.4,
+            1
+          ]
+        },
+        {
+          "t": 0.3,
+          "value": 32,
+          "ease": "linear"
+        },
+        {
+          "t": 1.2,
+          "value": 32,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.4,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "role": "arm.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "linear"
+        },
+        {
+          "t": 0.3,
+          "value": 24,
+          "ease": "linear"
+        },
+        {
+          "t": 0.525,
+          "value": -24,
+          "ease": "linear"
+        },
+        {
+          "t": 0.75,
+          "value": 24,
+          "ease": "linear"
+        },
+        {
+          "t": 0.975,
+          "value": -24,
+          "ease": "linear"
+        },
+        {
+          "t": 1.2,
+          "value": 24,
+          "ease": "linear"
+        },
+        {
+          "t": 1.4,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "head.main",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.4,
+            1
+          ]
+        },
+        {
+          "t": 0.35,
+          "value": 6,
+          "ease": "linear"
+        },
+        {
+          "t": 1.2,
+          "value": 6,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.4,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "body.root",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.4,
+            1
+          ]
+        },
+        {
+          "t": 0.4,
+          "value": -3,
+          "ease": "linear"
+        },
+        {
+          "t": 1.2,
+          "value": -3,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.4,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "body.root",
+      "property": "translate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.4,
+            1
+          ]
+        },
+        {
+          "t": 0.4,
+          "value": [
+            0,
+            0.008
+          ],
+          "ease": "linear"
+        },
+        {
+          "t": 1.2,
+          "value": [
+            0,
+            0.008
+          ],
+          "ease": "stepped"
+        },
+        {
+          "t": 1.4,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "linear"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "postures": [
+      "standing",
+      "seated"
+    ],
+    "views": [
+      "front"
+    ],
+    "resources": [
+      "channel:rightArm"
+    ]
+  },
+  "provenance": {
+    "kind": "llm",
+    "model": "GLM-5.3 (dev agent)",
+    "promptId": "p1-round3-coordination",
+    "candidate": 3,
+    "note": "Author 函数修订：在上轮 Tune 参数基础上新增头(6°)/躯干(-3°)/起伏(0.008H)协调通道"
+  },
+  "approval": "draft"
+}

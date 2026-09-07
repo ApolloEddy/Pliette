@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "id": "shrink_shy_c2",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 1.8,
+  "channels": [
+    "torso",
+    "head",
+    "leftArm",
+    "rightArm"
+  ],
+  "phases": {
+    "prepareEnd": 0.5,
+    "strokeEnd": 1.3,
+    "recoverEnd": 1.8
+  },
+  "curves": [
+    {
+      "role": "body.root",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.5,
+            1
+          ]
+        },
+        {
+          "t": 0.5,
+          "value": 5,
+          "ease": "linear"
+        },
+        {
+          "t": 1.3,
+          "value": 5,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.8,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "role": "body.root",
+      "property": "translate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.5,
+            1
+          ]
+        },
+        {
+          "t": 0.5,
+          "value": [
+            0,
+            -0.014
+          ],
+          "ease": "linear"
+        },
+        {
+          "t": 1.3,
+          "value": [
+            0,
+            -0.014
+          ],
+          "ease": "stepped"
+        },
+        {
+          "t": 1.8,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "head.main",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.5,
+            1
+          ]
+        },
+        {
+          "t": 0.5,
+          "value": 10,
+          "ease": "linear"
+        },
+        {
+          "t": 1.3,
+          "value": 10,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.8,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "role": "arm.upper.left",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.5,
+            1
+          ]
+        },
+        {
+          "t": 0.5,
+          "value": -14,
+          "ease": "linear"
+        },
+        {
+          "t": 1.3,
+          "value": -14,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.8,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "arm.upper.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.5,
+            1
+          ]
+        },
+        {
+          "t": 0.5,
+          "value": -14,
+          "ease": "linear"
+        },
+        {
+          "t": 1.3,
+          "value": -14,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.8,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "postures": [
+      "standing"
+    ],
+    "views": [
+      "front"
+    ]
+  },
+  "provenance": {
+    "kind": "llm",
+    "model": "GLM-5.3 (dev agent)",
+    "promptId": "p1-round3-coordination",
+    "candidate": 2,
+    "note": "修订2：新增重心下沉 -0.014H（蹲缩感），臂内收 -12→-14°"
+  },
+  "approval": "draft"
+}

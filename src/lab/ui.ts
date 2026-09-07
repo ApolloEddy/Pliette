@@ -243,12 +243,18 @@ function parseEditorDraft(): MotionDraft | null {
   }
 }
 
-/** 候选整体预览：作为完整小动画在轨道 0 播放（替代 base，便于孤立评审；切回原动画即恢复） */
+/** 候选整体预览：作为完整小动画在轨道 0 播放（孤立评审）。
+ * 先瞬时清空轨道（mix=0），避免从原动画（attack 等）做 0.2s 混合造成开头抖动；
+ * 空动画=setup 姿态，而候选动作首帧即 setup，因此无可见跳变。 */
 function playCompiledOnView(view: SpineView, layer: GestureLayer | null, motion: CompiledMotion): void {
   if (!view.state) return;
-  const entry = view.state.setAnimationWith(0, motion.animation, false);
+  const savedMix = view.state.data.defaultMix;
+  view.state.setEmptyAnimation(0, 0);
+  view.state.update(0);
+  view.state.data.defaultMix = 0;
+  view.state.setAnimationWith(0, motion.animation, false);
+  view.state.data.defaultMix = savedMix;
   void layer;
-  void entry;
 }
 
 function compileAndPreview(): void {
