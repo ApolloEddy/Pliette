@@ -106,6 +106,8 @@
       body.capture-mode #view-toggle, body.capture-mode #hud { display: none !important; }
       body.capture-mode main { grid-template-columns: 0 1fr 0; grid-template-rows: 1fr; }
       body.capture-mode #spine-flat { position: fixed; inset: 0; width: 100vw; height: 100vh; }
+      body.capture-mode #stage-wrap { position: fixed; inset: 0; }
+      body.capture-mode #stage3d { width: 100vw; height: 100vh; }
     </style>
   </head>
   <body>
@@ -297,6 +299,9 @@
           <div class="row">
             <button id="btn-g-base-walk">基础层→walk</button>
             <button id="btn-g-base-stand">基础层→stand</button>
+          </div>
+          <div class="row">
+            <button id="btn-g-a08" class="primary">A08 场景：走向椅子坐下</button>
           </div>
           <div class="row">
             <button id="btn-g-cancel">取消当前手势（局部）</button>

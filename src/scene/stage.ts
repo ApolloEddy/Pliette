@@ -38,10 +38,11 @@ export class Stage {
     this.scene.add(grid, floor);
 
     // 简单家具占位：一张桌子和一把椅子（P3 前的遮挡验证道具）
+    // 布局要点：椅背/桌面在角色平面（z=0）之后（z<0），保证坐姿纸片人在镜头前不被遮挡
     const furniture = new THREE.Group();
     const deskMat = new THREE.MeshBasicMaterial({ color: 0x24303e });
     const desk = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.05, 0.5), deskMat);
-    desk.position.set(1.15, 0.72, -0.55);
+    desk.position.set(1.15, 0.72, -0.85);
     const deskLegMat = new THREE.MeshBasicMaterial({ color: 0x1b2430 });
     for (const [dx, dz] of [[-0.4, -0.2], [0.4, -0.2], [-0.4, 0.2], [0.4, 0.2]] as const) {
       const leg = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.7, 0.05), deskLegMat);
@@ -50,9 +51,9 @@ export class Stage {
     }
     furniture.add(desk);
     const chair = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.06, 0.42), new THREE.MeshBasicMaterial({ color: 0x2c3a4a }));
-    chair.position.set(1.15, 0.42, 0.15);
+    chair.position.set(1.15, 0.42, -0.28);
     const chairBack = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.5, 0.05), new THREE.MeshBasicMaterial({ color: 0x2c3a4a }));
-    chairBack.position.set(1.15, 0.68, 0.36);
+    chairBack.position.set(1.15, 0.68, -0.5);
     const chairLegMat = new THREE.MeshBasicMaterial({ color: 0x1b2430 });
     for (const [dx, dz] of [[-0.17, -0.17], [0.17, -0.17], [-0.17, 0.17], [0.17, 0.17]] as const) {
       const leg = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.4, 0.04), chairLegMat);

@@ -522,6 +522,16 @@ function frame(now: number): void {
   gestureFlat?.sync();
   gesture3d?.sync();
   autoTick(logicalTime);
+  if (a08Runtime.active) {
+    a08Step(a08Runtime.state, dt);
+    stage.actorAnchor.position.x = a08Runtime.state.x;
+    a08Camera(a08Runtime.state.x);
+    if (a08Runtime.state.phase === "done") {
+      a08Runtime.active = false;
+      a08Camera(0);
+      log("A08 场景完成：走回起点", "good");
+    }
+  }
 
   stage.render(dt, actor);
   flatView.render(dt);
@@ -764,6 +774,7 @@ function wireBehaviorPanel(): void {
   $("btn-g-happy").addEventListener("click", () => submitGesture("happy"));
   $("btn-g-shy").addEventListener("click", () => submitGesture("shy"));
   $("btn-g-pump").addEventListener("click", () => submitGesture("pump"));
+  $("btn-g-a08").addEventListener("click", () => a08StartLive());
   $("btn-g-base-walk").addEventListener("click", () => {
     flatView.setAnimation("walk", true);
     actor.view.setAnimation("walk", true);
@@ -780,6 +791,107 @@ function wireBehaviorPanel(): void {
     const result = scheduler.submit({ schemaVersion: 1, ...lastIntent });
     log(`重发相同 requestId → ${result.status}${result.instanceId ? `（同一实例 ${result.instanceId}，幂等）` : ""}`, result.status === "accepted" ? "good" : "warn");
   });
+}
+
+/* ---------------- P3：姿态切换与 A08 场景（走向椅子坐下） ---------------- */
+
+type BaseName = "stand" | "walk" | "sit";
+
+function setBase(name: BaseName, hold = false): void {
+  for (const view of [flatView, actor.view]) {
+    if (!view.state || !view.skeletonData) continue;
+    const anim = view.skeletonData.findAnimation(name);
+    if (!anim) continue;
+    if (hold) {
+      const e = view.state.setAnimationWith(0, anim, false);
+      e.animationEnd = 1e6; // 保持末帧（坐姿持续）
+    } else {
+      view.state.setAnimation(0, name, true);
+    }
+  }
+}
+
+const A08 = { start: -0.8, seat: 0.6, walkSpeed: 0.567, sitAt: 3.4, standAt: 5.6, walkBackAt: 6.0, end: 7.6 };
+
+function a08Camera(x: number): void {
+  // 有限视差跟随（Spec 5.4 允许水平 ±12°）：镜头偏移为角色位置的一半
+  const cx = Math.max(-0.5, Math.min(0.7, x * 0.55));
+  stage.camera.position.x = cx;
+  stage.camera.lookAt(cx, 0.8, 0);
+}
+
+interface A08State { t: number; x: number; phase: "walk_in" | "sitting" | "hold_seated" | "standing_up" | "walk_back" | "done"; fired: Set<string>; }
+
+function a08Fresh(): A08State {
+  return { t: 0, x: A08.start, phase: "walk_in", fired: new Set() };
+}
+
+function a08ResetViews(): void {
+  for (const view of [flatView, actor.view]) {
+    view.state?.setEmptyAnimations(0);
+    view.state?.setEmptyAnimation(0, 0);
+  }
+  stage.actorAnchor.position.x = A08.start;
+  stage.turnActor(0);
+  a08Camera(A08.start);
+}
+
+function a08Step(s: A08State, dt: number): void {
+  s.t += dt;
+  const fire = (key: string, fn: () => void) => {
+    if (!s.fired.has(key) && s.t >= (Number(key.split(":")[1]) || 0)) {
+      s.fired.add(key);
+      fn();
+    }
+  };
+  if (s.phase === "walk_in") {
+    s.x = Math.max(A08.seat, s.x - A08.walkSpeed * dt);
+    if (s.x <= A08.seat + 0.001) {
+      s.phase = "sitting";
+      fire(`sit:${A08.sitAt}`, () => setBase("sit", true));
+      s.fired.add(`sit:${A08.sitAt}`);
+    }
+  } else if (s.phase === "sitting") {
+    if (s.t >= A08.standAt) {
+      s.phase = "standing_up";
+      setBase("stand");
+    }
+  } else if (s.phase === "standing_up") {
+    if (s.t >= A08.walkBackAt) {
+      s.phase = "walk_back";
+      setBase("walk");
+    }
+  } else if (s.phase === "walk_back") {
+    s.x = Math.min(A08.start, s.x - A08.walkSpeed * dt);
+    if (s.x <= A08.start + 0.001) s.phase = "done";
+  }
+}
+
+const a08Runtime = { active: false, state: a08Fresh() };
+
+function a08StartLive(): void {
+  a08ResetViews();
+  a08Runtime.state = a08Fresh();
+  setBase("walk");
+  a08Runtime.active = true;
+  autoState.active = false;
+  log(`A08 场景开始：走向椅子（x=${A08.seat}）→ 坐下 → 保持 → 起身 → 走回`, "good");
+}
+
+/** 确定性回放：从 0 以固定步长推进到 freezeAt（真实混合语义），用于逐帧出证 */
+function a08ReplayTo(freezeAt: number): void {
+  a08ResetViews();
+  const s = a08Fresh();
+  setBase("walk");
+  const step = 1 / 24;
+  while (s.t < freezeAt) {
+    a08Step(s, Math.min(step, freezeAt - s.t));
+    stage.actorAnchor.position.x = s.x;
+    a08Camera(s.x);
+  }
+  flatView.paused = true;
+  actor.view.paused = true;
+  log(`A08 回放冻结于 t=${freezeAt.toFixed(2)}s（phase=${s.phase}, x=${s.x.toFixed(2)}）`);
 }
 
 /* ---------------- 启动 ---------------- */
@@ -876,6 +988,15 @@ function applyBootParams(): Promise<void> {
         }
         $("btn-play").textContent = "播放";
         log(`叠加冻结于 t=${freezeAt}s（确定性截图模式）`);
+      }
+    }
+    const scenario = bootParams.get("scenario");
+    if (scenario === "a08") {
+      const freezeAt = Number(bootParams.get("freezeAt"));
+      if (Number.isFinite(freezeAt) && freezeAt > 0) {
+        a08ReplayTo(freezeAt);
+      } else {
+        a08StartLive();
       }
     }
     const motion = bootParams.get("motion");
