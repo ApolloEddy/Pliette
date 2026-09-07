@@ -23,6 +23,7 @@ export const GESTURE_LIBRARY: GestureDef[] = [
   { action: "shy", channel: "head", source: "sit", start: 0, end: 1.33, label: "低头害羞" },
   { action: "pump", channel: "rightArm", source: "victory", start: 3.3, end: 4.1, label: "庆祝挥拳" },
   { action: "fresh", channel: "head", source: "normal", start: 0.5, end: 2.5, label: "轻柔头部细节" },
+  { action: "point", channel: "rightArm", source: "attack", start: 0.15, end: 0.7, label: "右臂前伸指向" },
 ];
 
 export function findGesture(action: string, channel: string): GestureDef | undefined {

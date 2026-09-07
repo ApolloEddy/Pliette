@@ -53,7 +53,7 @@ export class SpineView {
   readonly canvas: HTMLCanvasElement;
   private gl: WebGLRenderingContext;
   private sceneRenderer: any;
-  private skeleton: spine.Skeleton | null = null;
+  skeleton: spine.Skeleton | null = null;
   state: spine.AnimationState | null = null;
   private bundle: AssetBundle | null = null;
   private disposables: (() => void)[] = [];

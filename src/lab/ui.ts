@@ -14,6 +14,7 @@ import { DEFAULT_CATALOG } from "../motion/parameters/presets.js";
 import { resolveParams, applyStyle, STYLE_HAPPY } from "../motion/parameters/registry.js";
 import { buildChannels, filterAnimation, playSlice, type ChannelDef, type OverlayHandle } from "../motion/library/overlay.js";
 import { findGesture, gestureWindowSec } from "../motion/library/gestures.js";
+import { spine36 as spine } from "spine-webgl";
 import { LabRecorder } from "./recorder.js";
 
 interface AssetEntry extends AssetSourceConfig {
@@ -522,6 +523,7 @@ function frame(now: number): void {
   gestureFlat?.sync();
   gesture3d?.sync();
   autoTick(logicalTime);
+  blinkTick(logicalTime);
   if (a08Runtime.active) {
     a08Step(a08Runtime.state, dt);
     stage.actorAnchor.position.x = a08Runtime.state.x;
@@ -774,6 +776,12 @@ function wireBehaviorPanel(): void {
   $("btn-g-happy").addEventListener("click", () => submitGesture("happy"));
   $("btn-g-shy").addEventListener("click", () => submitGesture("shy"));
   $("btn-g-pump").addEventListener("click", () => submitGesture("pump"));
+  $("btn-g-point").addEventListener("click", () => submitGesture("point"));
+  $("btn-g-a05").addEventListener("click", () => {
+    // A05：右手指向（attack 切片），左手可乐为原生持有不受影响；再加头部 happy 展示三通道独立
+    submitGesture("point");
+    submitGesture("dizzy");
+  });
   $("btn-g-a08").addEventListener("click", () => a08StartLive());
   $("btn-g-base-walk").addEventListener("click", () => {
     flatView.setAnimation("walk", true);
@@ -811,7 +819,8 @@ function setBase(name: BaseName, hold = false): void {
   }
 }
 
-const A08 = { start: -0.8, seat: 0.6, walkSpeed: 0.567, sitAt: 3.4, standAt: 5.6, walkBackAt: 6.0, end: 7.6 };
+// 行走速度标定值：scripts/calibrate-walk-speed.mjs 实测步幅 44.9 单位/周期 1.17s = 38.4 单位/s = 0.115 H/s（H=335）
+const A08 = { start: -0.5, seat: 0.6, walkSpeed: 0.115, sitAt: 9.6, standAt: 11.8, walkBackAt: 12.2, end: 21.6 };
 
 function a08Camera(x: number): void {
   // 有限视差跟随（Spec 5.4 允许水平 ±12°）：镜头偏移为角色位置的一半
@@ -892,6 +901,65 @@ function a08ReplayTo(freezeAt: number): void {
   flatView.paused = true;
   actor.view.paused = true;
   log(`A08 回放冻结于 t=${freezeAt.toFixed(2)}s（phase=${s.phase}, x=${s.x.toFixed(2)}）`);
+}
+
+/** 强制双眼附件（表情调制/眨眼）。holdForever=false 时到时自动结束，基础动画恢复当前表情。 */
+function playEyesOverride(lName: string, rName: string, holdSec = 1, holdForever = true): void {
+  for (const view of [flatView, actor.view]) {
+    if (!view.state || !view.skeletonData) continue;
+    const timelines: spine.Timeline[] = [];
+    for (const [slotName, attName] of [["eye_L", lName], ["eye_R", rName]] as const) {
+      const slotIndex = view.skeletonData.findSlotIndex(slotName);
+      if (slotIndex < 0) continue;
+      const tl = new spine.AttachmentTimeline(1);
+      tl.slotIndex = slotIndex;
+      tl.setFrame(0, 0, attName);
+      timelines.push(tl);
+    }
+    if (!timelines.length) continue;
+    const anim = new spine.Animation(`eyes:${lName}`, timelines, holdSec);
+    const e = view.state.setAnimationWith(5, anim, holdForever);
+    if (holdForever) e.animationEnd = 1e6;
+  }
+}
+
+/** 眨眼：face 通道附件调制（eye_2 = 动画师使用的自然闭眼素材，normal/move 内建）。结束自动恢复。 */
+const blinkState = { nextAt: 1.5 };
+let blinkEnabled = true;
+
+function blinkTick(logicalTime: number): void {
+  if (!blinkEnabled || !channels) return;
+  if (logicalTime < blinkState.nextAt) return;
+  if (scheduler.snapshot().ownership.head) {
+    // 头部通道被表情叠加占用时不闪（避免打架），稍后重试
+    blinkState.nextAt = logicalTime + 1;
+    return;
+  }
+  playEyesOverride("eye_2_1", "eye_2_2", 0.1, false);
+  blinkState.nextAt = logicalTime + 2.2 + Math.random() * 3.4;
+}
+
+/* ---------------- 行为配方：对话事件 → 手势（P4 对话层的映射表雏形） ---------------- */
+
+const EVENT_RECIPES: Record<string, string[]> = {
+  greet: ["wave"],
+  praise: ["pump", "happy"],
+  pet: ["happy"],
+  scare: ["dizzy"],
+  tease: ["shy"],
+  question: ["shy"],
+  ambient: ["fresh"],
+  drink: ["wave"],
+};
+
+function emitEvent(name: string): void {
+  const actions = EVENT_RECIPES[name];
+  if (!actions) {
+    log(`未知事件：${name}（可用：${Object.keys(EVENT_RECIPES).join(", ")}）`, "warn");
+    return;
+  }
+  for (const action of actions) submitGesture(action, action === "wave" ? "auto" : undefined);
+  log(`事件 ${name} → 配方 ${actions.join("+")}`);
 }
 
 /* ---------------- 启动 ---------------- */
@@ -999,6 +1067,21 @@ function applyBootParams(): Promise<void> {
         a08StartLive();
       }
     }
+    const eyesOverride = bootParams.get("eyes");
+    if (eyesOverride) {
+      // 表情调制探针：?eyes=eye_4_1,eye_4_2（左,右附件名），用于识别眨眼/闭眼素材
+      const [lName, rName] = eyesOverride.split(",");
+      if (lName && rName) {
+        playEyesOverride(lName, rName);
+        const freezeAt = Number(bootParams.get("freezeAt"));
+        if (Number.isFinite(freezeAt) && freezeAt > 0) {
+          for (const view of [flatView, actor.view]) {
+            view.state?.update(freezeAt);
+            view.paused = true;
+          }
+        }
+      }
+    }
     const motion = bootParams.get("motion");
     if (motion) {
       const loops = Math.max(1, Math.min(4, Number(bootParams.get("loops")) || 1));
@@ -1046,6 +1129,15 @@ function boot(): void {
   wireStaticControls();
   wireP1Panel();
   wireOverlayPanel();
+  (window as unknown as { __labDebug: unknown }).__labDebug = {
+    flatView,
+    actorView: actor.view,
+    stage,
+    scheduler,
+    skeleton: () => flatView.skeleton,
+    eyeSlot: () => flatView.skeleton?.findSlot("eye_L"),
+    emit: emitEvent,
+  };
   fillDraftTemplate($("template-select") as HTMLSelectElement);
   log("Motion Lab 就绪。选择资产开始基线播放验证（Spec P0）。", "good");
   log("拉菲 lafei_8 已就位：assets/Model/lafei_8/（原始资产不入库），Lab 从 public/assets-local/ 读取。");
