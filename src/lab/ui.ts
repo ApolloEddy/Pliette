@@ -1082,6 +1082,8 @@ function applyBootParams(): Promise<void> {
         }
       }
     }
+    const event = bootParams.get("event");
+    if (event) setTimeout(() => emitEvent(event), 300);
     const motion = bootParams.get("motion");
     if (motion) {
       const loops = Math.max(1, Math.min(4, Number(bootParams.get("loops")) || 1));
