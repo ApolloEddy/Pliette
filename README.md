@@ -12,14 +12,15 @@ Spine 纸片角色 · 参数化动作 · 有限 3D 场景 · 可替换的角色 
 
 ## 项目状态
 
-当前按 [Spec v1.0](docs/Pliette_Spec_v1.0.md) 推进至 **P0（真实资产与基线播放器）完成、P1 基础设施就绪**：
+当前按 [Spec v1.0](docs/Pliette_Spec_v1.0.md) 推进至 **P0 完成验收、P1 实验进行中**：
 
-- ✅ 官方 spine-ts **3.6** 运行时 vendored 并锁定哈希（目标角色 lafei_8 为 3.6.52 导出）
-- ✅ Motion Lab：资产导入检查、原动画播放（播放/暂停/逐帧/速度/循环）、骨骼调试、透明背景验收、骨骼探针
-- ✅ 3D 场景：Three.js 纸片演员（透明 PMA 画布 → CanvasTexture → 双面平面）、地面参考线、基础家具遮挡
-- ✅ MotionDraft Schema + Ajv 校验 + **匹配版本的官方 Timeline 编译器**（经官方运行时采样验证，含 0°→−72°→0° 线性示例）
-- ✅ 调度器种子：通道占用、幂等提交、auto 换手、抢占、局部取消、过期
-- ⏳ 等待拉菲 `lafei_8.zip` 放入 `assets-local/` 后执行真实资产接入验收（[asset-report](docs/asset-report.md) 第 4 节清单）
+- ✅ **P0 真实资产验收完成**：拉菲 lafei_8 在官方运行时正确播放（平面/3D 双模式目视），结构核对与 D.2 逐项一致，H 标定 heightUnits=335，正反面判定为仅正面（`_left` 为朝左变体），face ±6° 探针方向确认
+- ✅ 官方 spine-ts **3.6** 运行时 vendored 并锁定哈希；skel→JSON 用现成工具（wang606 converter，哈希记录在案）
+- ✅ Motion Lab：资产导入检查、原动画播放、骨骼调试、透明验收、骨骼探针、Motion Composer、调度演示、录像
+- ✅ 3D 场景：Three.js 纸片演员（透明 PMA 画布 → CanvasTexture → 双面平面）、35° 主镜头房间
+- ✅ MotionDraft Schema + Ajv 校验 + **匹配版本的官方 Timeline 编译器**（实测 rotate=setup 相对偏移语义）
+- 🔄 **P1 六项动作实验**：Tune（wave 固定 Primitive）+ Author（其余五项）首次输出完成并全部通过初审（无硬失败），1 轮修订后 wave/nod 提升，逐帧视频证据合成中（`experiments/p1-llm-motion/`）
+- ⏳ P2 参数库/并行中断、P3 房间交互、P4 对话桌面按阶段依赖推进
 
 ## 快速开始
 

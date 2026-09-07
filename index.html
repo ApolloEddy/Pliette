@@ -101,6 +101,11 @@
       .chip.occupied { color: var(--warn); border-color: var(--warn); }
       input[type="range"] { width: 100%; }
       .note { color: var(--dim); font-size: 11px; }
+      /* 确定性帧采集模式：?capture=1 只保留画布（fixed 定位，不依赖面板撑起的行高） */
+      body.capture-mode header, body.capture-mode aside, body.capture-mode #log,
+      body.capture-mode #view-toggle, body.capture-mode #hud { display: none !important; }
+      body.capture-mode main { grid-template-columns: 0 1fr 0; grid-template-rows: 1fr; }
+      body.capture-mode #spine-flat { position: fixed; inset: 0; width: 100vw; height: 100vh; }
     </style>
   </head>
   <body>
@@ -223,6 +228,24 @@
           </div>
           <div id="diagnostics"></div>
           <div class="note" id="compile-info"></div>
+        </section>
+
+        <section>
+          <h2>P1 候选实验台（六项动作）</h2>
+          <label for="p1-action-select">动作（首次输出）</label>
+          <select id="p1-action-select">
+            <option value="idle_subtle">idle_subtle 轻微待机</option>
+            <option value="nod">nod 点头</option>
+            <option value="wave">wave 挥手（Tune·Primitive）</option>
+            <option value="point">point 指向</option>
+            <option value="lean">lean 倾身倾听</option>
+            <option value="shrink">shrink 害羞收缩</option>
+          </select>
+          <div class="row" style="margin-top: 8px">
+            <button id="btn-p1-play" class="primary">载入并预览</button>
+            <button id="btn-p1-save">保存到 motions/</button>
+          </div>
+          <div class="note">预览在轨道 0 整段播放；保存写入 public/motions/ 供 ?motion= 确定性截图。</div>
         </section>
 
         <section>

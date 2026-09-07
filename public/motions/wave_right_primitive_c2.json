@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "id": "wave_right_primitive_c2",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 1.391304347826087,
+  "channels": [
+    "rightArm"
+  ],
+  "phases": {
+    "prepareEnd": 0.2608695652173913,
+    "strokeEnd": 1.0434782608695652,
+    "recoverEnd": 1.391304347826087
+  },
+  "curves": [
+    {
+      "role": "arm.upper.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "linear"
+        },
+        {
+          "t": 0.2608695652173913,
+          "value": 30,
+          "ease": "linear"
+        },
+        {
+          "t": 1.0434782608695652,
+          "value": 30,
+          "ease": "linear"
+        },
+        {
+          "t": 1.391304347826087,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "arm.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "linear"
+        },
+        {
+          "t": 0.2608695652173913,
+          "value": 24,
+          "ease": "linear"
+        },
+        {
+          "t": 0.4565217391304348,
+          "value": -24,
+          "ease": "linear"
+        },
+        {
+          "t": 0.6521739130434783,
+          "value": 24,
+          "ease": "linear"
+        },
+        {
+          "t": 0.8478260869565217,
+          "value": -24,
+          "ease": "linear"
+        },
+        {
+          "t": 1.0434782608695652,
+          "value": 24,
+          "ease": "linear"
+        },
+        {
+          "t": 1.391304347826087,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "postures": [
+      "standing",
+      "seated"
+    ],
+    "views": [
+      "front"
+    ],
+    "resources": [
+      "channel:rightArm"
+    ]
+  },
+  "provenance": {
+    "kind": "llm",
+    "candidate": 2,
+    "model": "GLM-5.3 (dev agent)",
+    "promptId": "p1-wave-primitive-tune-1",
+    "note": "Tune 模式：固定 wavePrimitive 函数，LLM 仅生成 liftDeg/wagDeg/cycles/tempo 数值参数"
+  },
+  "approval": "draft"
+}

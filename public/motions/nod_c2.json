@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "id": "nod_c2",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 0.8,
+  "channels": [
+    "head",
+    "torso"
+  ],
+  "phases": {
+    "prepareEnd": 0.16,
+    "strokeEnd": 0.56,
+    "recoverEnd": 0.8
+  },
+  "curves": [
+    {
+      "role": "head.main",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.7,
+            1
+          ]
+        },
+        {
+          "t": 0.28,
+          "value": 12,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.7,
+            1
+          ]
+        },
+        {
+          "t": 0.56,
+          "value": 2,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.7,
+            1
+          ]
+        },
+        {
+          "t": 0.8,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "body.root",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.7,
+            1
+          ]
+        },
+        {
+          "t": 0.28,
+          "value": 1.5,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.7,
+            1
+          ]
+        },
+        {
+          "t": 0.56,
+          "value": 0.2,
+          "ease": "bezier",
+          "bezierCP": [
+            0.3,
+            0,
+            0.7,
+            1
+          ]
+        },
+        {
+          "t": 0.8,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "postures": [
+      "standing",
+      "seated"
+    ],
+    "views": [
+      "front"
+    ]
+  },
+  "provenance": {
+    "kind": "llm",
+    "candidate": 2,
+    "model": "GLM-5.3 (dev agent)",
+    "promptId": "p1-six-actions-author-1",
+    "note": "修订1：躯干 1.5° 跟随提升协调（review-round1）"
+  },
+  "approval": "draft"
+}

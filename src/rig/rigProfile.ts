@@ -77,6 +77,22 @@ export const LAFEI_8_FRONT_CANDIDATES: RigProfile = {
       notes: "与左臂独立写属性，但共享 body 祖先",
       status: "candidate",
     },
+    "arm.upper.left": {
+      bone: "hand_L",
+      chain: ["body", "hand_L"],
+      kind: "localFk",
+      channel: "leftArm",
+      notes: "整臂抬放（hand_L 为 body 直接子节点，旋转带动整个手臂链）",
+      status: "candidate",
+    },
+    "arm.upper.right": {
+      bone: "hand_R",
+      chain: ["body", "hand_R"],
+      kind: "localFk",
+      channel: "rightArm",
+      notes: "整臂抬放；挥手/指向的主驱动骨，指尖挥动配合 arm.right",
+      status: "candidate",
+    },
     "leg.ik.left": {
       bone: "leg_L",
       chain: ["root", "leg_L"],

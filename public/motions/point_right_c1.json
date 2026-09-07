@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "point_right_c1",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 1.4,
+  "channels": [
+    "rightArm"
+  ],
+  "phases": {
+    "prepareEnd": 0.35,
+    "strokeEnd": 0.55,
+    "recoverEnd": 1.4
+  },
+  "curves": [
+    {
+      "role": "arm.upper.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.35,
+          "value": 38,
+          "ease": "linear"
+        },
+        {
+          "t": 0.95,
+          "value": 38,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.4,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "role": "arm.right",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "linear"
+        },
+        {
+          "t": 0.35,
+          "value": -6,
+          "ease": "linear"
+        },
+        {
+          "t": 0.95,
+          "value": -6,
+          "ease": "stepped"
+        },
+        {
+          "t": 1.4,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "postures": [
+      "standing",
+      "seated"
+    ],
+    "views": [
+      "front"
+    ],
+    "resources": [
+      "channel:rightArm"
+    ]
+  },
+  "provenance": {
+    "kind": "llm",
+    "candidate": 1,
+    "model": "GLM-5.3 (dev agent)",
+    "promptId": "p1-six-actions-author-1"
+  },
+  "approval": "draft"
+}

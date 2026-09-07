@@ -9,6 +9,7 @@ import { compileDraft, type CompiledMotion } from "../motion/compiler/compile.js
 import { nodHeadDraft, waveSmallDraft, type MotionDraft } from "../motion/authoring/draft.js";
 import { MotionScheduler, type MotionInstance } from "../motion/runtime/scheduler.js";
 import { GestureLayer, CHANNEL_TRACK } from "../motion/runtime/gestureLayer.js";
+import { P1_FIRST_OUTPUT } from "../motion/authoring/p1-drafts.js";
 import { DEFAULT_CATALOG } from "../motion/parameters/presets.js";
 import { resolveParams, applyStyle, STYLE_HAPPY } from "../motion/parameters/registry.js";
 import { LabRecorder } from "./recorder.js";
@@ -136,7 +137,7 @@ function fillSelect(select: HTMLSelectElement, values: string[], selected?: stri
 
 /* ---------------- RigProfile 绑定面板 ---------------- */
 
-const ROLE_KEYS = ["body.root", "head.main", "arm.left", "arm.right"] as const;
+const ROLE_KEYS = ["body.root", "head.main", "arm.left", "arm.right", "arm.upper.left", "arm.upper.right"] as const;
 
 function guessFromNames(names: string[], role: string): string | null {
   if (currentEntry?.characterId === "lafei_8") {
@@ -145,8 +146,10 @@ function guessFromNames(names: string[], role: string): string | null {
   }
   const patterns: Record<string, RegExp[]> = {
     "head.main": [/^head$/i, /head/i, /face/i],
-    "arm.left": [/hand[_-]?l/i, /arm[_-]?l/i, /handl/i, /arml/i],
-    "arm.right": [/hand[_-]?r/i, /arm[_-]?r/i, /handr/i, /armr/i],
+    "arm.left": [/hand[_-]?l3/i, /handl3/i, /hand[_-]?l/i, /arml/i],
+    "arm.right": [/hand[_-]?r3/i, /handr3/i, /hand[_-]?r/i, /armr/i],
+    "arm.upper.left": [/^hand[_-]?l$/i, /arm[_-]?upper[_-]?l/i, /shoulder[_-]?l/i],
+    "arm.upper.right": [/^hand[_-]?r$/i, /arm[_-]?upper[_-]?r/i, /shoulder[_-]?r/i],
     "body.root": [/^(body|hip|torso)$/i],
   };
   for (const re of patterns[role] ?? []) {
@@ -175,19 +178,34 @@ function rebuildRig(): void {
   const data = flatView.skeletonData;
   if (!data || !currentEntry) return;
   const names = data.bones.map((b) => b.name);
-  const bones: RigProfile["bones"] = {};
+  const picks: Record<string, string> = {};
   document.querySelectorAll<HTMLSelectElement>("#rig-bindings select").forEach((select) => {
-    const role = select.dataset.role!;
-    const boneName = select.value;
-    if (!names.includes(boneName)) return;
-    const channel: ChannelId =
-      role === "head.main" ? "head" : role === "arm.left" ? "leftArm" : role === "arm.right" ? "rightArm" : "torso";
-    const lafei = LAFEI_8_FRONT_CANDIDATES.bones[role];
-    bones[role] =
-      currentEntry!.characterId === "lafei_8" && lafei && lafei.bone === boneName
-        ? { ...lafei, channel }
-        : { bone: boneName, kind: "localFk", channel, status: "candidate" };
+    picks[select.dataset.role!] = select.value;
   });
+
+  // lafei_8：面板选择与 D.3 候选完全一致时使用规范 RigProfile（id 与 Draft 契约一致）
+  if (currentEntry.characterId === "lafei_8") {
+    const canonical = Object.entries(LAFEI_8_FRONT_CANDIDATES.bones)
+      .filter(([role]) => role in picks)
+      .every(([role, binding]) => picks[role] === binding.bone);
+    if (canonical) {
+      currentRig = { ...LAFEI_8_FRONT_CANDIDATES };
+      fillDraftTemplate($("template-select") as HTMLSelectElement);
+      log(`RigProfile 使用规范绑定：${currentRig.id}（${Object.keys(currentRig.bones).length} 个角色，含整臂/腿 IK/眼部）`);
+      return;
+    }
+  }
+
+  const bones: RigProfile["bones"] = {};
+  for (const [role, boneName] of Object.entries(picks)) {
+    if (!names.includes(boneName)) continue;
+    const channel: ChannelId =
+      role === "head.main" ? "head"
+        : role === "arm.left" || role === "arm.upper.left" ? "leftArm"
+          : role === "arm.right" || role === "arm.upper.right" ? "rightArm"
+            : "torso";
+    bones[role] = { bone: boneName, kind: "localFk", channel, status: "candidate" };
+  }
   currentRig = {
     id: `${currentEntry.characterId}.front.lab`,
     characterId: currentEntry.characterId,
@@ -225,14 +243,12 @@ function parseEditorDraft(): MotionDraft | null {
   }
 }
 
-/** 直接把编译动画放到对应通道轨道（绕过调度器的快速预览路径） */
+/** 候选整体预览：作为完整小动画在轨道 0 播放（替代 base，便于孤立评审；切回原动画即恢复） */
 function playCompiledOnView(view: SpineView, layer: GestureLayer | null, motion: CompiledMotion): void {
-  const channel = (motion.channels[0] ?? "torso") as ChannelId;
-  const track = CHANNEL_TRACK[channel] ?? 3;
   if (!view.state) return;
-  view.state.setAnimationWith(track, motion.animation, false);
-  view.state.addEmptyAnimation(track, 0.15, Math.max(0, motion.durationSec - 0.15));
+  const entry = view.state.setAnimationWith(0, motion.animation, false);
   void layer;
+  void entry;
 }
 
 function compileAndPreview(): void {
@@ -574,14 +590,54 @@ function frame(now: number): void {
   requestAnimationFrame(frame);
 }
 
+/* ---------------- P1 候选实验台 ---------------- */
+
+async function saveMotionToPublic(draft: MotionDraft): Promise<void> {
+  try {
+    const res = await fetch("/__save-motion", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ id: draft.id, draft }),
+    });
+    const data = (await res.json()) as { ok: boolean; saved?: string; error?: string };
+    log(data.ok ? `候选已保存：public/motions/${data.saved}` : `保存失败：${data.error}`, data.ok ? "good" : "bad");
+  } catch (e) {
+    log(`保存失败（dev server 未运行插件？）：${(e as Error).message}`, "bad");
+  }
+}
+
+function wireP1Panel(): void {
+  const select = $("p1-action-select") as HTMLSelectElement;
+  const fillEditor = (key: string) => {
+    const draft = P1_FIRST_OUTPUT[key];
+    if (!draft) return;
+    ($("draft-editor") as HTMLTextAreaElement).value = JSON.stringify(draft, null, 2);
+    renderDiagnostics([]);
+    $("compile-info").textContent = "";
+  };
+  select.addEventListener("change", () => fillEditor(select.value));
+  $("btn-p1-play").addEventListener("click", () => {
+    fillEditor(select.value);
+    compileAndPreview();
+  });
+  $("btn-p1-save").addEventListener("click", async () => {
+    const draft = parseEditorDraft();
+    if (!draft) return;
+    await saveMotionToPublic(draft);
+  });
+}
+
 /* ---------------- 启动 ---------------- */
 
-/** URL 参数支持确定性截图：?asset=lafei_8&view=flat&anim=walk&probe=6 */
+/** URL 参数支持确定性截图：?asset=lafei_8&view=flat&anim=walk&probe=6&motion=nod_c1&poseAt=0.28 */
 const bootParams = new URLSearchParams(location.search);
 
 function applyBootParams(): Promise<void> {
   const assetName = bootParams.get("asset");
   const proceed = () => {
+    if (bootParams.get("capture") === "1") {
+      document.body.classList.add("capture-mode");
+    }
     if (bootParams.get("view") === "flat") {
       document.body.classList.add("flat-mode");
       $("btn-view-flat").classList.add("primary");
@@ -600,6 +656,29 @@ function applyBootParams(): Promise<void> {
       ($("probe-angle") as HTMLInputElement).value = probe;
       applyProbe(true);
     }
+    const motion = bootParams.get("motion");
+    if (motion) {
+      const loops = Math.max(1, Math.min(4, Number(bootParams.get("loops")) || 1));
+      fetch(`/motions/${motion}.json`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then((draft) => {
+          ($("draft-editor") as HTMLTextAreaElement).value = JSON.stringify(draft, null, 2);
+          compileAndPreview();
+          const poseAt = Number(bootParams.get("poseAt"));
+          if (Number.isFinite(poseAt) && poseAt > 0) {
+            // 循环采样：state.update 累计时间，loop=true 时 TrackEntry 会回绕（两次执行）
+            for (const view of [flatView, actor.view]) {
+              const entry = view.state?.tracks[0];
+              if (entry && loops > 1) entry.loop = true;
+              view.state?.update(poseAt);
+              view.paused = true;
+            }
+            $("btn-play").textContent = "播放";
+            log(`姿态冻结于 motion=${motion} t=${poseAt}s × ${loops} 循环（确定性截图模式）`);
+          }
+        })
+        .catch((e) => log(`motion 加载失败 ${motion}：${(e as Error).message}`, "bad"));
+    }
     return Promise.resolve();
   };
   if (assetName) {
@@ -615,6 +694,7 @@ function applyBootParams(): Promise<void> {
 
 function boot(): void {
   wireStaticControls();
+  wireP1Panel();
   fillDraftTemplate($("template-select") as HTMLSelectElement);
   log("Motion Lab 就绪。选择资产开始基线播放验证（Spec P0）。", "good");
   log("拉菲 lafei_8 已就位：assets/Model/lafei_8/（原始资产不入库），Lab 从 public/assets-local/ 读取。");

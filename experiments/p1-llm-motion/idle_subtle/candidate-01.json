@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "id": "idle_subtle_c1",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 2.4,
+  "channels": [
+    "torso",
+    "head"
+  ],
+  "phases": {
+    "prepareEnd": 0.2,
+    "strokeEnd": 1.2,
+    "recoverEnd": 2.4
+  },
+  "curves": [
+    {
+      "role": "body.root",
+      "property": "translate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        },
+        {
+          "t": 1.2,
+          "value": [
+            0,
+            0.008
+          ],
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        },
+        {
+          "t": 2.4,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "role": "head.main",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        },
+        {
+          "t": 1.2,
+          "value": 2.5,
+          "ease": "bezier",
+          "bezierCP": [
+            0.4,
+            0,
+            0.6,
+            1
+          ]
+        },
+        {
+          "t": 2.4,
+          "value": 0,
+          "ease": "linear"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "postures": [
+      "standing"
+    ],
+    "views": [
+      "front"
+    ]
+  },
+  "provenance": {
+    "kind": "llm",
+    "candidate": 1,
+    "model": "GLM-5.3 (dev agent)",
+    "promptId": "p1-six-actions-author-1"
+  },
+  "approval": "draft"
+}
