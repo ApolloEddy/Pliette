@@ -45,7 +45,7 @@ for entry in "${COMBOS[@]}"; do
   n=$(ls "$dir" | wc -l)
   echo "    采集 $n 帧，合成中…"
   cat > "$T/filtero-$$.txt" << EOF
-scale=720:960:force_original_aspect_ratio=decrease,pad=720:960:(ow-iw)/2:(oh-ih)/2,drawtext=text='$title':fontfile='C\:/Windows/Fonts/arial.ttf':fontsize=21:fontcolor=white@0.85:x=14:y=h-46,drawtext=text='%{pts\:hms}':fontfile='C\:/Windows/Fonts/consola.ttf':fontsize=19:fontcolor=0xE0E6F2@0.8:x=14:y=h-22,format=yuv420p
+scale=720:960:force_original_aspect_ratio=decrease,pad=720:960:(ow-iw)/2:(oh-ih)/2,drawtext=text='$title':fontfile='C\:/Windows/Fonts/msyh.ttc':fontsize=21:fontcolor=white@0.85:x=14:y=h-46,drawtext=text='%{pts\:hms}':fontfile='C\:/Windows/Fonts/consola.ttf':fontsize=19:fontcolor=0xE0E6F2@0.8:x=14:y=h-22,format=yuv420p
 EOF
   "$FFMPEG" -y -framerate $FPS -i "$dir/%04d.png" -filter_script "$T/filtero-$$.txt" -c:v libx264 -crf 18 "$OUT/overlay-$label.mp4" > /dev/null 2>&1
   [ -f "$OUT/overlay-$label.mp4" ] && echo "    -> $OUT/overlay-$label.mp4 ($(du -h "$OUT/overlay-$label.mp4" | cut -f1))" || echo "    FFMPEG 失败: $label"
