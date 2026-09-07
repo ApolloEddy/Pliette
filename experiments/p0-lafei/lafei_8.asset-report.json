@@ -1,0 +1,291 @@
+{
+  "assetName": "lafei_8",
+  "exportVersion": "3.6.52",
+  "runtimeVersion": "3.6.53",
+  "versionMatch": true,
+  "setupSize": {
+    "w": 333,
+    "h": 333.81,
+    "hash": "czCpiS9kYS8liuqJ1EzFbIpt2+g"
+  },
+  "boneCount": 79,
+  "slotCount": 42,
+  "attachmentTotal": 67,
+  "attachmentByType": {
+    "mesh": 11,
+    "region": 56
+  },
+  "skins": [
+    "default"
+  ],
+  "ikConstraints": [
+    {
+      "name": "leg_L",
+      "bones": [
+        "leg_L1",
+        "leg_L3"
+      ],
+      "target": "leg_L",
+      "mix": 1,
+      "bendDirection": -1
+    },
+    {
+      "name": "leg_R",
+      "bones": [
+        "leg_R1",
+        "leg_R3"
+      ],
+      "target": "leg_R",
+      "mix": 1,
+      "bendDirection": -1
+    }
+  ],
+  "animations": [
+    {
+      "name": "attack",
+      "duration": 1
+    },
+    {
+      "name": "attack_left",
+      "duration": 1
+    },
+    {
+      "name": "dance",
+      "duration": 1.17
+    },
+    {
+      "name": "dead",
+      "duration": 0.83
+    },
+    {
+      "name": "motou",
+      "duration": 7.33
+    },
+    {
+      "name": "move",
+      "duration": 6
+    },
+    {
+      "name": "move_left",
+      "duration": 6
+    },
+    {
+      "name": "normal",
+      "duration": 4.67
+    },
+    {
+      "name": "sit",
+      "duration": 1.33
+    },
+    {
+      "name": "skill",
+      "duration": 6
+    },
+    {
+      "name": "sleep",
+      "duration": 4
+    },
+    {
+      "name": "stand",
+      "duration": 20.33
+    },
+    {
+      "name": "stand2",
+      "duration": 20.33
+    },
+    {
+      "name": "touch",
+      "duration": 0.67
+    },
+    {
+      "name": "tuozhuai",
+      "duration": 0.83
+    },
+    {
+      "name": "tuozhuai2",
+      "duration": 0.83
+    },
+    {
+      "name": "victory",
+      "duration": 7.33
+    },
+    {
+      "name": "walk",
+      "duration": 1.17
+    },
+    {
+      "name": "wash",
+      "duration": 2.67
+    },
+    {
+      "name": "yun",
+      "duration": 2
+    }
+  ],
+  "events": [
+    "action",
+    "finish"
+  ],
+  "calibration": {
+    "heightUnits": 335,
+    "footBaselineY": -2.4,
+    "method": "setup/stand/walk 三姿态附件世界包围盒（333.8/332.8/337.0），非纹理尺寸"
+  },
+  "frontBackConclusion": "仅正面：唯一 default 皮肤、67 附件无任何 back 部件；move_left/attack_left 与正向版本骨骼写集与附件切换完全一致（仅关键帧数值不同），属朝左行为变体而非背面视图（Spec 4.2 判定）。镜像不得作为背面；完整转身需后续素材或限制展示朝向。",
+  "faceCapability": {
+    "eyes": "eye_L/eye_R 各 8 个附件变体（睁闭/大小/形状），meimao1 slot 含 5 种眉毛，bushuang1/2 补丁，hongyun 红晕，sleep2 睡眼，dangao/kele/lanzi/mao_* 道具附件——表情/道具切换能力丰富，适合 slotState 控制器（Spec 10.3 分级：独立眼部附件）"
+  },
+  "attachmentBySlot": {
+    "mawei_R": [
+      "mawei_R"
+    ],
+    "mao_leg_L": [
+      "mao_leg_L"
+    ],
+    "mao_leg_R": [
+      "mao_leg_R"
+    ],
+    "mao_tail": [
+      "mao_tail"
+    ],
+    "mao_body": [
+      "mao_body"
+    ],
+    "mao_hand_L": [
+      "mao_hand_L"
+    ],
+    "mao_hand_R": [
+      "mao_hand_R"
+    ],
+    "dangao": [
+      "dangao"
+    ],
+    "waitao_R2": [
+      "waitao_R2"
+    ],
+    "hand_R": [
+      "hand_R"
+    ],
+    "waitao_R": [
+      "waitao_R"
+    ],
+    "hand_R2": [
+      "hand_R2",
+      "hand_R2_2"
+    ],
+    "kele": [
+      "kele"
+    ],
+    "leg_R1": [
+      "leg_R1"
+    ],
+    "leg_R2": [
+      "leg_R2"
+    ],
+    "leg_L1": [
+      "leg_L1"
+    ],
+    "leg_L2": [
+      "leg_L2"
+    ],
+    "body": [
+      "body",
+      "body_w"
+    ],
+    "hudieji": [
+      "hudieji"
+    ],
+    "hair_R2": [
+      "hair_R2"
+    ],
+    "face": [
+      "face"
+    ],
+    "honyun": [
+      "hongyun2",
+      "honyun"
+    ],
+    "meimao1": [
+      "meimao1",
+      "meimao2",
+      "meimao3",
+      "meimao4",
+      "meimao5"
+    ],
+    "eye_R": [
+      "eye_2_2",
+      "eye_3_2",
+      "eye_4_2",
+      "eye_R",
+      "eye_R2",
+      "eye_R3",
+      "eye_R4",
+      "eye_R5",
+      "eye_R5_2"
+    ],
+    "eye_L": [
+      "eye_2_1",
+      "eye_3_1",
+      "eye_4_1",
+      "eye_L",
+      "eye_L2",
+      "eye_L3",
+      "eye_L4",
+      "eye_L5"
+    ],
+    "ear": [
+      "ear"
+    ],
+    "waitao_L2": [
+      "waitao_L2"
+    ],
+    "hand_L": [
+      "hand_L"
+    ],
+    "lanzi": [
+      "lanzi"
+    ],
+    "waitao_L": [
+      "waitao_L"
+    ],
+    "hand_L2": [
+      "hand_L2",
+      "hand_L2_2",
+      "hand_L2_3"
+    ],
+    "hair_L2": [
+      "hair_L2"
+    ],
+    "mawei_L": [
+      "mawei_L"
+    ],
+    "erduo_R": [
+      "erduo_R"
+    ],
+    "hair_R": [
+      "hair_R"
+    ],
+    "hair_L": [
+      "hair_L"
+    ],
+    "hair_F": [
+      "hair_F"
+    ],
+    "tougu": [
+      "paopao1",
+      "tougu"
+    ],
+    "bushuang2": [
+      "bushuang2"
+    ],
+    "bushuang1": [
+      "bushuang1"
+    ],
+    "erduo_L": [
+      "erduo_L"
+    ],
+    "sleep2": [
+      "sleep2"
+    ]
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "../schemas/character-manifest.schema.v0.json",
+  "schemaVersion": 1,
+  "characterId": "lafei_8",
+  "displayName": "拉菲（lafei_8）",
+  "source": {
+    "providedBy": "用户",
+    "license": "游戏资源，仅本地使用，不入库不分发",
+    "localPath": "assets/Model/lafei_8/",
+    "servingPath": "public/assets-local/lafei_8/",
+    "sha256": {
+      "lafei_8.skel": "b86c72e884a6c0203887493e1ceba01787392a79942f56c62337d1e48d35f8c4",
+      "lafei_8.atlas.txt": "1a65b1d05f2e9acf6ed290bcb9eabcb67d461307b1a7052f7fa2f025b5c66cbb",
+      "lafei_8.png": "5db949c0815714e4242bc233bb5608807a099d66a7b1fd10bce937e9118a650f",
+      "lafei_8.json": "13e5270120c81d64c11c1a28786b92f24c4ea1a3da8c1321ce52836808313abc"
+    },
+    "conversion": {
+      "tool": "wang606/SpineSkeletonDataConverter v3.8",
+      "command": "SpineSkeletonDataConverter.exe lafei_8.skel lafei_8.json",
+      "note": "自动识别 3.6，同版本 JSON 输出；转换产物经官方 spine-ts 3.6.53 运行时加载与采样验证"
+    }
+  },
+  "views": {
+    "front": {
+      "skeleton": "assets/Model/lafei_8/lafei_8.json",
+      "atlas": "assets/Model/lafei_8/lafei_8.atlas.txt",
+      "textures": ["assets/Model/lafei_8/lafei_8.png"],
+      "premultipliedAlpha": true,
+      "status": "verified"
+    },
+    "back": {
+      "status": "absent",
+      "note": "2026-09-07 核查：唯一 default 皮肤、67 附件无 back 部件；move_left/attack_left 与正向版本骨骼写集和附件切换完全一致（仅数值不同），是朝左行为变体而非背面。镜像不得作为背面（Spec 4.2）；完整转身需后续素材或限制展示朝向"
+    }
+  },
+  "exportVersion": "3.6.52",
+  "calibration": {
+    "heightUnits": 335,
+    "footBaselineY": -2.4,
+    "method": "setup/stand/walk 三姿态附件世界包围盒高度 333.8/332.8/337.0（非纹理尺寸、非 skeleton 包围盒字段）"
+  },
+  "structureFacts": {
+    "bones": 79,
+    "slots": 42,
+    "attachments": 67,
+    "legIk": ["leg_L: leg_L1→leg_L3 target=leg_L mix=1", "leg_R: leg_R1→leg_R3 target=leg_R mix=1"],
+    "nonessential": false,
+    "skeletonSize": "333 × 333.81",
+    "events": []
+  },
+  "animations": [
+    { "name": "attack", "duration": 1.0 }, { "name": "attack_left", "duration": 1.0 },
+    { "name": "dance", "duration": 1.17 }, { "name": "dead", "duration": 0.83 },
+    { "name": "motou", "duration": 7.33 }, { "name": "move", "duration": 6.0 },
+    { "name": "move_left", "duration": 6.0 }, { "name": "normal", "duration": 4.67 },
+    { "name": "sit", "duration": 1.33 }, { "name": "skill", "duration": 6.0 },
+    { "name": "sleep", "duration": 4.0 }, { "name": "stand", "duration": 20.33 },
+    { "name": "stand2", "duration": 20.33 }, { "name": "touch", "duration": 0.67 },
+    { "name": "tuozhuai", "duration": 0.83 }, { "name": "tuozhuai2", "duration": 0.83 },
+    { "name": "victory", "duration": 7.33 }, { "name": "walk", "duration": 1.17 },
+    { "name": "wash", "duration": 2.67 }, { "name": "yun", "duration": 2.0 }
+  ],
+  "rigProfiles": [
+    { "id": "lafei_8.front.v1", "view": "front", "status": "candidate", "location": "src/rig/rigProfile.ts#LAFEI_8_FRONT_CANDIDATES", "heightUnits": 335 }
+  ],
+  "capabilities": [
+    "face.eyes.attachments（eye_L/eye_R 各 8-9 个附件变体；meimao1 slot 5 种眉毛；hongyun 红晕；sleep2 睡眼）",
+    "mouth.unverified（未确认独立嘴部附件，Slot 名单中无 mouth 项——不宣称口型同步）",
+    "props.attachments（dangao 蛋糕 / kele 可乐 / lanzi 篮子 / mao_* 猫咪套装 / paopao 泡泡）",
+    "sit（自带 sit 动画 1.33s，坐姿能力由素材直接支持）"
+  ],
+  "defaultAnimation": "stand"
+}

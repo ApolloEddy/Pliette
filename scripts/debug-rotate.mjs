@@ -1,0 +1,31 @@
+const { spine } = await import("../vendor/spine-ts/3.6/spine-core-esm.js");
+import { readFileSync } from "node:fs";
+const raw = JSON.parse(readFileSync("public/examples/spineboy/spineboy-pro.json", "utf8"));
+const atlasText = readFileSync("public/examples/spineboy/spineboy-pma.atlas", "utf8");
+const dummy = () => ({ setFilters() {}, setWraps() {}, getImage: () => ({ width: 4, height: 4 }), getWidth: () => 4, getHeight: () => 4, dispose() {} });
+const atlas = new spine.TextureAtlas(atlasText, dummy);
+const al = new spine.AtlasAttachmentLoader(atlas);
+const sj = new spine.SkeletonJson(al);
+const data = sj.readSkeletonData(raw);
+const headIdx = data.findBoneIndex("head");
+console.log("head idx", headIdx, "setup rotation", data.bones[headIdx].rotation, "parent", data.bones[headIdx].parent?.name);
+const setup = data.bones[headIdx].rotation;
+const tl = new spine.RotateTimeline(3);
+tl.boneIndex = headIdx;
+tl.setFrame(0, 0, setup + 0);
+tl.setFrame(1, 0.5, setup + -72);
+tl.setFrame(2, 1.0, setup + 0);
+const anim = new spine.Animation("t", [tl], 1.0);
+const sk = new spine.Skeleton(data);
+for (const t of [0, 0.25, 0.5, 0.75, 1.0]) {
+  sk.setToSetupPose();
+  anim.apply(sk, 0, t, false, [], 1, spine.MixPose.setup, spine.MixDirection.in);
+  const b = sk.findBone("head");
+  console.log("t=" + t, "rotation", b.rotation.toFixed(3), "rel", (b.rotation - setup).toFixed(3));
+}
+console.log("frames:", JSON.stringify(tl.frames));
+const tl2 = new spine.RotateTimeline(3);
+tl2.setStepped(0);
+tl2.setCurve(1, 0.25, 0.1, 0.25, 1);
+console.log("STEPPED:", spine.CurveTimeline.STEPPED, "LINEAR:", spine.CurveTimeline.LINEAR, "BEZIER:", spine.CurveTimeline.BEZIER, "BEZIER_SIZE:", spine.CurveTimeline.BEZIER_SIZE);
+console.log("curves:", JSON.stringify(Array.from(tl2.curves)));
