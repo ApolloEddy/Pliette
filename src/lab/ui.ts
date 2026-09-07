@@ -12,6 +12,7 @@ import { GestureLayer, CHANNEL_TRACK } from "../motion/runtime/gestureLayer.js";
 import { P1_FIRST_OUTPUT } from "../motion/authoring/p1-drafts.js";
 import { DEFAULT_CATALOG } from "../motion/parameters/presets.js";
 import { resolveParams, applyStyle, STYLE_HAPPY } from "../motion/parameters/registry.js";
+import { buildChannels, filterAnimation, playSlice, type ChannelDef, type OverlayHandle } from "../motion/library/overlay.js";
 import { LabRecorder } from "./recorder.js";
 
 interface AssetEntry extends AssetSourceConfig {
@@ -317,10 +318,19 @@ async function loadAsset(entry: AssetEntry): Promise<void> {
 
   gestureFlat = new GestureLayer(flatView.state!, scheduler);
   gesture3d = new GestureLayer(actor.view.state!, scheduler);
+  buildOverlayPanel();
 
   const animName = ($("anim-select") as HTMLSelectElement).value || null;
   flatView.setAnimation(animName, ($("loop-check") as HTMLInputElement).checked);
   actor.view.setAnimation(animName, ($("loop-check") as HTMLInputElement).checked);
+  // lafei 默认待机用 stand（官方待机，含专业呼吸/小动作），不用列表第一个（attack）
+  const preferred = data.animations.find((a) => a.name === "stand") ?? data.animations[0];
+  if (preferred && (!animName || animName === "attack")) {
+    const select = $("anim-select") as HTMLSelectElement;
+    select.value = preferred.name;
+    flatView.setAnimation(preferred.name, true);
+    actor.view.setAnimation(preferred.name, true);
+  }
 
   $("asset-status").textContent = `${entry.name} · 导出 ${lastReport.exportVersion} · ${lastReport.boneCount} 骨骼 · ${lastReport.animations.length} 动画`;
   log(`资产加载完成：${entry.label}（导出 ${lastReport.exportVersion}，运行时匹配 ${lastReport.versionMatch ? "✓" : "✗"}）`, "good");
@@ -586,6 +596,7 @@ function frame(now: number): void {
   scheduler.tick(dt);
   gestureFlat?.sync();
   gesture3d?.sync();
+  autoTick(logicalTime);
 
   stage.render(dt, actor);
   flatView.render(dt);
@@ -685,6 +696,103 @@ function benchFrame(): void {
 
 let benchStart = 0;
 
+/* ---------------- 原动画切片叠加（专业数据复用路线） ---------------- */
+
+let channels: Record<string, ChannelDef> | null = null;
+const activeOverlays = new Map<string, { handle: OverlayHandle; flatTrack: number; threeTrack: number }>();
+
+function buildOverlayPanel(): void {
+  const data = flatView.skeletonData;
+  if (!data) return;
+  channels = buildChannels(data);
+  const sourceSelect = $("overlay-source") as HTMLSelectElement;
+  fillSelect(
+    sourceSelect,
+    data.animations.map((a) => a.name),
+    "touch",
+  );
+  const channelSelect = $("overlay-channel") as HTMLSelectElement;
+  fillSelect(channelSelect, ["head", "face", "leftArm", "rightArm", "torso"], "head");
+  ($("btn-overlay-play") as HTMLButtonElement).disabled = false;
+  ($("btn-overlay-clear") as HTMLButtonElement).disabled = false;
+}
+
+function playOverlayFromPanel(): void {
+  if (!channels || !flatView.state || !actor.view.state || !currentEntry) return;
+  const sourceName = ($("overlay-source") as HTMLSelectElement).value;
+  const channelName = ($("overlay-channel") as HTMLSelectElement).value;
+  const t0 = Number(($("overlay-start") as HTMLInputElement).value) || 0;
+  const t1 = Number(($("overlay-end") as HTMLInputElement).value) || 0.67;
+  const mixIn = Number(($("overlay-mixin") as HTMLInputElement).value) || 0.15;
+  const source = flatView.skeletonData!.findAnimation(sourceName);
+  if (!source) {
+    log(`源动画不存在：${sourceName}`, "bad");
+    return;
+  }
+  const channel = channels[channelName];
+  const filtered = filterAnimation(flatView.skeletonData!, source, channel, `${sourceName}#${channelName}`);
+  if (!filtered) {
+    log(`${sourceName} 在通道 ${channelName} 上没有可过滤的 timeline`, "warn");
+    return;
+  }
+  const windowSec = Math.max(0.2, Math.min(t1, source.duration) - Math.min(t0, source.duration));
+  const handle: OverlayHandle = { source: sourceName, channel: channelName, startTime: t0, windowSec, track: channel.track };
+  for (const [view, layer] of [[flatView, gestureFlat], [actor.view, gesture3d]] as const) {
+    if (!view.state) continue;
+    playSlice(view.state, filtered, handle, mixIn, 0.25);
+  }
+  activeOverlays.set(channelName, { handle, flatTrack: channel.track, threeTrack: channel.track });
+  log(
+    `叠加：${sourceName} [${t0.toFixed(2)}~${(t0 + windowSec).toFixed(2)}s] → 通道 ${channelName}（轨道 ${channel.track}，混合 ${mixIn}s/0.25s），` +
+      `基础层继续播放，结束后交还`,
+    "good",
+  );
+}
+
+function clearOverlays(): void {
+  for (const view of [flatView, actor.view]) {
+    if (!view.state) continue;
+    for (const { flatTrack } of activeOverlays.values()) view.state.setEmptyAnimation(flatTrack, 0.25);
+  }
+  activeOverlays.clear();
+  log("已清除全部叠加层（0.25s 混出交还基础层）");
+}
+
+function wireOverlayPanel(): void {
+  $("btn-overlay-play").addEventListener("click", playOverlayFromPanel);
+  $("btn-overlay-clear").addEventListener("click", clearOverlays);
+}
+
+/* ---------------- 自动待机行为（?auto=1）：stand 打底 + 随机表情/动作切片 ---------------- */
+
+const AUTO_OVERLAYS: { source: string; channel: string; start: number; end: number }[] = [
+  { source: "touch", channel: "head", start: 0, end: 0.67 },
+  { source: "yun", channel: "head", start: 0.4, end: 2.0 },
+  { source: "sit", channel: "head", start: 0, end: 1.33 },
+  { source: "normal", channel: "head", start: 0.5, end: 2.5 },
+  { source: "dance", channel: "torso", start: 0, end: 1.17 },
+  { source: "motou", channel: "head", start: 1.0, end: 3.0 },
+];
+
+const autoState = { active: false, nextAt: 0 };
+
+function autoTick(logicalTime: number): void {
+  if (!autoState.active || !channels || !flatView.state) return;
+  if (logicalTime < autoState.nextAt) return;
+  const pick = AUTO_OVERLAYS[Math.floor(Math.random() * AUTO_OVERLAYS.length)];
+  const source = flatView.skeletonData?.findAnimation(pick.source);
+  const channel = channels[pick.channel];
+  if (!source || !channel) return;
+  const filtered = filterAnimation(flatView.skeletonData!, source, channel, `${pick.source}#${pick.channel}`);
+  if (!filtered) return;
+  const windowSec = Math.max(0.3, Math.min(pick.end, source.duration) - pick.start);
+  for (const view of [flatView, actor.view]) {
+    if (view.state) playSlice(view.state, filtered, { ...channel, source: pick.source, startTime: pick.start, windowSec }, 0.2, 0.3);
+  }
+  autoState.nextAt = logicalTime + windowSec + 2 + Math.random() * 4;
+  log(`自动行为：叠加 ${pick.source} → ${pick.channel}（${windowSec.toFixed(2)}s）`);
+}
+
 /* ---------------- 启动 ---------------- */
 
 /** URL 参数支持确定性截图：?asset=lafei_8&view=flat&anim=walk&probe=6&motion=nod_c1&poseAt=0.28 */
@@ -726,6 +834,28 @@ function applyBootParams(): Promise<void> {
       benchParams.threeMs = [];
       log(`实时基准开始：${benchSec}s 真实时间（walk 动画循环播放）`);
     }
+    const overlay = bootParams.get("overlay");
+    if (overlay) {
+      // 格式 source:channel:t0:t1，如 overlay=touch:head:0:0.67
+      const [srcName, chName, s0, s1] = overlay.split(":");
+      const sourceSelect = $("overlay-source") as HTMLSelectElement;
+      const channelSelect = $("overlay-channel") as HTMLSelectElement;
+      if ([...sourceSelect.options].some((o) => o.value === srcName)) sourceSelect.value = srcName;
+      if ([...channelSelect.options].some((o) => o.value === chName)) channelSelect.value = chName;
+      ($("overlay-start") as HTMLInputElement).value = s0 ?? "0";
+      ($("overlay-end") as HTMLInputElement).value = s1 ?? "0.67";
+      playOverlayFromPanel();
+      // freezeAt：确定性帧——把所有轨道（基础+叠加）一致推进 t 秒后冻结
+      const freezeAt = Number(bootParams.get("freezeAt"));
+      if (Number.isFinite(freezeAt) && freezeAt > 0) {
+        for (const view of [flatView, actor.view]) {
+          view.state?.update(freezeAt);
+          view.paused = true;
+        }
+        $("btn-play").textContent = "播放";
+        log(`叠加冻结于 t=${freezeAt}s（确定性截图模式）`);
+      }
+    }
     const motion = bootParams.get("motion");
     if (motion) {
       const loops = Math.max(1, Math.min(4, Number(bootParams.get("loops")) || 1));
@@ -756,7 +886,14 @@ function applyBootParams(): Promise<void> {
     if (entry) {
       const select = $("asset-select") as HTMLSelectElement;
       if ([...select.options].some((o) => o.value === assetName)) select.value = assetName;
-      return loadAsset(entry).then(proceed);
+      return loadAsset(entry).then(() => {
+        if (bootParams.get("auto") === "1") {
+          autoState.active = true;
+          autoState.nextAt = 2;
+          log("自动待机行为开启：stand 打底，随机叠加表情/动作切片");
+        }
+        return proceed();
+      });
     }
   }
   return proceed();
@@ -765,6 +902,7 @@ function applyBootParams(): Promise<void> {
 function boot(): void {
   wireStaticControls();
   wireP1Panel();
+  wireOverlayPanel();
   fillDraftTemplate($("template-select") as HTMLSelectElement);
   log("Motion Lab 就绪。选择资产开始基线播放验证（Spec P0）。", "good");
   log("拉菲 lafei_8 已就位：assets/Model/lafei_8/（原始资产不入库），Lab 从 public/assets-local/ 读取。");

@@ -249,6 +249,39 @@
         </section>
 
         <section>
+          <h2>原动画切片叠加（专业数据复用）</h2>
+          <label for="overlay-source">源动画</label>
+          <select id="overlay-source" disabled></select>
+          <label for="overlay-channel">目标通道（轨道）</label>
+          <select id="overlay-channel" disabled>
+            <option value="head">head 头部（含表情）</option>
+            <option value="face">face 仅眼眉</option>
+            <option value="leftArm">leftArm 左臂</option>
+            <option value="rightArm">rightArm 右臂</option>
+            <option value="torso">torso 躯干</option>
+          </select>
+          <div class="row">
+            <div style="flex:1">
+              <label for="overlay-start">起点 s</label>
+              <input type="text" id="overlay-start" value="0" disabled />
+            </div>
+            <div style="flex:1">
+              <label for="overlay-end">终点 s</label>
+              <input type="text" id="overlay-end" value="0.67" disabled />
+            </div>
+            <div style="flex:1">
+              <label for="overlay-mixin">混合 s</label>
+              <input type="text" id="overlay-mixin" value="0.15" disabled />
+            </div>
+          </div>
+          <div class="row" style="margin-top: 8px">
+            <button id="btn-overlay-play" class="primary" disabled>播放叠加</button>
+            <button id="btn-overlay-clear" disabled>清除叠加</button>
+          </div>
+          <div class="note">基础层继续播放；切片结束自动混出交还。确定性截图：?overlay=源:通道:起点:终点</div>
+        </section>
+
+        <section>
           <h2>调度演示（通道 / 冲突 / 取消）</h2>
           <div class="row">
             <button id="btn-submit-wave-r" class="primary">挥手·右手</button>
