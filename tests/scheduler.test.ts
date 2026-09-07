@@ -105,3 +105,31 @@ describe("MotionScheduler", () => {
     expect(wave.channel).toBe("rightArm");
   });
 });
+
+describe("健壮性：压力与边界", () => {
+  it("100 次快速提交 + 交错取消不崩且状态一致", () => {
+    const s = makeScheduler();
+    const ids: string[] = [];
+    for (let i = 0; i < 100; i++) {
+      const r = s.submit(intent({ requestId: `stress-${i}`, action: "wave", params: { hand: i % 2 ? "right" : "left", durationSec: 0.05 } }));
+      if (r.status === "accepted") ids.push(r.instanceId!);
+      if (i % 3 === 0 && ids.length) s.cancel(ids[ids.length - 1], "stress");
+      s.tick(0.02);
+    }
+    for (let i = 0; i < 10; i++) s.tick(0.1);
+    expect(s.snapshot().active.every((i2) => i2.status === "active")).toBe(true);
+  });
+
+  it("NaN/Infinity 参数被拒绝", () => {
+    const s = makeScheduler();
+    const r = s.submit(intent({ requestId: "nan", action: "nod", params: { durationSec: Number.NaN } }));
+    expect(r.status).toBe("rejected");
+  });
+
+  it("dt 极大值一次 tick 全部完成并释放（暂停恢复不补大步由调用方钳制）", () => {
+    const s = makeScheduler();
+    s.submit(intent({ requestId: "big", action: "wave", params: { hand: "right", durationSec: 1 } }));
+    s.tick(1000);
+    expect(s.holderOf("rightArm")).toBeUndefined();
+  });
+});

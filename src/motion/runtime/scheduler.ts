@@ -78,6 +78,9 @@ export class MotionScheduler {
       if (!entry.allowedParams.includes(key)) {
         return { status: "rejected", reason: "unknownParam", detail: `动作 ${intent.action} 不接受参数 ${key}` };
       }
+      if (typeof params[key] === "number" && !Number.isFinite(params[key])) {
+        return { status: "rejected", reason: "invalidParam", detail: `参数 ${key}=${params[key]} 非有限数值` };
+      }
     }
 
     // 显式 hand 直接路由通道；auto/缺省在占用时换空闲手（Spec 7.6 / 8.5）
@@ -114,7 +117,10 @@ export class MotionScheduler {
       action: intent.action,
       channel,
       params,
-      durationSec: typeof params.durationSec === "number" ? params.durationSec : entry.defaultDurationSec,
+      durationSec:
+        typeof params.durationSec === "number" && Number.isFinite(params.durationSec) && params.durationSec > 0
+          ? params.durationSec
+          : entry.defaultDurationSec,
       elapsedSec: 0,
       status: "active",
       startedAtMs: now,

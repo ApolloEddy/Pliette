@@ -52,8 +52,13 @@ export interface CatalogEntry {
 }
 
 export const DEFAULT_CATALOG: CatalogEntry[] = [
-  { action: "wave", channel: "rightArm", alternativeChannel: "leftArm", defaultDurationSec: 1.6, interruptible: true, allowedParams: ["hand", "amplitude", "tempo", "cycles", "preset", "durationSec"] },
+  { action: "wave", channel: "rightArm", alternativeChannel: "leftArm", defaultDurationSec: 2.4, interruptible: true, allowedParams: ["hand", "amplitude", "tempo", "cycles", "preset", "durationSec"] },
   { action: "point", channel: "rightArm", alternativeChannel: "leftArm", defaultDurationSec: 1.2, interruptible: true, allowedParams: ["hand", "amplitude", "durationSec"] },
+  { action: "dizzy", channel: "head", defaultDurationSec: 1.6, interruptible: true, allowedParams: ["durationSec"] },
+  { action: "happy", channel: "head", defaultDurationSec: 0.67, interruptible: true, allowedParams: ["durationSec"] },
+  { action: "shy", channel: "head", defaultDurationSec: 1.33, interruptible: true, allowedParams: ["durationSec"] },
+  { action: "pump", channel: "rightArm", defaultDurationSec: 0.8, interruptible: true, allowedParams: ["durationSec"] },
+  { action: "fresh", channel: "head", defaultDurationSec: 2.0, interruptible: true, allowedParams: ["durationSec"] },
   { action: "nod", channel: "head", defaultDurationSec: 0.8, interruptible: true, allowedParams: ["amplitude", "tempo", "cycles", "durationSec"] },
   { action: "look_at", channel: "head", defaultDurationSec: 1.5, interruptible: true, allowedParams: ["target", "holdSec"] },
   { action: "lean", channel: "torso", defaultDurationSec: 1.0, interruptible: true, allowedParams: ["amplitude", "durationSec"] },

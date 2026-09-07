@@ -282,18 +282,27 @@
         </section>
 
         <section>
-          <h2>调度演示（通道 / 冲突 / 取消）</h2>
+          <h2>行为库（原动画切片 + 调度器）</h2>
           <div class="row">
-            <button id="btn-submit-wave-r" class="primary">挥手·右手</button>
-            <button id="btn-submit-wave-auto">挥手·auto</button>
-            <button id="btn-submit-wave-l">挥手·左手</button>
+            <button id="btn-g-wave-r" class="primary">挥手·右手</button>
+            <button id="btn-g-wave-auto">挥手·auto</button>
+            <button id="btn-g-wave-l">挥手·左手</button>
           </div>
           <div class="row">
-            <button id="btn-submit-nod">点头</button>
-            <button id="btn-cancel">取消当前手势</button>
-            <button id="btn-dup-submit">重发上一请求（幂等）</button>
+            <button id="btn-g-dizzy">头晕</button>
+            <button id="btn-g-happy">开心</button>
+            <button id="btn-g-shy">害羞</button>
+            <button id="btn-g-pump">庆祝</button>
           </div>
-          <div class="note">挥手提交/取消会以编译后的挥手动画上屏；重复 requestId 必须幂等（Spec 11.2）。</div>
+          <div class="row">
+            <button id="btn-g-base-walk">基础层→walk</button>
+            <button id="btn-g-base-stand">基础层→stand</button>
+          </div>
+          <div class="row">
+            <button id="btn-g-cancel">取消当前手势（局部）</button>
+            <button id="btn-g-dup">重发上一请求（幂等）</button>
+          </div>
+          <div class="note">A04 验证流程：基础层→walk → 挥手 → 取消手势（行走不应中断）。</div>
           <label>通道占用</label>
           <div id="channel-occupancy" class="note"></div>
         </section>

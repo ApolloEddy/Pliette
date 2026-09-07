@@ -13,6 +13,7 @@ import { P1_FIRST_OUTPUT } from "../motion/authoring/p1-drafts.js";
 import { DEFAULT_CATALOG } from "../motion/parameters/presets.js";
 import { resolveParams, applyStyle, STYLE_HAPPY } from "../motion/parameters/registry.js";
 import { buildChannels, filterAnimation, playSlice, type ChannelDef, type OverlayHandle } from "../motion/library/overlay.js";
+import { findGesture, gestureWindowSec } from "../motion/library/gestures.js";
 import { LabRecorder } from "./recorder.js";
 
 interface AssetEntry extends AssetSourceConfig {
@@ -336,48 +337,6 @@ async function loadAsset(entry: AssetEntry): Promise<void> {
   log(`资产加载完成：${entry.label}（导出 ${lastReport.exportVersion}，运行时匹配 ${lastReport.versionMatch ? "✓" : "✗"}）`, "good");
 }
 
-/* ---------------- 调度演示 ---------------- */
-
-function submitDemo(action: string, params: Record<string, unknown>, label: string): void {
-  const requestId = `turn-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-  const intent = { schemaVersion: 1 as const, requestId, action, params };
-  lastIntent = { requestId, action, params };
-  const result = scheduler.submit(intent);
-  if (result.status !== "accepted") {
-    log(
-      `提交 ${label} → ${result.status}${result.reason ? `（${result.reason}${result.detail ? "：" + result.detail : ""}）` : ""}` +
-        (result.alternatives?.length ? ` 可替代通道：${result.alternatives.join(",")}` : ""),
-      "warn",
-    );
-    return;
-  }
-  lastInstanceId = result.instanceId!;
-  const hand = (result.channel === "leftArm" ? "left" : "right") as "left" | "right";
-  const draft = waveSmallDraft(currentRig.id, hand);
-  const { motion, diagnostics } = compileDraft(draft, currentRig, flatView.skeletonData!);
-  if (!motion) {
-    renderDiagnostics(diagnostics);
-    log("调度已接受，但挥手编译失败（检查绑定）", "bad");
-    return;
-  }
-  const inst = scheduler.get(result.instanceId!)!;
-  let ok = true;
-  if (gestureFlat) ok = gestureFlat.play(inst, motion.animation) && ok;
-  if (gesture3d) ok = gesture3d.play(inst, motion.animation) && ok;
-  log(`提交 ${label} → accepted（实例 ${result.instanceId}，通道 ${result.channel}）`, "good");
-}
-
-function cancelCurrentGesture(): void {
-  if (!lastInstanceId) {
-    log("当前没有已接受的手势实例", "warn");
-    return;
-  }
-  const ok = scheduler.cancel(lastInstanceId, "user");
-  if (gestureFlat) gestureFlat.cancel(lastInstanceId);
-  if (gesture3d) gesture3d.cancel(lastInstanceId);
-  log(ok ? `已取消实例 ${lastInstanceId}（局部取消，base 与其他通道继续）` : `实例 ${lastInstanceId} 已不在活动状态`, ok ? "good" : "warn");
-}
-
 /* ---------------- 探针 ---------------- */
 
 function applyProbe(on: boolean): void {
@@ -508,40 +467,6 @@ function wireStaticControls(): void {
     renderDiagnostics(validateDraft(draft, currentRig));
   });
   $("btn-compile").addEventListener("click", compileAndPreview);
-
-  $("btn-submit-wave-r").addEventListener("click", () => submitDemo("wave", { hand: "right" }, "挥手·右手"));
-  $("btn-submit-wave-auto").addEventListener("click", () => submitDemo("wave", { hand: "auto" }, "挥手·auto"));
-  $("btn-submit-wave-l").addEventListener("click", () => submitDemo("wave", { hand: "left" }, "挥手·左手"));
-  $("btn-submit-nod").addEventListener("click", () => {
-    // 点头：编译 nod 模板并经调度器 head 通道播放
-    submitHeadNod();
-  });
-  $("btn-cancel").addEventListener("click", cancelCurrentGesture);
-  $("btn-dup-submit").addEventListener("click", () => {
-    if (!lastIntent) return;
-    const result = scheduler.submit({ schemaVersion: 1, ...lastIntent });
-    log(`重发相同 requestId → ${result.status}${result.instanceId ? `（同一实例 ${result.instanceId}，幂等）` : ""}`, result.status === "accepted" ? "good" : "warn");
-  });
-}
-
-function submitHeadNod(): void {
-  const requestId = `turn-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-  const result = scheduler.submit({ schemaVersion: 1, requestId, action: "nod", params: {} });
-  if (result.status !== "accepted") {
-    log(`提交 点头 → ${result.status}（${result.reason}）`, "warn");
-    return;
-  }
-  lastInstanceId = result.instanceId!;
-  const draft = nodHeadDraft(currentRig.id);
-  const { motion, diagnostics } = compileDraft(draft, currentRig, flatView.skeletonData!);
-  if (!motion) {
-    renderDiagnostics(diagnostics);
-    return;
-  }
-  const inst = scheduler.get(result.instanceId!)!;
-  gestureFlat?.play(inst, motion.animation);
-  gesture3d?.play(inst, motion.animation);
-  log(`提交 点头 → accepted（${result.instanceId}，通道 head）`, "good");
 }
 
 function downloadText(name: string, text: string): void {
@@ -765,32 +690,96 @@ function wireOverlayPanel(): void {
 
 /* ---------------- 自动待机行为（?auto=1）：stand 打底 + 随机表情/动作切片 ---------------- */
 
-const AUTO_OVERLAYS: { source: string; channel: string; start: number; end: number }[] = [
-  { source: "touch", channel: "head", start: 0, end: 0.67 },
-  { source: "yun", channel: "head", start: 0.4, end: 2.0 },
-  { source: "sit", channel: "head", start: 0, end: 1.33 },
-  { source: "normal", channel: "head", start: 0.5, end: 2.5 },
-  { source: "dance", channel: "torso", start: 0, end: 1.17 },
-  { source: "motou", channel: "head", start: 1.0, end: 3.0 },
-];
-
+const AUTO_GESTURES = ["happy", "shy", "dizzy", "fresh", "wave", "pump"];
 const autoState = { active: false, nextAt: 0 };
 
 function autoTick(logicalTime: number): void {
   if (!autoState.active || !channels || !flatView.state) return;
   if (logicalTime < autoState.nextAt) return;
-  const pick = AUTO_OVERLAYS[Math.floor(Math.random() * AUTO_OVERLAYS.length)];
-  const source = flatView.skeletonData?.findAnimation(pick.source);
-  const channel = channels[pick.channel];
-  if (!source || !channel) return;
-  const filtered = filterAnimation(flatView.skeletonData!, source, channel, `${pick.source}#${pick.channel}`);
-  if (!filtered) return;
-  const windowSec = Math.max(0.3, Math.min(pick.end, source.duration) - pick.start);
-  for (const view of [flatView, actor.view]) {
-    if (view.state) playSlice(view.state, filtered, { ...channel, source: pick.source, startTime: pick.start, windowSec }, 0.2, 0.3);
+  const action = AUTO_GESTURES[Math.floor(Math.random() * AUTO_GESTURES.length)];
+  submitGesture(action, action === "wave" ? (Math.random() < 0.5 ? "right" : "auto") : undefined);
+  autoState.nextAt = logicalTime + 6 + Math.random() * 5;
+}
+
+/* ---------------- 行为库演示（原动画切片 + 调度器，A04 流程） ---------------- */
+
+function submitGesture(action: string, hand?: string): void {
+  if (!channels || !flatView.state || !actor.view.state || !currentEntry) {
+    log("资产未加载", "warn");
+    return;
   }
-  autoState.nextAt = logicalTime + windowSec + 2 + Math.random() * 4;
-  log(`自动行为：叠加 ${pick.source} → ${pick.channel}（${windowSec.toFixed(2)}s）`);
+  const requestId = `act-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+  const result = scheduler.submit({ schemaVersion: 1, requestId, action, params: hand ? { hand } : {} });
+  if (result.status !== "accepted") {
+    log(
+      `提交 ${action}${hand ? `·${hand}` : ""} → ${result.status}${result.reason ? `（${result.reason}${result.detail ? "：" + result.detail : ""}）` : ""}`,
+      "warn",
+    );
+    return;
+  }
+  lastInstanceId = result.instanceId!;
+  const gesture = findGesture(action, result.channel!);
+  if (!gesture) {
+    log(`调度已接受，但行为库中没有 ${action}@${result.channel} 的切片`, "bad");
+    return;
+  }
+  const source = flatView.skeletonData!.findAnimation(gesture.source);
+  if (!source) return;
+  const filtered = filterAnimation(flatView.skeletonData!, source, channels[gesture.channel], `${gesture.source}#${gesture.channel}`);
+  if (!filtered) return;
+  const windowSec = Math.min(gestureWindowSec(gesture), source.duration - gesture.start);
+  const inst = scheduler.get(result.instanceId!)!;
+  for (const view of [flatView, actor.view]) {
+    if (!view.state) continue;
+    playSlice(view.state, filtered, { track: CHANNEL_TRACK[gesture.channel]!, channel: gesture.channel, source: gesture.source, startTime: gesture.start, windowSec }, 0.15, 0.25);
+  }
+  inst.durationSec = windowSec;
+  lastIntent = { requestId, action, params: hand ? { hand } : {} };
+  log(`行为 ${action}（${gesture.label}）→ accepted（${result.instanceId}，通道 ${result.channel}，${windowSec.toFixed(2)}s）`, "good");
+}
+
+function cancelCurrentGesture(): void {
+  if (!lastInstanceId) {
+    log("当前没有已接受的手势实例", "warn");
+    return;
+  }
+  const inst = scheduler.get(lastInstanceId);
+  const ok = scheduler.cancel(lastInstanceId, "user");
+  if (inst) {
+    // 局部取消：只清该实例的通道轨道，基础层与其他通道继续（A04）
+    const track = CHANNEL_TRACK[inst.channel];
+    if (track != null) {
+      flatView.state?.setEmptyAnimation(track, 0.25);
+      actor.view.state?.setEmptyAnimation(track, 0.25);
+    }
+  }
+  log(ok ? `已取消实例 ${lastInstanceId}（局部取消，base 与其他通道继续）` : `实例 ${lastInstanceId} 已不在活动状态`, ok ? "good" : "warn");
+}
+
+function wireBehaviorPanel(): void {
+  $("btn-g-wave-r").addEventListener("click", () => submitGesture("wave", "right"));
+  $("btn-g-wave-auto").addEventListener("click", () => submitGesture("wave", "auto"));
+  $("btn-g-wave-l").addEventListener("click", () => submitGesture("wave", "left"));
+  $("btn-g-dizzy").addEventListener("click", () => submitGesture("dizzy"));
+  $("btn-g-happy").addEventListener("click", () => submitGesture("happy"));
+  $("btn-g-shy").addEventListener("click", () => submitGesture("shy"));
+  $("btn-g-pump").addEventListener("click", () => submitGesture("pump"));
+  $("btn-g-base-walk").addEventListener("click", () => {
+    flatView.setAnimation("walk", true);
+    actor.view.setAnimation("walk", true);
+    log("基础层切换：walk（循环）——可在其上叠加手势验证 A04");
+  });
+  $("btn-g-base-stand").addEventListener("click", () => {
+    flatView.setAnimation("stand", true);
+    actor.view.setAnimation("stand", true);
+    log("基础层切换：stand（循环）");
+  });
+  $("btn-g-cancel").addEventListener("click", cancelCurrentGesture);
+  $("btn-g-dup").addEventListener("click", () => {
+    if (!lastIntent) return;
+    const result = scheduler.submit({ schemaVersion: 1, ...lastIntent });
+    log(`重发相同 requestId → ${result.status}${result.instanceId ? `（同一实例 ${result.instanceId}，幂等）` : ""}`, result.status === "accepted" ? "good" : "warn");
+  });
 }
 
 /* ---------------- 启动 ---------------- */
@@ -833,6 +822,39 @@ function applyBootParams(): Promise<void> {
       benchParams.spineMs = [];
       benchParams.threeMs = [];
       log(`实时基准开始：${benchSec}s 真实时间（walk 动画循环播放）`);
+    }
+    const gesture = bootParams.get("gesture");
+    if (gesture) {
+      submitGesture(gesture, bootParams.get("hand") ?? undefined);
+      const freezeAt = Number(bootParams.get("freezeAt"));
+      const cancelAt = Number(bootParams.get("cancelAt"));
+      // A03/A04：在 cancelAt 相位取消手势（局部），其余时间继续走基础层
+      if (Number.isFinite(cancelAt) && cancelAt > 0) {
+        for (const view of [flatView, actor.view]) view.state?.update(Math.min(cancelAt, freezeAt || cancelAt));
+        if (lastInstanceId) {
+          const inst = scheduler.get(lastInstanceId);
+          scheduler.cancel(lastInstanceId, "script");
+          const track = inst ? CHANNEL_TRACK[inst.channel] : undefined;
+          if (track != null) {
+            flatView.state?.setEmptyAnimation(track, 0.3);
+            actor.view.state?.setEmptyAnimation(track, 0.3);
+          }
+        }
+        if (Number.isFinite(freezeAt) && freezeAt > cancelAt) {
+          for (const view of [flatView, actor.view]) {
+            view.state?.update(freezeAt - cancelAt);
+            view.paused = true;
+          }
+        }
+        log(`脚本：手势在 ${cancelAt}s 相位被取消，剩余 ${((freezeAt || cancelAt) - cancelAt).toFixed(2)}s 观察基础层与混出`);
+      } else if (Number.isFinite(freezeAt) && freezeAt > 0) {
+        for (const view of [flatView, actor.view]) {
+          view.state?.update(freezeAt);
+          view.paused = true;
+        }
+        $("btn-play").textContent = "播放";
+        log(`手势冻结于 t=${freezeAt}s（确定性截图模式）`);
+      }
     }
     const overlay = bootParams.get("overlay");
     if (overlay) {
