@@ -26,7 +26,12 @@
       "atlas": "assets/Model/lafei_8/lafei_8.atlas.txt",
       "textures": ["assets/Model/lafei_8/lafei_8.png"],
       "premultipliedAlpha": true,
-      "status": "verified"
+      "status": "verified",
+      "hdVariant": {
+        "texture": "assets/Model/lafei_8/lafei_8-upscale-3x.png",
+        "textureScale": 3,
+        "note": "用户 3 倍超分（3072×768）；加载时 scaleAtlasText 同步缩放 atlas 坐标。A/B 对比清晰度提升、性能零代价（docs/perf-baseline.md）"
+      }
     },
     "back": {
       "status": "absent",

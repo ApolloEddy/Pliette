@@ -41,6 +41,22 @@ export interface LoadArgs {
   createTexture?: (imagePath: string) => unknown;
 }
 
+/**
+ * 将 atlas 文本坐标按倍率缩放（用于超分贴图：PNG 放大 s 倍时，page size 与
+ * region 的 xy/size/orig/offset 同乘 s，UV 语义不变；rotate/index 不缩放）。
+ */
+export function scaleAtlasText(text: string, scale: number): string {
+  if (scale === 1) return text;
+  return text
+    .split(/\r?\n/)
+    .map((line) => {
+      const m = line.match(/^(\s*)(size|xy|orig|offset):\s*(-?\d+),\s*(-?\d+)\s*$/);
+      if (!m) return line;
+      return `${m[1]}${m[2]}: ${Math.round(Number(m[3]) * scale)},${Math.round(Number(m[4]) * scale)}`;
+    })
+    .join("\n");
+}
+
 /** 用官方运行时解析 skeleton JSON + atlas。版本不匹配直接抛错，不做兜底修补（Spec 4.1）。 */
 export function loadSkeleton(args: LoadArgs): AssetBundle {
   const check = checkVersion(args.skeletonJson);

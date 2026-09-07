@@ -50,12 +50,23 @@ const ASSETS: AssetEntry[] = [
   },
   {
     name: "lafei_8",
-    label: "拉菲 lafei_8（assets-local）",
+    label: "拉菲 lafei_8（原始分辨率）",
     characterId: "lafei_8",
     jsonUrl: "/assets-local/lafei_8/lafei_8.json",
     atlasUrl: "/assets-local/lafei_8/lafei_8.atlas.txt",
     imagePathFor: (n) => `/assets-local/lafei_8/${n}`,
     premultipliedAlpha: true,
+    optional: true,
+  },
+  {
+    name: "lafei_8hd",
+    label: "拉菲 lafei_8（超分 3x）",
+    characterId: "lafei_8",
+    jsonUrl: "/assets-local/lafei_8/lafei_8.json",
+    atlasUrl: "/assets-local/lafei_8/lafei_8.atlas.txt",
+    imagePathFor: () => `/assets-local/lafei_8/lafei_8-upscale-3x.png`,
+    premultipliedAlpha: true,
+    textureScale: 3,
     optional: true,
   },
 ];
@@ -553,6 +564,13 @@ let fpsAccum = 0;
 let fpsCount = 0;
 
 function frame(now: number): void {
+  if (benchParams.active) {
+    benchParams.dts.push(now - lastFrame);
+    lastFrame = now;
+    benchFrame();
+    requestAnimationFrame(frame);
+    return;
+  }
   const dt = Math.min((now - lastFrame) / 1000, 0.05);
   lastFrame = now;
   logicalTime += dt;
@@ -633,6 +651,40 @@ function wireP1Panel(): void {
   });
 }
 
+/* ---------------- 实时性能基准（?bench=1，真实计时，非虚拟时间） ---------------- */
+
+const benchParams = { active: false, untilMs: 0, frames: 0, dts: [] as number[], spineMs: [] as number[], threeMs: [] as number[] };
+
+function benchFrame(): void {
+  if (!benchParams.active) return;
+  const now = performance.now();
+  benchParams.frames++;
+  const t0 = performance.now();
+  // 完整产品路径：actor 的 Spine 更新+绘制 → CanvasTexture 上传 → Three.js 场景渲染
+  stage.render(1 / 60, actor);
+  const t1 = performance.now();
+  benchParams.spineMs.push(t1 - t0);
+  if (now >= benchParams.untilMs) {
+    benchParams.active = false;
+    const sorted = benchParams.dts.slice().sort((a, b) => a - b);
+    const p = (q: number) => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * q))] ?? 0;
+    const sum = (a: number[]) => a.reduce((s, v) => s + v, 0);
+    const secs = (benchParams.untilMs - benchStart) / 1000;
+    const report = [
+      `Pliette 实时性能基准 · 完整产品路径（Spine 绘制+纹理上传+3D 场景）`,
+      `渲染环境：headless SwiftShader 软件渲染（真机 GPU 只会更快）；资产=${currentEntry?.name ?? "?"}`,
+      `采样：${benchParams.frames} 帧 / ${secs.toFixed(2)}s 真实时间`,
+      `平均 FPS：${(benchParams.frames / secs).toFixed(1)}`,
+      `帧间隔 ms：avg=${(sum(benchParams.dts) / benchParams.dts.length).toFixed(2)} p50=${p(0.5).toFixed(2)} p95=${p(0.95).toFixed(2)} max=${sorted[sorted.length - 1]?.toFixed(2)}`,
+      `整帧渲染（Spine+纹理上传+场景）avg=${(sum(benchParams.spineMs) / benchParams.spineMs.length).toFixed(3)}ms`,
+      `Spec 15.4 目标：稳定 60 FPS、p95 帧间隔 ≤20ms`,
+    ].join("\n");
+    document.body.innerHTML = `<pre style="color:#d6dbe6;font:14px/1.7 Consolas,monospace;padding:24px;white-space:pre-wrap">${report}</pre>`;
+  }
+}
+
+let benchStart = 0;
+
 /* ---------------- 启动 ---------------- */
 
 /** URL 参数支持确定性截图：?asset=lafei_8&view=flat&anim=walk&probe=6&motion=nod_c1&poseAt=0.28 */
@@ -661,6 +713,18 @@ function applyBootParams(): Promise<void> {
     if (probe != null && probe !== "") {
       ($("probe-angle") as HTMLInputElement).value = probe;
       applyProbe(true);
+    }
+    if (bootParams.get("bench") === "1") {
+      const benchSec = Number(bootParams.get("benchSec")) || 6;
+      document.body.classList.add("capture-mode");
+      benchParams.active = true;
+      benchParams.untilMs = performance.now() + benchSec * 1000;
+      benchStart = performance.now();
+      benchParams.frames = 0;
+      benchParams.dts = [];
+      benchParams.spineMs = [];
+      benchParams.threeMs = [];
+      log(`实时基准开始：${benchSec}s 真实时间（walk 动画循环播放）`);
     }
     const motion = bootParams.get("motion");
     if (motion) {

@@ -3,7 +3,7 @@
  * 稳定取景：跨动作使用同一画布范围与脚底基准，不做逐帧包围盒适配（Spec 5.2）。
  */
 import { spine36 as spine } from "spine-webgl";
-import { loadSkeleton, type AssetBundle } from "../assets/loader.js";
+import { loadSkeleton, scaleAtlasText, type AssetBundle } from "../assets/loader.js";
 
 /** 运行时类在 3.6.53 构建中位于 spine.webgl 子命名空间（见 vendor PROVENANCE.md） */
 const webgl = (spine as unknown as { webgl: Record<string, any> }).webgl;
@@ -15,6 +15,8 @@ export interface AssetSourceConfig {
   /** 图集页名（如 spineboy-pma.png）→ 图片 URL */
   imagePathFor: (pageName: string) => string;
   premultipliedAlpha: boolean;
+  /** 贴图超分倍率：PNG 放大 s 倍时自动缩放 atlas 坐标（1 = 原生） */
+  textureScale?: number;
 }
 
 export interface ProbeOffset {
@@ -88,7 +90,8 @@ export class SpineView {
 
   /** 拉取并解析资产（图片预加载后经官方 TextureAtlas / SkeletonJson）。 */
   async loadFromUrls(cfg: AssetSourceConfig): Promise<AssetBundle> {
-    const [jsonText, atlasText] = await Promise.all([fetchTextCached(cfg.jsonUrl), fetchTextCached(cfg.atlasUrl)]);
+    const [jsonText, atlasTextRaw] = await Promise.all([fetchTextCached(cfg.jsonUrl), fetchTextCached(cfg.atlasUrl)]);
+    const atlasText = scaleAtlasText(atlasTextRaw, cfg.textureScale ?? 1);
     const rawJson = JSON.parse(jsonText);
     const pageNames = atlasText
       .split(/\r?\n/)
