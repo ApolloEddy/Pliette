@@ -1,0 +1,9 @@
+# 统一行尾，避免文本资产（json/atlas）被 CRLF 转换改变内容
+* text=auto eol=lf
+
+# 二进制
+*.png binary
+*.exe binary
+*.skel binary
+*.webm binary
+*.mp4 binary
