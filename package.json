@@ -1,0 +1,25 @@
+{
+  "name": "pliette",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Pliette（纸栖）— Spine 纸片角色 + 参数化动作 + 有限 3D 场景的桌面 AI 伴侣（P0/P1 阶段）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "three": "^0.178.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "@types/three": "^0.178.1",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  }
+}

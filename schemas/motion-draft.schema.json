@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pliette:motion-draft:1",
+  "title": "MotionDraft（Spec 附录 A.1）",
+  "type": "object",
+  "required": ["schemaVersion", "id", "rigProfile", "durationSec", "channels", "curves", "approval"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9_.:-]+$", "maxLength": 120 },
+    "rigProfile": { "type": "string", "minLength": 1 },
+    "durationSec": { "type": "number", "exclusiveMinimum": 0, "maximum": 30 },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "enum": ["base", "leftArm", "rightArm", "torso", "head", "face", "mouth"] }
+    },
+    "phases": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "curves": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "#/definitions/curve" }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "postures": { "type": "array", "items": { "type": "string" } },
+        "views": { "type": "array", "items": { "enum": ["front", "back"] } },
+        "resources": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["llm", "manual", "builtin"] },
+        "candidate": { "type": "integer", "minimum": 0 },
+        "model": { "type": "string" },
+        "promptId": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "approval": { "enum": ["draft", "approved"] }
+  },
+  "definitions": {
+    "bezierCP": {
+      "type": "array",
+      "items": { "type": "number", "minimum": 0, "maximum": 1 },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "key": {
+      "type": "object",
+      "required": ["t", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "t": { "type": "number", "minimum": 0 },
+        "value": {},
+        "ease": { "enum": ["linear", "stepped", "bezier"] },
+        "bezierCP": { "$ref": "#/definitions/bezierCP" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "ease": { "const": "bezier" } }, "required": ["ease"] },
+          "then": { "required": ["bezierCP"] }
+        }
+      ]
+    },
+    "curve": {
+      "type": "object",
+      "required": ["role", "property", "mode", "keys"],
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string", "minLength": 1 },
+        "property": { "enum": ["rotate", "translate", "scale", "attachment"] },
+        "mode": { "const": "relativeToReference" },
+        "keys": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": { "$ref": "#/definitions/key" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "property": { "const": "rotate" } }, "required": ["property"] },
+          "then": {
+            "properties": {
+              "keys": { "items": { "properties": { "value": { "type": "number" } } } }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "property": { "enum": ["translate", "scale"] } }, "required": ["property"] },
+          "then": {
+            "properties": {
+              "keys": {
+                "items": {
+                  "properties": {
+                    "value": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "number" } }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "property": { "const": "attachment" } }, "required": ["property"] },
+          "then": {
+            "properties": {
+              "keys": { "items": { "properties": { "value": { "type": "string" } } } }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

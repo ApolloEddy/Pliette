@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.vite/
+
+# 用户原始资产（拉菲 lafei_8 等）默认不入库，见 Spec 13.1
+assets-local/
+assets/Model/
+public/assets-local/
+
+# 实验产物中的大文件（录像、截图批次）
+experiments/media/
+
+# 第三方本地工具二进制（获取方式与哈希见 docs/runtime-lock.md，不入库）
+tools/spine-converter/
+
+*.local
+npm-debug.log*
+.DS_Store

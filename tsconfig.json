@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "types": ["vite/client", "node"]
+  },
+  "include": [
+    "src",
+    "tests",
+    "vite.config.ts",
+    "vendor/spine-ts/3.6/spine-core.d.ts",
+    "vendor/spine-ts/3.6/spine-webgl.d.ts",
+    "vendor/spine-ts/3.6/spine-esm-shim.d.ts"
+  ]
+}
