@@ -10,8 +10,8 @@ mkdir -p "$FRAMES"
 T="C:/Users/Eddy/AppData/Local/Temp/pliette-shots"
 dir="$FRAMES/a08"
 mkdir -p "$dir"
-total=$(awk -v c="7.6" -v f="$FPS" 'BEGIN{print int(c*f)+1}')
-echo "=== A08 (7.6s @ ${FPS}fps = $total 帧) ==="
+total=$(awk -v c="21.8" -v f="$FPS" 'BEGIN{print int(c*f)+1}')
+echo "=== A08 (21.8s @ ${FPS}fps = $total 帧) ==="
 i=0
 while [ "$i" -lt "$total" ]; do
   t=$(awk -v i="$i" -v f="$FPS" 'BEGIN{printf "%.3f", i/f}')
