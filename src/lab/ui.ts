@@ -897,7 +897,9 @@ function a08ReplayTo(freezeAt: number): void {
   setBase("walk");
   const step = 1 / 24;
   while (s.t < freezeAt) {
-    a08Step(s, Math.min(step, freezeAt - s.t));
+    const dt = Math.min(step, freezeAt - s.t);
+    a08Step(s, dt);
+    for (const view of [flatView, actor.view]) view.state?.update(dt);
     stage.actorAnchor.position.x = s.x;
     a08Camera(s.x);
   }
@@ -963,6 +965,95 @@ function emitEvent(name: string): void {
   }
   for (const action of actions) submitGesture(action, action === "wave" ? "auto" : undefined);
   log(`事件 ${name} → 配方 ${actions.join("+")}`);
+}
+
+/* ---------------- P3：触碰矮桌接触交互（Spec 15.2 接触误差 ≤0.02H） ---------------- */
+
+// 接触锚点：矮桌前沿 (0.85, 0.27)；victory[0.7-1.2] 右手稳定高度实测 90/335=0.2687
+const TOUCH = { start: 0.3, contactX: 0.85, contactY: 0.27, handLocalX: 26 / 335, walkSpeed: 0.115, arriveAt: 0, window: 0.5 };
+
+interface TouchState { t: number; x: number; phase: "walk_in" | "contact" | "done"; fired: Set<string>; errors: number[]; }
+
+function touchFresh(): TouchState {
+  return { t: 0, x: TOUCH.start, phase: "walk_in", fired: new Set(), errors: [] };
+}
+
+function touchResetViews(): void {
+  for (const view of [flatView, actor.view]) {
+    view.state?.setEmptyAnimations(0);
+    view.state?.setEmptyAnimation(0, 0);
+  }
+  stage.actorAnchor.position.set(TOUCH.start, 0, 0);
+  stage.turnActor(0);
+  a08Camera(TOUCH.start);
+}
+
+function touchStep(s: TouchState, dt: number): void {
+  s.t += dt;
+  if (s.phase === "walk_in") {
+    const targetX = TOUCH.contactX - TOUCH.handLocalX;
+    s.x = Math.min(targetX, s.x + TOUCH.walkSpeed * dt);
+    if (s.x >= targetX - 0.001) {
+      s.phase = "contact";
+      s.fired.add("touch");
+      submitGesture("touch_table");
+    }
+    return;
+  }
+  if (s.phase === "contact") {
+    // 稳定接触段采样：排除混入（前 0.15s）与释放（后 0.1s），Spec 15.2 允许
+    const inWindow = s.t >= TOUCH.arriveAt + 0.25 && s.t <= TOUCH.arriveAt + 0.4;
+    if (inWindow && flatView.state && flatView.skeleton) {
+      // 回放中无渲染循环，这里手动推进并应用姿态后读取
+      flatView.state.apply(flatView.skeleton);
+      flatView.skeleton.updateWorldTransform();
+      const hand = flatView.skeleton.findBone("hand_R3");
+      if (hand) {
+        const hx = s.x + hand.worldX / 335;
+        const hy = hand.worldY / 335;
+        s.errors.push(Math.hypot(hx - TOUCH.contactX, hy - TOUCH.contactY));
+      }
+    }
+    if (s.t >= TOUCH.arriveAt + 0.9) s.phase = "done";
+  }
+}
+
+const touchRuntime = { active: false, state: touchFresh() };
+
+function touchStartLive(): void {
+  touchResetViews();
+  touchRuntime.state = touchFresh();
+  setBase("stand");
+  touchRuntime.active = true;
+  autoState.active = false;
+  a08Runtime.active = false;
+  log(`触碰场景开始：走向矮桌锚点（x=${(TOUCH.contactX - TOUCH.handLocalX).toFixed(3)}）→ 右手停在桌沿 0.27H`, "good");
+}
+
+/** 确定性回放：固定步长重演至 freezeAt，返回接触误差报告 */
+function touchReplayTo(freezeAt: number): TouchState {
+  touchResetViews();
+  const s = touchFresh();
+  setBase("stand");
+  const step = 1 / 24;
+  while (s.t < freezeAt) {
+    const dt = Math.min(step, freezeAt - s.t);
+    const prevPhase = s.phase;
+    touchStep(s, dt);
+    for (const view of [flatView, actor.view]) view.state?.update(dt);
+    stage.actorAnchor.position.x = s.x;
+    if (prevPhase === "walk_in" && s.phase === "contact") TOUCH.arriveAt = s.t;
+  }
+  flatView.paused = true;
+  actor.view.paused = true;
+  return s;
+}
+
+function touchReport(s: TouchState): string {
+  const e = s.errors;
+  if (!e.length) return "（无接触段采样）";
+  const max = Math.max(...e), avg = e.reduce((a, b) => a + b, 0) / e.length;
+  return `接触误差（${e.length} 采样，排除首尾）: max=${max.toFixed(4)}H avg=${avg.toFixed(4)}H → ${max <= 0.02 ? "≤0.02H 达标 ✅" : "超标 ❌"}`;
 }
 
 /* ---------------- 启动 ---------------- */
@@ -1068,6 +1159,15 @@ function applyBootParams(): Promise<void> {
         a08ReplayTo(freezeAt);
       } else {
         a08StartLive();
+      }
+    }
+    if (scenario === "touch") {
+      const freezeAt = Number(bootParams.get("freezeAt"));
+      if (Number.isFinite(freezeAt) && freezeAt > 0) {
+        const s = touchReplayTo(freezeAt);
+        log(`触碰回放 t=${freezeAt.toFixed(2)}s phase=${s.phase} | ${touchReport(s)}`);
+      } else {
+        touchStartLive();
       }
     }
     const eyesOverride = bootParams.get("eyes");

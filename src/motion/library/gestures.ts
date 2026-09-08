@@ -24,6 +24,7 @@ export const GESTURE_LIBRARY: GestureDef[] = [
   { action: "pump", channel: "rightArm", source: "victory", start: 3.3, end: 4.1, label: "庆祝挥拳" },
   { action: "fresh", channel: "head", source: "normal", start: 0.5, end: 2.5, label: "轻柔头部细节" },
   { action: "point", channel: "rightArm", source: "attack", start: 0.15, end: 0.7, label: "右臂前伸指向" },
+  { action: "touch_table", channel: "rightArm", source: "victory", start: 0.7, end: 1.2, label: "触碰矮桌（右手平稳停在 0.27H）" },
 ];
 
 export function findGesture(action: string, channel: string): GestureDef | undefined {

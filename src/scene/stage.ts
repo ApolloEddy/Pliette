@@ -62,6 +62,14 @@ export class Stage {
       furniture.add(leg);
     }
     furniture.add(chair, chairBack);
+
+    // 矮桌（Q 版比例，0.27H 高）：触碰接触交互的目标（victory[0.7-1.2] 右手稳定高度 = 0.27H）
+    const lowTableMat = new THREE.MeshBasicMaterial({ color: 0x3a4a5e });
+    const lowTable = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.27, 0.35), lowTableMat);
+    lowTable.position.set(0.85, 0.135, -0.35);
+    const lowTableEdge = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.04, 0.06), new THREE.MeshBasicMaterial({ color: 0x4c6076 }));
+    lowTableEdge.position.set(0.85, 0.27, -0.18);
+    furniture.add(lowTable, lowTableEdge);
     this.scene.add(furniture);
     this.scene.add(this.actorAnchor);
 
