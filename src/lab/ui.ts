@@ -847,6 +847,9 @@ function a08ResetViews(): void {
 
 function a08Step(s: A08State, dt: number): void {
   s.t += dt;
+  const seated = s.phase === "sitting" || s.phase === "hold_seated";
+  // 坐姿锚点抬升到椅面高度（0.42H）
+  stage.actorAnchor.position.y = seated ? 0.42 : 0;
   const fire = (key: string, fn: () => void) => {
     if (!s.fired.has(key) && s.t >= (Number(key.split(":")[1]) || 0)) {
       s.fired.add(key);
