@@ -1,6 +1,14 @@
 #!/bin/bash
 # A08 验收视频：走向椅子坐下（3D 场景，离线逐帧确定性回放）
 cd "$(dirname "$0")/.."
+# 代码新鲜度预检：dev server 缓存可能滞后（vite 文件监视在部分环境不可靠）
+MARKER="${MARKER:-walkSpeed: 0.115}"
+served=$(curl -s "http://localhost:5174/src/lab/ui.ts" | grep -c "$MARKER")
+if [ "$served" -eq 0 ]; then
+  echo "⛔ dev server 代码非最新（缺少标记: $MARKER），请重启 vite 后重试"
+  exit 1
+fi
+echo "✓ dev server 代码新鲜度检查通过"
 EDGE="C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 FFMPEG="$(node -p "require('ffmpeg-static')")"
 FPS=24

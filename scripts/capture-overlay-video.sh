@@ -2,6 +2,14 @@
 # 原动画切片叠加组合的确定性视频：stand 基础 + 通道叠加（离线逐帧对照证据）
 # 用法: bash scripts/capture-overlay-video.sh
 cd "$(dirname "$0")/.."
+# 代码新鲜度预检：dev server 缓存可能滞后
+MARKER="${MARKER:-walkSpeed: 0.115}"
+served=$(curl -s "http://localhost:5174/src/lab/ui.ts" | grep -c "$MARKER")
+if [ "$served" -eq 0 ]; then
+  echo "⛔ dev server 代码非最新，请重启 vite 后重试"
+  exit 1
+fi
+echo "✓ dev server 代码新鲜度检查通过"
 EDGE="C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 FFMPEG="$(node -p "require('ffmpeg-static')")"
 FPS=24

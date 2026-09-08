@@ -29,6 +29,10 @@ P1 视频证据管线（`scripts/capture-p1-video.sh`）每帧都要**冷启动�
 
 Lab 资产下拉已提供「拉菲 lafei_8（超分 3x）」条目（`textureScale: 3`，`scaleAtlasText` 自动缩放 atlas 坐标）。
 
+## 持续运行（Spec 15.4 长跑）
+
+30 分钟浸泡测试通过（`scripts/soak-test.mjs`，CDP 每分钟采样）：`?auto=1` 自动行为 + 眨眼持续运行下，**JS 堆内存 26.2MB → 26.2MB（增幅 0.0%，峰值 26.6MB），无泄漏**；活动轨道数稳定（2，叠加时瞬时 3）；眨眼每分钟可见；期间与 A08 视频渲染进程并行抢 CPU，FPS 仍保持 42-69。正式 30 分钟目标机验收（含 GPU/显存采样）在 P4 Electron 环境执行。
+
 ## 边界
 
 - 本基准为 headless 软件渲染（SwiftShader），是**下界**；目标机器（RTX 4060 / 1080p 窗口 / Electron）的正式验收按 Spec 15.4 在 P4 阶段以真实环境测量并记录 CPU/GPU/内存。
