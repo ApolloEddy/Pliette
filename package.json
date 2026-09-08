@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "desktop": "electron desktop/main.js",
-    "desktop:dev": "electron desktop/main.js --dev"
+    "desktop": "electron desktop/main.cjs",
+    "desktop:dev": "electron desktop/main.cjs --dev"
   },
   "dependencies": {
     "ajv": "^8.17.1",

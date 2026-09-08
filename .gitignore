@@ -16,3 +16,4 @@ tools/spine-converter/
 *.local
 npm-debug.log*
 .DS_Store
+config/*.local.json

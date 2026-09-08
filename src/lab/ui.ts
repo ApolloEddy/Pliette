@@ -16,6 +16,8 @@ import { buildChannels, filterAnimation, playSlice, type ChannelDef, type Overla
 import { findGesture, gestureWindowSec } from "../motion/library/gestures.js";
 import { spine36 as spine } from "spine-webgl";
 import { LabRecorder } from "./recorder.js";
+import { createDialogueAdapter } from "../dialogue/adapter.js";
+import { MockTts } from "../speech/adapter.js";
 
 interface AssetEntry extends AssetSourceConfig {
   label: string;
@@ -1056,6 +1058,67 @@ function touchReport(s: TouchState): string {
   return `接触误差（${e.length} 采样，排除首尾）: max=${max.toFixed(4)}H avg=${avg.toFixed(4)}H → ${max <= 0.02 ? "≤0.02H 达标 ✅" : "超标 ❌"}`;
 }
 
+/* ---------------- 对话（Select 层）与语音（P4） ---------------- */
+
+const dialogue = createDialogueAdapter(false);
+const tts = new MockTts();
+let currentPosture: "standing" | "seated" = "standing";
+
+function appendChat(who: "user" | "char", text: string): void {
+  const box = $("chat-history");
+  const line = document.createElement("div");
+  line.className = who;
+  line.textContent = who === "user" ? `你：${text}` : `她：${text}`;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+
+function updateSpeechBubble(): void {
+  const st = tts.state;
+  const bubble = $("speech-bubble");
+  if (st.active) {
+    bubble.hidden = false;
+    ($("speech-text") as HTMLElement).textContent = st.text;
+  } else {
+    bubble.hidden = true;
+  }
+}
+
+function handleChatSend(): void {
+  const input = $("chat-input") as HTMLInputElement;
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = "";
+  appendChat("user", text);
+  const resp = dialogue.respond({
+    text,
+    context: { posture: currentPosture, busyChannels: Object.keys(scheduler.snapshot().ownership) as ChannelId[] },
+  });
+  appendChat("char", resp.reply);
+  log(`对话 → Select(${dialogue.name})：事件 [${resp.events.join(", ")}]`);
+  tts.speak(resp.reply);
+  submitGesture("fresh");
+  for (const e of resp.events) emitEvent(e);
+}
+
+function wireChatPanel(): void {
+  tts.onListen(() => updateSpeechBubble());
+  $("btn-chat-send").addEventListener("click", handleChatSend);
+  $("chat-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleChatSend();
+  });
+  $("btn-chat-cancel").addEventListener("click", () => {
+    tts.cancel();
+    log("语音已打断（A10：取消同时失效旧的说话状态与气泡）");
+  });
+  $("btn-a07").addEventListener("click", () => {
+    setBase("sit", true);
+    currentPosture = "seated";
+    ($("chat-input") as HTMLInputElement).value = "在吗？";
+    handleChatSend();
+  });
+}
+
 /* ---------------- 启动 ---------------- */
 
 /** URL 参数支持确定性截图：?asset=lafei_8&view=flat&anim=walk&probe=6&motion=nod_c1&poseAt=0.28 */
@@ -1234,6 +1297,7 @@ function boot(): void {
   wireStaticControls();
   wireP1Panel();
   wireOverlayPanel();
+  wireChatPanel();
   (window as unknown as { __labDebug: unknown }).__labDebug = {
     flatView,
     actorView: actor.view,
