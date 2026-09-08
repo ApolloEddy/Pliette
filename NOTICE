@@ -1,0 +1,28 @@
+Pliette（纸栖）
+Copyright 2026 ApolloEddy / Pliette contributors
+
+This product includes third-party components with their own licenses:
+
+1. Spine Runtime (vendor/spine-ts/3.6/)
+   Copyright (c) 2013-2026, Esoteric Software LLC
+   Licensed under the Spine Runtimes Software License
+   (https://esotericsoftware.com/spine-runtimes-license).
+   Vendored with minimal ES-module packaging; the official build is
+   unmodified. This component remains subject to its own license and is
+   NOT covered by the Apache License 2.0 applied to the rest of this
+   project. Spine and the Spine logo are registered trademarks of
+   Esoteric Software LLC.
+
+2. Official Spine demo assets (public/examples/)
+   Copyright (c) 2013-2026, Esoteric Software LLC.
+   Spineboy, Goblins and Stretchyman exported assets and their
+   license.txt files are included from the spine-runtimes repository
+   for pipeline-verification purposes.
+
+3. Third-party npm packages (three.js, ajv, vite, vitest, etc.)
+   Remain under their respective licenses (MIT / ISC). See
+   package-lock.json for the full dependency list.
+
+The Apache License 2.0 applies to all original project code and
+documentation authored for Pliette. Third-party game character assets
+are NOT included in this repository and MUST NOT be distributed.
