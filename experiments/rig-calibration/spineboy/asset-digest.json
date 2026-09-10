@@ -1,0 +1,9 @@
+{
+  "name": "spineboy",
+  "files": {
+    "public/examples/spineboy/spineboy-pro.json": "2cdf14329fe673b91db39322263a1cedaad837453a040f4d48003d20b15296f0",
+    "public/examples/spineboy/spineboy-pma.atlas": "3dd7b10a0b6d242f7671eff9877ed1dbc0316ec02a12f92abca09c03d043814c"
+  },
+  "digest": "sha256-94d11fbb0e4432cd27feea1ce617cae94354f4cce0bc75891bd52eef7f2b8a3a",
+  "date": "2026-09-09"
+}

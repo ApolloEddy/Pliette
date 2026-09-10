@@ -1,0 +1,1068 @@
+{
+  "asset": "spineboy",
+  "exportVersion": "3.6.32",
+  "generated": "2026-09-09",
+  "animations": [
+    {
+      "animation": "aim",
+      "duration": 0,
+      "bones": {
+        "front-fist": [
+          "rotate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "crosshair": [
+          "attachment"
+        ],
+        "eye": [
+          "deform"
+        ],
+        "goggles": [
+          "deform"
+        ],
+        "head": [
+          "deform"
+        ],
+        "mouth": [
+          "deform"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "TransformConstraint"
+      ]
+    },
+    {
+      "animation": "death",
+      "duration": 4.933300018310547,
+      "bones": {
+        "head": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "front-upper-arm": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "front-thigh": [
+          "rotate"
+        ],
+        "front-shin": [
+          "rotate"
+        ],
+        "rear-thigh": [
+          "rotate"
+        ],
+        "rear-shin": [
+          "rotate"
+        ],
+        "rear-foot": [
+          "rotate"
+        ],
+        "front-foot": [
+          "rotate"
+        ],
+        "front-foot-tip": [
+          "rotate"
+        ],
+        "back-foot-tip": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "eye": [
+          "attachment"
+        ],
+        "front-fist": [
+          "attachment"
+        ],
+        "mouth": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "hoverboard",
+      "duration": 1,
+      "bones": {
+        "hoverboard-controller": [
+          "translate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "exhaust1": [
+          "scale"
+        ],
+        "exhaust2": [
+          "scale"
+        ],
+        "hoverboard-thruster-front": [
+          "rotate"
+        ],
+        "hoverglow-front": [
+          "scale"
+        ],
+        "hoverboard-thruster-rear": [
+          "rotate"
+        ],
+        "hoverglow-rear": [
+          "scale"
+        ],
+        "front-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "front-fist": [
+          "rotate",
+          "shear",
+          "translate"
+        ],
+        "board-ik": [
+          "translate"
+        ],
+        "front-thigh": [
+          "translate"
+        ],
+        "front-ankle-ik": [
+          "translate"
+        ],
+        "rear-ankle-ik": [
+          "translate"
+        ],
+        "exhaust3": [
+          "scale"
+        ],
+        "side-glow1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "side-glow2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "head": [
+          "rotate",
+          "translate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "hair3": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "hair1": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "exhaust1": [
+          "attachment"
+        ],
+        "exhaust2": [
+          "attachment"
+        ],
+        "exhaust3": [
+          "attachment"
+        ],
+        "front-fist": [
+          "attachment"
+        ],
+        "hoverboard-board": [
+          "attachment",
+          "deform"
+        ],
+        "hoverboard-thruster-front": [
+          "attachment"
+        ],
+        "hoverboard-thruster-rear": [
+          "attachment"
+        ],
+        "hoverglow-front": [
+          "attachment"
+        ],
+        "hoverglow-rear": [
+          "attachment"
+        ],
+        "side-glow1": [
+          "attachment"
+        ],
+        "side-glow2": [
+          "attachment"
+        ],
+        "side-glow3": [
+          "attachment"
+        ],
+        "eye": [
+          "deform"
+        ],
+        "front-foot": [
+          "deform"
+        ],
+        "front-shin": [
+          "deform"
+        ],
+        "goggles": [
+          "deform"
+        ],
+        "head": [
+          "deform"
+        ],
+        "mouth": [
+          "deform"
+        ],
+        "rear-foot": [
+          "deform"
+        ],
+        "torso": [
+          "deform"
+        ]
+      },
+      "global": [
+        "TransformConstraint"
+      ]
+    },
+    {
+      "animation": "idle",
+      "duration": 1.666700005531311,
+      "bones": {
+        "front-foot-ik": [
+          "translate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "rear-foot-ik": [
+          "translate"
+        ],
+        "front-upper-arm": [
+          "rotate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate"
+        ],
+        "head": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate",
+          "scale"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "front-fist": [
+          "attachment"
+        ]
+      },
+      "global": []
+    },
+    {
+      "animation": "idle-turn",
+      "duration": 0.26669999957084656,
+      "bones": {
+        "front-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "rear-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "front-fist": [
+          "rotate",
+          "scale"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "torso": [
+          "rotate",
+          "scale"
+        ],
+        "head": [
+          "rotate",
+          "scale"
+        ],
+        "rear-foot-ik": [
+          "translate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "front-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "hair3": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "hair1": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ],
+        "front-thigh": [
+          "translate"
+        ],
+        "rear-thigh": [
+          "translate"
+        ]
+      },
+      "slots": {
+        "front-fist": [
+          "attachment"
+        ],
+        "torso": [
+          "deform"
+        ]
+      },
+      "global": []
+    },
+    {
+      "animation": "jump",
+      "duration": 1.333299994468689,
+      "bones": {
+        "front-thigh": [
+          "rotate",
+          "translate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "rear-thigh": [
+          "rotate",
+          "translate"
+        ],
+        "rear-shin": [
+          "rotate"
+        ],
+        "front-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "head": [
+          "rotate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "front-shin": [
+          "rotate"
+        ],
+        "front-foot": [
+          "rotate"
+        ],
+        "rear-foot": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "back-foot-tip": [
+          "rotate"
+        ],
+        "front-foot-tip": [
+          "rotate"
+        ],
+        "hair3": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ],
+        "hair1": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "front-fist": [
+          "attachment"
+        ],
+        "mouth": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "portal",
+      "duration": 3.5999999046325684,
+      "bones": {
+        "portal-root": [
+          "scale",
+          "translate"
+        ],
+        "portal-streaks1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "portal-streaks2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "portal-shade": [
+          "scale",
+          "translate"
+        ],
+        "portal": [
+          "rotate"
+        ],
+        "clipping": [
+          "scale",
+          "translate"
+        ],
+        "hip": [
+          "rotate",
+          "translate"
+        ],
+        "rear-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "front-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "head": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate"
+        ],
+        "back-foot-tip": [
+          "rotate"
+        ],
+        "front-upper-arm": [
+          "rotate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "front-thigh": [
+          "translate"
+        ],
+        "front-foot-tip": [
+          "rotate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate",
+          "scale"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "hair3": [
+          "rotate"
+        ],
+        "hair1": [
+          "rotate"
+        ],
+        "flare1": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare2": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare3": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare4": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare5": [
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "flare7": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare8": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare9": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "flare10": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ]
+      },
+      "slots": {
+        "clipping": [
+          "attachment"
+        ],
+        "front-fist": [
+          "attachment"
+        ],
+        "portal-bg": [
+          "attachment"
+        ],
+        "portal-flare1": [
+          "attachment"
+        ],
+        "portal-flare2": [
+          "attachment"
+        ],
+        "portal-flare3": [
+          "attachment"
+        ],
+        "portal-flare4": [
+          "attachment"
+        ],
+        "portal-flare5": [
+          "attachment"
+        ],
+        "portal-flare6": [
+          "attachment"
+        ],
+        "portal-flare7": [
+          "attachment"
+        ],
+        "portal-flare8": [
+          "attachment"
+        ],
+        "portal-flare9": [
+          "attachment"
+        ],
+        "portal-flare10": [
+          "attachment"
+        ],
+        "portal-shade": [
+          "attachment"
+        ],
+        "portal-streaks1": [
+          "attachment"
+        ],
+        "portsl-streaks2": [
+          "attachment"
+        ],
+        "torso": [
+          "deform"
+        ]
+      },
+      "global": []
+    },
+    {
+      "animation": "run",
+      "duration": 0.800000011920929,
+      "bones": {
+        "front-thigh": [
+          "rotate",
+          "translate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "rear-thigh": [
+          "rotate",
+          "translate"
+        ],
+        "rear-shin": [
+          "rotate"
+        ],
+        "front-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "head": [
+          "rotate"
+        ],
+        "front-shin": [
+          "rotate"
+        ],
+        "front-foot": [
+          "rotate"
+        ],
+        "rear-foot": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "front-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "front-ankle-ik": [
+          "translate"
+        ],
+        "rear-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "rear-ankle-ik": [
+          "translate"
+        ],
+        "back-foot-tip": [
+          "rotate"
+        ],
+        "front-foot-tip": [
+          "rotate"
+        ],
+        "hair1": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ],
+        "hair3": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "dust": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "torso2": [
+          "rotate"
+        ],
+        "torso3": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "dust": [
+          "attachment",
+          "color"
+        ],
+        "eye": [
+          "deform"
+        ],
+        "goggles": [
+          "deform"
+        ],
+        "head": [
+          "deform"
+        ],
+        "mouth": [
+          "deform"
+        ],
+        "torso": [
+          "deform"
+        ]
+      },
+      "global": [
+        "event"
+      ]
+    },
+    {
+      "animation": "run-to-idle",
+      "duration": 0.26669999957084656,
+      "bones": {
+        "front-foot-ik": [
+          "translate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "rear-foot-ik": [
+          "translate"
+        ],
+        "front-upper-arm": [
+          "rotate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate"
+        ],
+        "head": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate",
+          "scale"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "torso": [
+          "rotate",
+          "scale"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "hair3": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "hair1": [
+          "rotate"
+        ],
+        "hair2": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "front-fist": [
+          "attachment"
+        ]
+      },
+      "global": []
+    },
+    {
+      "animation": "shoot",
+      "duration": 0.6333000063896179,
+      "bones": {
+        "gun": [
+          "rotate"
+        ],
+        "muzzle": [
+          "translate"
+        ],
+        "rear-upper-arm": [
+          "translate"
+        ],
+        "rear-bracer": [
+          "translate"
+        ],
+        "gun-tip": [
+          "scale",
+          "translate"
+        ],
+        "muzzle-ring": [
+          "scale",
+          "translate"
+        ],
+        "muzzle-ring2": [
+          "scale",
+          "translate"
+        ],
+        "muzzle-ring3": [
+          "scale",
+          "translate"
+        ],
+        "muzzle-ring4": [
+          "translate"
+        ]
+      },
+      "slots": {
+        "muzzle": [
+          "attachment",
+          "color"
+        ],
+        "muzzle-glow": [
+          "attachment",
+          "color"
+        ],
+        "muzzle-ring": [
+          "attachment",
+          "color"
+        ],
+        "muzzle-ring2": [
+          "attachment",
+          "color"
+        ],
+        "muzzle-ring3": [
+          "attachment",
+          "color"
+        ],
+        "muzzle-ring4": [
+          "attachment",
+          "color"
+        ]
+      },
+      "global": []
+    },
+    {
+      "animation": "walk",
+      "duration": 0.8666999936103821,
+      "bones": {
+        "rear-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "front-foot-ik": [
+          "rotate",
+          "translate"
+        ],
+        "hip": [
+          "translate"
+        ],
+        "front-foot-tip": [
+          "rotate"
+        ],
+        "torso": [
+          "rotate"
+        ],
+        "neck": [
+          "rotate"
+        ],
+        "head": [
+          "rotate"
+        ],
+        "back-foot-tip": [
+          "rotate"
+        ],
+        "front-thigh": [
+          "rotate",
+          "translate"
+        ],
+        "rear-thigh": [
+          "rotate",
+          "translate"
+        ],
+        "torso2": [
+          "rotate"
+        ],
+        "torso3": [
+          "rotate"
+        ],
+        "front-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "front-bracer": [
+          "rotate"
+        ],
+        "front-fist": [
+          "rotate"
+        ],
+        "rear-upper-arm": [
+          "rotate",
+          "translate"
+        ],
+        "hair2": [
+          "rotate"
+        ],
+        "hair4": [
+          "rotate"
+        ],
+        "rear-bracer": [
+          "rotate"
+        ],
+        "gun": [
+          "rotate"
+        ],
+        "rear-shin": [
+          "rotate"
+        ],
+        "rear-foot": [
+          "rotate"
+        ],
+        "aim-constraint-target": [
+          "rotate"
+        ],
+        "front-shin": [
+          "rotate"
+        ],
+        "front-foot": [
+          "rotate"
+        ]
+      },
+      "slots": {
+        "eye": [
+          "deform"
+        ],
+        "goggles": [
+          "deform"
+        ],
+        "head": [
+          "deform"
+        ],
+        "mouth": [
+          "deform"
+        ],
+        "torso": [
+          "deform"
+        ]
+      },
+      "global": [
+        "event"
+      ]
+    }
+  ],
+  "subtrees": {}
+}

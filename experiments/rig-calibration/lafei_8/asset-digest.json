@@ -1,0 +1,11 @@
+{
+  "name": "lafei_8",
+  "files": {
+    "public/assets-local/lafei_8/lafei_8.json": "13e5270120c81d64c11c1a28786b92f24c4ea1a3da8c1321ce52836808313abc",
+    "public/assets-local/lafei_8/lafei_8.atlas.txt": "1a65b1d05f2e9acf6ed290bcb9eabcb67d461307b1a7052f7fa2f025b5c66cbb",
+    "public/assets-local/lafei_8/lafei_8.png": "5db949c0815714e4242bc233bb5608807a099d66a7b1fd10bce937e9118a650f",
+    "characters/lafei_8.character.json": "34d4165136c32031abff79f53e15812ecb1c2b7c2487e7e7516f55ff76f0ad13"
+  },
+  "digest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+  "date": "2026-09-09"
+}

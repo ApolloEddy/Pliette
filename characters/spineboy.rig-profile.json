@@ -1,0 +1,194 @@
+{
+  "identity": {
+    "modelId": "spineboy",
+    "profileId": "spineboy.front.cp1",
+    "profileRevision": 1,
+    "assetDigest": "sha256-94d11fbb0e4432cd27feea1ce617cae94354f4cce0bc75891bd52eef7f2b8a3a",
+    "runtimeRef": {
+      "exportVersion": "3.6.32",
+      "runtimeVersion": "3.6.53",
+      "runtimeSource": "vendor/spine-ts/3.6（spine-runtimes tag 3.6.53，ESM 包装，官方内容零修改）",
+      "adapterVersion": "control-profile/1.0"
+    },
+    "viewId": "front",
+    "skinId": "default",
+    "referencePose": {
+      "poseId": "setup",
+      "description": "Spine setup pose。曲线值语义锚定 setup（3.6 RotateTimeline 为 setup 相对偏移，tests/compiler.test.ts 实证）。",
+      "digest": "fnv1a64-e5149c7b3e6584bd"
+    },
+    "heightUnits": null,
+    "coordinateConvention": {
+      "angle": "度；相对参考姿态 setup 的偏移角",
+      "translation": "标定身高 H 的比例；本档案 H 未标定（heightUnits=null），开放集合中无位移控制，不构成阻塞",
+      "leftRight": "侧面朝向角色（面朝屏幕右）：手臂分前臂（front，屏幕右）/后臂（rear，屏幕左），与拉菲的左右臂命名体系不同；禁止把 front/rear 当作角色左右"
+    }
+  },
+  "controls": [
+    {
+      "controlId": "head.tilt",
+      "semanticPart": "head（头部主骨；neck 子节点，torso3 链内——与拉菲的兄弟拓扑相反）",
+      "kind": "localFk",
+      "channel": "head",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "抬头/后仰：+40 面部朝上（目视复核连贯）",
+        "negativeLooksLike": "低头/前倾：−40 面部朝下",
+        "default": 0
+      },
+      "binding": { "bone": "head", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "head.main", "property": "rotate" },
+      "domain": { "min": -60, "max": 60, "verifiedMin": -40, "verifiedMax": 40 },
+      "rate": { "maxPerSec": 300 },
+      "ownership": {
+        "writes": ["bone:head/rotate"],
+        "dependsOn": ["ancestor:neck", "ancestor:torso3（躯干旋转会带动头部——子级拓扑；与拉菲档案相反）"]
+      },
+      "behavior": "调大=抬头、调小=低头、归零=setup 视线方向",
+      "conditions": ["躯干（hip）旋转时头部随动——自然联动，无需（也不应）反向补偿"],
+      "evidenceIds": ["ev-sb-probe-20260910", "ev-sb-rate-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "torso.sway",
+      "semanticPart": "hip（髋部主骨；全身上身链的根，setup rotation=0）",
+      "kind": "localFk",
+      "channel": "torso",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "上身后仰（以髋为轴整体旋转，头/臂随动）：+15 连贯",
+        "negativeLooksLike": "上身前倾",
+        "default": 0
+      },
+      "binding": { "bone": "hip", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "body.root", "property": "rotate" },
+      "domain": { "min": -20, "max": 20, "verifiedMin": -15, "verifiedMax": 15 },
+      "rate": { "maxPerSec": 150 },
+      "ownership": {
+        "writes": ["bone:hip/rotate"],
+        "dependsOn": [
+          "descendant:torso/torso2/torso3/head/双臂（全部随动——探针画面实证）",
+          "ik:front-foot-ik/rear-foot-ik（双脚 IK 目标在 root 下，脚保持原地）",
+          "ancestor:root"
+        ]
+      },
+      "behavior": "调大=后仰、调小=前倾；头臂全部自然跟随（与拉菲需要显式组合头曲线完全不同）",
+      "conditions": ["无位移控制开放（H 未标定）；走/跑由原动画切片提供"],
+      "evidenceIds": ["ev-sb-probe-20260910", "ev-sb-rate-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "arm.front.raise",
+      "semanticPart": "front-upper-arm（前臂上段；屏幕右侧的手臂，持枪侧）",
+      "kind": "localFk",
+      "channel": "rightArm",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "手臂上举：+90 手臂伸直上举（目视连贯）",
+        "negativeLooksLike": "手臂下放：−60 下段摆动",
+        "default": 0
+      },
+      "binding": { "bone": "front-upper-arm", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "arm.upper.right", "property": "rotate" },
+      "domain": { "min": -60, "max": 90, "verifiedMin": -30, "verifiedMax": 60 },
+      "rate": { "maxPerSec": 500 },
+      "ownership": {
+        "writes": ["bone:front-upper-arm/rotate"],
+        "dependsOn": ["ancestor:torso3", "descendant:front-bracer/front-fist（前臂段与拳随动）", "rear-upper-arm 独立（无联动——双臂分开标定）"]
+      },
+      "behavior": "调大=前臂上举；rear-upper-arm（后臂）未开放——需要双手动作时先在档案中补充标定",
+      "conditions": ["side-view 命名体系：front/rear ≠ 角色左右；枪（gun 附件）挂 rear-bracer，前臂动作不带动枪"],
+      "evidenceIds": ["ev-sb-probe-20260910", "ev-sb-rate-20260910"],
+      "status": "verified"
+    }
+  ],
+  "rules": [
+    {
+      "ruleId": "sb-view-front-only",
+      "type": "requiresVariant",
+      "target": "*",
+      "condition": { "view": "front" },
+      "params": { "allowedViews": ["front"] },
+      "severity": "error",
+      "explanation": "side-view 素材无独立背面视图；镜像不等于背面（Spec 3.5）。",
+      "evidenceRefs": ["ev-sb-static-20260910"],
+      "version": 1
+    },
+    {
+      "ruleId": "sb-rate-head",
+      "type": "rateLimit",
+      "target": "head.tilt",
+      "condition": {},
+      "params": { "maxPerSec": 300 },
+      "severity": "error",
+      "explanation": "原动画峰值 death=975°/s、portal=492°/s 为高强度段；在线取稳态上限 300°/s。",
+      "evidenceRefs": ["ev-sb-rate-20260910"],
+      "version": 1
+    },
+    {
+      "ruleId": "sb-range-head",
+      "type": "range",
+      "target": "head.tilt",
+      "condition": {},
+      "params": { "min": -60, "max": 60, "verifiedMin": -40, "verifiedMax": 40 },
+      "severity": "error",
+      "explanation": "超出 allowed 或 verified 一律拒绝（Spec 9.4）。",
+      "evidenceRefs": ["ev-sb-probe-20260910"],
+      "version": 1
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "ev-sb-static-20260910",
+      "kind": "static",
+      "input": "官方 spine-ts 3.6.53 无头加载 spineboy-pro（JSON+atlas），全量结构提取",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "hip→torso→torso2→torso3→{neck→head；front-upper-arm→front-bracer→front-fist；rear-upper-arm→rear-bracer→gun}；腿 IK：front/rear-foot-ik（root 子）；11 段动画；assetDigest sha256-94d11fbb…",
+      "mediaPath": "experiments/rig-calibration/spineboy/write-coverage-spineboy-pro.json",
+      "observation": "与拉菲的三项结构差异：头在躯干链内（子级 vs 兄弟）、双段臂 front/rear 命名（vs 左右）、腿 IK 目标显式（vs 拉菲同名机制）；外加 hoverboard/portal 等部件",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "结构清单；类型=官方示例资产（Spec 5.3：机制验证，非产品角色）",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-sb-probe-20260910",
+      "kind": "probe",
+      "input": "3 控制 ± 梯度探针（隔离实例、setup 参考、18 步）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "head.tilt +40=抬头连贯；torso.sway +15=以髋为轴后仰且头部随动、双脚原地；arm.front.raise +90=手臂伸直上举",
+      "mediaPath": "experiments/media/rig-calibration/spineboy/（18 帧 PNG，本地）",
+      "observation": "头随躯干（子级拓扑）与拉菲（兄弟拓扑）形成画面级对照；front/rear 臂独立无联动",
+      "reviewer": "dev-agent (GLM-5.3)，逐帧目视复核 3 张关键帧",
+      "scope": "front、setup 参考、隔离实例；类型=官方示例（机制验证）",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-sb-rate-20260910",
+      "kind": "probe",
+      "input": "原动画逐帧（dt=1/30s）角速度峰值采样（11 段动画 × head/hip/torso2/front-upper-arm）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "baseAnim": "全部 11 段",
+      "runtimeVersion": "3.6.53",
+      "samples": "head 峰 975°/s（death）、torso2 84°/s（walk）、hip 682°/s（portal）、front-upper-arm 3608°/s（portal）/2256°/s（idle-turn）",
+      "mediaPath": "experiments/rig-calibration/spineboy/rate-samples.json",
+      "observation": "portal/death 属高强度特殊段；在线速率上限取稳态保守值（head 300 / torso 150 / arm 500）",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "3.6.53 采样语义",
+      "status": "verified",
+      "date": "2026-09-10"
+    }
+  ]
+}

@@ -1,0 +1,545 @@
+{
+  "date": "2026-09-09",
+  "dt": 0.03333333333333333,
+  "note": "原动画逐帧采样的骨骼局部角速度峰值（动画师原生节奏）",
+  "rates": {
+    "arm.right.raise": [
+      {
+        "anim": "attack",
+        "peakPerSec": 694,
+        "atSec": 0.27
+      },
+      {
+        "anim": "stand",
+        "peakPerSec": 541,
+        "atSec": 15.33
+      },
+      {
+        "anim": "stand2",
+        "peakPerSec": 541,
+        "atSec": 15.33
+      },
+      {
+        "anim": "attack_left",
+        "peakPerSec": 474,
+        "atSec": 0.27
+      },
+      {
+        "anim": "motou",
+        "peakPerSec": 276,
+        "atSec": 1.73
+      },
+      {
+        "anim": "victory",
+        "peakPerSec": 276,
+        "atSec": 1.73
+      },
+      {
+        "anim": "touch",
+        "peakPerSec": 144,
+        "atSec": 0.37
+      },
+      {
+        "anim": "move",
+        "peakPerSec": 124,
+        "atSec": 3.07
+      },
+      {
+        "anim": "skill",
+        "peakPerSec": 124,
+        "atSec": 3.07
+      },
+      {
+        "anim": "dead",
+        "peakPerSec": 90,
+        "atSec": 0.67
+      },
+      {
+        "anim": "tuozhuai",
+        "peakPerSec": 44,
+        "atSec": 0.2
+      },
+      {
+        "anim": "tuozhuai2",
+        "peakPerSec": 44,
+        "atSec": 0.2
+      },
+      {
+        "anim": "dance",
+        "peakPerSec": 39,
+        "atSec": 0.47
+      },
+      {
+        "anim": "yun",
+        "peakPerSec": 34,
+        "atSec": 1.6
+      },
+      {
+        "anim": "walk",
+        "peakPerSec": 21,
+        "atSec": 0.27
+      },
+      {
+        "anim": "normal",
+        "peakPerSec": 10,
+        "atSec": 1.23
+      },
+      {
+        "anim": "sit",
+        "peakPerSec": 9,
+        "atSec": 0.97
+      },
+      {
+        "anim": "sleep",
+        "peakPerSec": 4,
+        "atSec": 0.83
+      },
+      {
+        "anim": "move_left",
+        "peakPerSec": 1,
+        "atSec": 0.63
+      }
+    ],
+    "arm.right.forearm": [
+      {
+        "anim": "motou",
+        "peakPerSec": 1074,
+        "atSec": 0.63
+      },
+      {
+        "anim": "victory",
+        "peakPerSec": 1074,
+        "atSec": 0.63
+      },
+      {
+        "anim": "attack_left",
+        "peakPerSec": 524,
+        "atSec": 0.27
+      },
+      {
+        "anim": "stand",
+        "peakPerSec": 508,
+        "atSec": 15.33
+      },
+      {
+        "anim": "stand2",
+        "peakPerSec": 508,
+        "atSec": 15.33
+      },
+      {
+        "anim": "attack",
+        "peakPerSec": 432,
+        "atSec": 0.27
+      },
+      {
+        "anim": "dance",
+        "peakPerSec": 250,
+        "atSec": 0.83
+      },
+      {
+        "anim": "tuozhuai",
+        "peakPerSec": 171,
+        "atSec": 0.2
+      },
+      {
+        "anim": "tuozhuai2",
+        "peakPerSec": 171,
+        "atSec": 0.2
+      },
+      {
+        "anim": "touch",
+        "peakPerSec": 144,
+        "atSec": 0.37
+      },
+      {
+        "anim": "dead",
+        "peakPerSec": 49,
+        "atSec": 0.17
+      },
+      {
+        "anim": "sit",
+        "peakPerSec": 37,
+        "atSec": 1
+      },
+      {
+        "anim": "move_left",
+        "peakPerSec": 24,
+        "atSec": 0.7
+      },
+      {
+        "anim": "walk",
+        "peakPerSec": 14,
+        "atSec": 0.27
+      },
+      {
+        "anim": "normal",
+        "peakPerSec": 10,
+        "atSec": 1.47
+      },
+      {
+        "anim": "move",
+        "peakPerSec": 8,
+        "atSec": 0.6
+      },
+      {
+        "anim": "skill",
+        "peakPerSec": 8,
+        "atSec": 0.6
+      },
+      {
+        "anim": "sleep",
+        "peakPerSec": 4,
+        "atSec": 0.83
+      }
+    ],
+    "arm.left.raise": [
+      {
+        "anim": "motou",
+        "peakPerSec": 397,
+        "atSec": 3.4
+      },
+      {
+        "anim": "victory",
+        "peakPerSec": 397,
+        "atSec": 3.4
+      },
+      {
+        "anim": "stand",
+        "peakPerSec": 385,
+        "atSec": 13
+      },
+      {
+        "anim": "stand2",
+        "peakPerSec": 385,
+        "atSec": 13
+      },
+      {
+        "anim": "dead",
+        "peakPerSec": 340,
+        "atSec": 0.73
+      },
+      {
+        "anim": "attack_left",
+        "peakPerSec": 118,
+        "atSec": 0.1
+      },
+      {
+        "anim": "touch",
+        "peakPerSec": 107,
+        "atSec": 0.37
+      },
+      {
+        "anim": "tuozhuai",
+        "peakPerSec": 86,
+        "atSec": 0.2
+      },
+      {
+        "anim": "tuozhuai2",
+        "peakPerSec": 86,
+        "atSec": 0.2
+      },
+      {
+        "anim": "attack",
+        "peakPerSec": 84,
+        "atSec": 0.1
+      },
+      {
+        "anim": "move",
+        "peakPerSec": 74,
+        "atSec": 3
+      },
+      {
+        "anim": "skill",
+        "peakPerSec": 74,
+        "atSec": 3
+      },
+      {
+        "anim": "yun",
+        "peakPerSec": 46,
+        "atSec": 1.53
+      },
+      {
+        "anim": "walk",
+        "peakPerSec": 42,
+        "atSec": 0.27
+      },
+      {
+        "anim": "dance",
+        "peakPerSec": 41,
+        "atSec": 0.47
+      },
+      {
+        "anim": "normal",
+        "peakPerSec": 6,
+        "atSec": 1.27
+      },
+      {
+        "anim": "sit",
+        "peakPerSec": 6,
+        "atSec": 1
+      },
+      {
+        "anim": "move_left",
+        "peakPerSec": 2,
+        "atSec": 0.67
+      },
+      {
+        "anim": "sleep",
+        "peakPerSec": 1,
+        "atSec": 1.2
+      }
+    ],
+    "arm.left.forearm": [
+      {
+        "anim": "stand",
+        "peakPerSec": 10546,
+        "atSec": 15.3
+      },
+      {
+        "anim": "stand2",
+        "peakPerSec": 10546,
+        "atSec": 15.3
+      },
+      {
+        "anim": "motou",
+        "peakPerSec": 973,
+        "atSec": 5.77
+      },
+      {
+        "anim": "victory",
+        "peakPerSec": 973,
+        "atSec": 5.77
+      },
+      {
+        "anim": "dance",
+        "peakPerSec": 250,
+        "atSec": 0.83
+      },
+      {
+        "anim": "move",
+        "peakPerSec": 163,
+        "atSec": 3
+      },
+      {
+        "anim": "skill",
+        "peakPerSec": 163,
+        "atSec": 3
+      },
+      {
+        "anim": "walk",
+        "peakPerSec": 138,
+        "atSec": 0.27
+      },
+      {
+        "anim": "tuozhuai",
+        "peakPerSec": 133,
+        "atSec": 0.2
+      },
+      {
+        "anim": "tuozhuai2",
+        "peakPerSec": 133,
+        "atSec": 0.2
+      },
+      {
+        "anim": "touch",
+        "peakPerSec": 107,
+        "atSec": 0.37
+      },
+      {
+        "anim": "move_left",
+        "peakPerSec": 35,
+        "atSec": 0.83
+      },
+      {
+        "anim": "sit",
+        "peakPerSec": 35,
+        "atSec": 1.03
+      },
+      {
+        "anim": "dead",
+        "peakPerSec": 25,
+        "atSec": 0.03
+      },
+      {
+        "anim": "attack",
+        "peakPerSec": 20,
+        "atSec": 0.37
+      },
+      {
+        "anim": "normal",
+        "peakPerSec": 6,
+        "atSec": 1.87
+      },
+      {
+        "anim": "attack_left",
+        "peakPerSec": 4,
+        "atSec": 0.37
+      },
+      {
+        "anim": "sleep",
+        "peakPerSec": 4,
+        "atSec": 0.83
+      }
+    ],
+    "head.nod": [
+      {
+        "anim": "motou",
+        "peakPerSec": 206,
+        "atSec": 4.17
+      },
+      {
+        "anim": "victory",
+        "peakPerSec": 206,
+        "atSec": 4.17
+      },
+      {
+        "anim": "stand",
+        "peakPerSec": 191,
+        "atSec": 15.33
+      },
+      {
+        "anim": "stand2",
+        "peakPerSec": 191,
+        "atSec": 15.33
+      },
+      {
+        "anim": "tuozhuai",
+        "peakPerSec": 109,
+        "atSec": 0.2
+      },
+      {
+        "anim": "tuozhuai2",
+        "peakPerSec": 109,
+        "atSec": 0.2
+      },
+      {
+        "anim": "attack",
+        "peakPerSec": 95,
+        "atSec": 0.3
+      },
+      {
+        "anim": "attack_left",
+        "peakPerSec": 65,
+        "atSec": 0.3
+      },
+      {
+        "anim": "dance",
+        "peakPerSec": 65,
+        "atSec": 0.27
+      },
+      {
+        "anim": "dead",
+        "peakPerSec": 51,
+        "atSec": 0.7
+      },
+      {
+        "anim": "yun",
+        "peakPerSec": 49,
+        "atSec": 0.5
+      },
+      {
+        "anim": "sit",
+        "peakPerSec": 17,
+        "atSec": 1
+      },
+      {
+        "anim": "walk",
+        "peakPerSec": 10,
+        "atSec": 0.27
+      },
+      {
+        "anim": "wash",
+        "peakPerSec": 7,
+        "atSec": 0.57
+      },
+      {
+        "anim": "sleep",
+        "peakPerSec": 6,
+        "atSec": 0.87
+      },
+      {
+        "anim": "move_left",
+        "peakPerSec": 4,
+        "atSec": 0.63
+      },
+      {
+        "anim": "move",
+        "peakPerSec": 3,
+        "atSec": 0.63
+      },
+      {
+        "anim": "skill",
+        "peakPerSec": 3,
+        "atSec": 0.63
+      },
+      {
+        "anim": "normal",
+        "peakPerSec": 2,
+        "atSec": 1.3
+      }
+    ],
+    "torso.lean": [
+      {
+        "anim": "attack",
+        "peakPerSec": 103,
+        "atSec": 0.3
+      },
+      {
+        "anim": "stand",
+        "peakPerSec": 68,
+        "atSec": 7.67
+      },
+      {
+        "anim": "stand2",
+        "peakPerSec": 68,
+        "atSec": 7.67
+      },
+      {
+        "anim": "tuozhuai",
+        "peakPerSec": 62,
+        "atSec": 0.2
+      },
+      {
+        "anim": "tuozhuai2",
+        "peakPerSec": 62,
+        "atSec": 0.2
+      },
+      {
+        "anim": "motou",
+        "peakPerSec": 61,
+        "atSec": 4.17
+      },
+      {
+        "anim": "victory",
+        "peakPerSec": 61,
+        "atSec": 4.17
+      },
+      {
+        "anim": "dance",
+        "peakPerSec": 46,
+        "atSec": 0.27
+      },
+      {
+        "anim": "attack_left",
+        "peakPerSec": 41,
+        "atSec": 0.3
+      },
+      {
+        "anim": "yun",
+        "peakPerSec": 26,
+        "atSec": 1.53
+      },
+      {
+        "anim": "move_left",
+        "peakPerSec": 2,
+        "atSec": 0.67
+      },
+      {
+        "anim": "sleep",
+        "peakPerSec": 1,
+        "atSec": 0.83
+      }
+    ],
+    "torso.bob": []
+  }
+}

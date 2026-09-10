@@ -3,6 +3,30 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased] - 2026-09-10
+
+动作指导书与受限在线参数生成（Spec：`docs/Pliette_Spine_Motion_Guide_Development_Spec_v1.0.md`）。
+
+### 新增
+
+- **ControlProfile 控制档案**（`src/rig/controlProfile.ts`）：档案身份（modelId/profileRevision/assetDigest/参考姿态 digest/坐标约定）、控制定义（语义/输入/绑定/mapsTo 唯一映射/域/速率/写集依赖/行为/证据）、有限规则类型、确定性摘要（canonical JSON + FNV-1a64）；严格解析（未知字段拒绝、写集冲突拒绝、verified 必须引用证据）
+- **拉菲档案 v2**（`characters/lafei_8.rig-profile.json`，8 开放控制/6 规则/12 证据）：89 步 ±探针、原动画速率挖掘、眼睛配对图鉴、头身分离反例全部出证；屏幕左右归属实测（hand_R=屏幕右臂、hand_L=屏幕左臂、左右非对称禁止镜像）
+- **组合控制**：`face.eyes.pair` 枚举映射表（open/blink/squeeze/dizzy/sleepy/wink），左右眼成对切换，单眼写入被 requiresCapability 规则拒绝
+- **MotionDraft V1.1 协议**（`src/motion/author/`）：请求包（availableControls/mandatoryRules 依赖闭包/guideExcerpts/预算）+ 响应判别联合（motion/unsupported/needs_context，身份回显校验，未知字段拒绝）；controlId → 内部 role+property 唯一映射与 composite 展开；smooth=固定有界缓动映射
+- **验证管线**（Spec 9.1 七步）：结构/身份 → 控制能力 → 数值/时间线/预算/缓动 → 规则解释器（range/rateLimit/requiresVariant/exclusiveWrite/requiresCapability/contactDependency 六种确定性解释器）→ 官方编译 → 隔离实例轨迹采样（真实合成值+速率）；Spec 10.2 十四个最低错误码全量落地
+- **AuthorBroker**：每角色单飞、截止从提交计时、离散状态版本陈旧性检查（连续状态不判过时）、requestId 幂等（有界备忘录）、原子"检查+取权"提交、局部取消与播放释放；浸泡发现的无界 Set 泄漏已修复（FIFO 上限 8192）
+- **Author 客户端**：LlmAuthorClient（OpenAI 兼容，deadline AbortController/32KiB 上限/截断即失败/不落密钥）+ MockAuthorClient（确定性域内模板，管线工程验收）+ 候选文件导入
+- **Lab Author 面板**：请求上下文查看、Mock 在线生成（校验→提交→播放全链路可视化）、候选导入验证播放
+- **第二骨架 spineboy**（官方示例，机制验证）：静态提取+3 控制探针+速率挖掘出证；档案/绑定注册/指导书；跨角色隔离测试（controlId 集合不相交、同意图参数不同、头身拓扑世界坐标机器证据：spineboy 头随躯干 vs 拉菲兄弟不随动）
+- **Guide Builder**（`scripts/build-guides.mts`）：单一档案源生成 `docs/motion-guides/{common,lafei_8,spineboy}.md`（GENERATED 标记，人工编辑不改程序边界）
+- **测试**：39 项新增（档案 13/作者管线 20/跨角色 6），全量 94/94
+- **录像**：`experiments/media/motion-guide/`（拉菲/spineboy 探针、在线生成 Mock 流程演示；本地不入库）
+
+### 未完成（如实声明）
+
+- **LLM 实测未做**：无 API 密钥（`config/llm.local.json` 待配置）。Spec 11.3 指标与 11.4 在线开放门槛未判定，在线 Author 不应对外启用；A/B/C run1 为管线工程验收（Mock），不构成指导书收益证据
+- 口型、背面视图、接触类（托腮等）、独立手指：能力缺失，如实 unsupported
+
 ## [0.1.0] - 2026-09-08
 
 首个公开版本。P0～P3 阶段验收满足，P4 部分落地。

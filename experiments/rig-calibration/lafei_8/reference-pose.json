@@ -1,0 +1,119 @@
+{
+  "date": "2026-09-09",
+  "setupPoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+  "runtimeVersion": "3.6.52",
+  "keyBones": [
+    {
+      "name": "root",
+      "parent": null,
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "length": 0
+    },
+    {
+      "name": "bone",
+      "parent": "root",
+      "x": 17.65,
+      "y": 77.06,
+      "rotation": 0,
+      "length": 0
+    },
+    {
+      "name": "body",
+      "parent": "bone",
+      "x": -17.94,
+      "y": 49.14,
+      "rotation": -90,
+      "length": 37.83
+    },
+    {
+      "name": "face",
+      "parent": "bone",
+      "x": -17.94,
+      "y": 48.75,
+      "rotation": 90,
+      "length": 30.42
+    },
+    {
+      "name": "hand_L",
+      "parent": "body",
+      "x": 8.41,
+      "y": -10.24,
+      "rotation": -34.38,
+      "length": 24.79
+    },
+    {
+      "name": "hand_L3",
+      "parent": "hand_L",
+      "x": 29.27,
+      "y": 0.45222,
+      "rotation": 11.06,
+      "length": 22.67
+    },
+    {
+      "name": "hand_R",
+      "parent": "body",
+      "x": 9.48,
+      "y": 10.94,
+      "rotation": 27.68,
+      "length": 24.73
+    },
+    {
+      "name": "hand_R3",
+      "parent": "hand_R",
+      "x": 30.82,
+      "y": -0.28589,
+      "rotation": -1.99,
+      "length": 24.81
+    },
+    {
+      "name": "leg_L",
+      "parent": "root",
+      "x": -12.07,
+      "y": 1.06,
+      "rotation": 0,
+      "length": 0
+    },
+    {
+      "name": "leg_L1",
+      "parent": "body",
+      "x": 57.26,
+      "y": -18.02,
+      "rotation": 4.72,
+      "length": 30.73
+    },
+    {
+      "name": "leg_L3",
+      "parent": "leg_L1",
+      "x": 36.33,
+      "y": 0.10144,
+      "rotation": 0.93933,
+      "length": 31.34
+    },
+    {
+      "name": "leg_R",
+      "parent": "root",
+      "x": 12.65,
+      "y": 1.47,
+      "rotation": 0,
+      "length": 0
+    },
+    {
+      "name": "leg_R1",
+      "parent": "body",
+      "x": 55.8,
+      "y": 17.16,
+      "rotation": -3.93,
+      "length": 30.73
+    },
+    {
+      "name": "leg_R3",
+      "parent": "leg_R1",
+      "x": 37.5,
+      "y": 0.46512,
+      "rotation": 0.26825,
+      "length": 29.31
+    }
+  ]
+}

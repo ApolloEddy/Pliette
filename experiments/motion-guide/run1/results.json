@@ -1,0 +1,762 @@
+{
+  "config": {
+    "runId": "run1",
+    "date": "2026-09-09",
+    "profileDigest": "fnv1a64-ebdddc81287bc754",
+    "profileRevision": 2,
+    "model": "mock-author(deterministic) —— LLM 实测未执行（无密钥）",
+    "note": "工程验收 run：验证实验框架/统计/记录格式。A/B 质量差异需真实 LLM。",
+    "budgetKeys": [
+      "minDurationSec",
+      "maxDurationSec",
+      "maxControls",
+      "maxKeysPerCurve",
+      "maxTotalKeys",
+      "deadlineMs"
+    ],
+    "requests": [
+      {
+        "id": "q01",
+        "goal": "轻轻点头示意",
+        "kind": "basic"
+      },
+      {
+        "id": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic"
+      },
+      {
+        "id": "q03",
+        "goal": "害羞地挥挥手打招呼",
+        "kind": "basic"
+      },
+      {
+        "id": "q04",
+        "goal": "身体前倾认真倾听",
+        "kind": "basic"
+      },
+      {
+        "id": "q05",
+        "goal": "深呼吸一样起伏一下",
+        "kind": "basic"
+      },
+      {
+        "id": "q06",
+        "goal": "眨左眼 wink",
+        "kind": "basic"
+      },
+      {
+        "id": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo"
+      },
+      {
+        "id": "q08",
+        "goal": "倾身倾听并且眨眨眼",
+        "kind": "combo"
+      },
+      {
+        "id": "q09",
+        "goal": "向两边张开手臂再放下",
+        "kind": "combo"
+      },
+      {
+        "id": "q10",
+        "goal": "晕头晕脑地摇摇晃晃",
+        "kind": "combo"
+      }
+    ],
+    "runsPerGroup": 2
+  },
+  "results": [
+    {
+      "group": "A",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 453,
+      "latencyMs": 11,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 10,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 461,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 597,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 384,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 612,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q10",
+      "goal": "晕头晕脑地摇摇晃晃",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 532,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 453,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 461,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 597,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 384,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 612,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q10",
+      "goal": "晕头晕脑地摇摇晃晃",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 532,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 453,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 461,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 597,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 384,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 612,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q10",
+      "goal": "晕头晕脑地摇摇晃晃",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 532,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 453,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 461,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 597,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 384,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 423,
+      "latencyMs": 15,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 612,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q10",
+      "goal": "晕头晕脑地摇摇晃晃",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 532,
+      "latencyMs": 16,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q01",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q01",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q02",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q02",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q03",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q03",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q04",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q04",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q05",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q05",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q06",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q06",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q07",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q07",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q08",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q08",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q09",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q09",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q10",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q10",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "findings": []
+    }
+  ],
+  "summary": {
+    "原始候选校验通过率": {
+      "A": "20/20（100%）",
+      "B": "20/20（100%）"
+    },
+    "程序接纳率_C": "20/20（100%）",
+    "拒绝明细": [],
+    "免责": "Mock 输出确定性模板，A/B 差异无信息量；视觉通过率/延迟 p95/实际执行成功率等 Spec 11.3 指标必须等真实 LLM 实测，本 run 仅为管线工程验收。"
+  }
+}

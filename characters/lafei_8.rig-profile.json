@@ -1,0 +1,558 @@
+{
+  "identity": {
+    "modelId": "lafei_8",
+    "profileId": "lafei_8.front.cp1",
+    "profileRevision": 2,
+    "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+    "runtimeRef": {
+      "exportVersion": "3.6.52",
+      "runtimeVersion": "3.6.53",
+      "runtimeSource": "vendor/spine-ts/3.6（spine-runtimes tag 3.6.53，ESM 包装，官方内容零修改）",
+      "adapterVersion": "control-profile/1.0"
+    },
+    "viewId": "front",
+    "skinId": "default",
+    "referencePose": {
+      "poseId": "setup",
+      "description": "Spine setup pose（导出默认姿态）。曲线值语义锚定 setup：3.6 运行时 RotateTimeline 值为 setup 相对偏移（tests/compiler.test.ts 实证）。视觉静止基准另有 stand@0s，但生成参数不以其为零点。",
+      "digest": "fnv1a64-0a46aaf8232ef9e8"
+    },
+    "heightUnits": 335,
+    "coordinateConvention": {
+      "angle": "度；相对参考姿态 setup 的偏移角，经 binding.sign 换算为骨骼局部正角",
+      "translation": "标定身高 H 的比例（H=335 原生单位，脚底基准 y≈-2.4）；V1 仅开放绑定骨的父局部空间",
+      "leftRight": "角色面向观察者。实测：hand_R=屏幕右臂（角色自身左侧），hand_L=屏幕左臂（角色自身右侧），eye_L=屏幕左眼——命名视角混用，以各控制器的实测标注为准，禁止按名称推断"
+    }
+  },
+  "controls": [
+    {
+      "controlId": "arm.right.raise",
+      "semanticPart": "屏幕右臂整臂（hand_R，body 直接子节点，旋转带动整条手臂链与衣袖）",
+      "kind": "localFk",
+      "channel": "rightArm",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "抬臂前上举：+60 前臂达肩前（手持可乐附件随动）；+90 手进入脸区产生遮挡（轮廓仍连贯）",
+        "negativeLooksLike": "收臂贴体：−40 手贴近身侧；−60 起手臂开始横越躯干前方（开始显怪）",
+        "default": 0
+      },
+      "binding": { "bone": "hand_R", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "arm.upper.right", "property": "rotate" },
+      "domain": { "min": -60, "max": 90, "verifiedMin": -40, "verifiedMax": 60 },
+      "rate": { "maxPerSec": 550 },
+      "ownership": {
+        "writes": ["bone:hand_R/rotate"],
+        "dependsOn": ["ancestor:body", "ancestor:bone"],
+        "affectedAttachments": ["hand_R2 挂载的衣袖与手持物（kele 可乐等随臂变换）"]
+      },
+      "behavior": "调大=手臂前上举（挥手/指向主驱动）；调小=收臂贴体；归零=setup 自然下垂方向；混出后该属性交还基础动画",
+      "conditions": ["视图 front", "手臂链无 IK（静态确认），FK 直接生效", "基础动画 stand 等持续写该骨——本控制以满权重绝对接管，混入期平滑过渡"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-rate-20260910", "ev-twotrack-20260908"],
+      "status": "verified"
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "semanticPart": "屏幕右臂第二段（hand_R3，hand_R 子节点；小幅精调通道）",
+      "kind": "localFk",
+      "channel": "rightArm",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "前臂内旋：手持物上端转向躯干（+20 可乐瓶口朝内）",
+        "negativeLooksLike": "前臂外旋：手持物上端转向外（−20 瓶口朝外）",
+        "default": 0
+      },
+      "binding": { "bone": "hand_R3", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "arm.right", "property": "rotate" },
+      "domain": { "min": -45, "max": 45, "verifiedMin": -20, "verifiedMax": 20 },
+      "rate": { "maxPerSec": 550 },
+      "ownership": {
+        "writes": ["bone:hand_R3/rotate"],
+        "dependsOn": ["ancestor:hand_R（父级整臂姿态改变其世界效果——局部角语义）", "ancestor:body"]
+      },
+      "behavior": "小幅精调前臂/手持物朝向；大幅摆动应交给 arm.right.raise；归零=setup 相对角",
+      "conditions": ["与 arm.right.raise 同通道互斥调度（同轨道）"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-rate-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "arm.left.raise",
+      "semanticPart": "屏幕左臂整臂（hand_L，body 直接子节点）",
+      "kind": "localFk",
+      "channel": "leftArm",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "向外侧平举：+60 手臂展至身侧（自然）",
+        "negativeLooksLike": "向躯干内侧收：−60 起横越身前（−40 贴体尚可）",
+        "default": 0
+      },
+      "binding": { "bone": "hand_L", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "arm.upper.left", "property": "rotate" },
+      "domain": { "min": -60, "max": 60, "verifiedMin": -40, "verifiedMax": 45 },
+      "rate": { "maxPerSec": 400 },
+      "ownership": {
+        "writes": ["bone:hand_L/rotate"],
+        "dependsOn": ["ancestor:body", "ancestor:bone"],
+        "affectedAttachments": ["hand_L2 挂载的衣袖"]
+      },
+      "behavior": "调大=向屏幕左侧外展；调小=向躯干收；归零=setup 下垂方向",
+      "conditions": ["左右非对称：与右臂的 setup 差 −34.38° vs +27.68°，同为 + 时视觉方向不同（左=侧举、右=前上举），禁止取反镜像"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-rate-20260910", "ev-twotrack-20260908"],
+      "status": "verified"
+    },
+    {
+      "controlId": "arm.left.forearm",
+      "semanticPart": "屏幕左臂第二段（hand_L3，hand_L 子节点；小幅精调通道）",
+      "kind": "localFk",
+      "channel": "leftArm",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "外旋：袖口/手向外翻（+20 外翻可见）",
+        "negativeLooksLike": "内旋：向躯干方向收（−20 内收）",
+        "default": 0
+      },
+      "binding": { "bone": "hand_L3", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "arm.left", "property": "rotate" },
+      "domain": { "min": -45, "max": 45, "verifiedMin": -20, "verifiedMax": 20 },
+      "rate": { "maxPerSec": 600 },
+      "ownership": {
+        "writes": ["bone:hand_L3/rotate"],
+        "dependsOn": ["ancestor:hand_L", "ancestor:body"]
+      },
+      "behavior": "小幅精调；原动画中该骨时间线存在非连续阶跃（stand@15.3s 一帧跳约 350°，为时间线伪影），生成曲线必须连续——运行时速率检查会拦截",
+      "conditions": ["与 arm.left.raise 同通道互斥调度"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-rate-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "head.nod",
+      "semanticPart": "头部主骨（face；与 body 是兄弟节点，同父 bone）",
+      "kind": "localFk",
+      "channel": "head",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "头向屏幕右倾：+40 整头（含双马尾/兔耳）右倾，连贯自然",
+        "negativeLooksLike": "头向屏幕左倾：−40 左倾，同样自然",
+        "default": 0
+      },
+      "binding": { "bone": "face", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "head.main", "property": "rotate" },
+      "domain": { "min": -53, "max": 53, "verifiedMin": -40, "verifiedMax": 40 },
+      "rate": { "maxPerSec": 200 },
+      "ownership": {
+        "writes": ["bone:face/rotate"],
+        "dependsOn": ["ancestor:bone", "sibling:body（躯干旋转/位移不带动头部——探针画面实证）", "头部下属表情骨骼随头动（层级子图）"]
+      },
+      "behavior": "调大=右倾、调小=左倾、归零=setup 头位；原动画 stand 中该骨活动范围 ±53°，是资产原生表情节奏",
+      "conditions": ["躯干倾斜/位移不会自动带动头部；需要组合时同时给 torso.lean 与 head.nod 曲线", "±40 已复核；±53 为原动画峰值（勿超）"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-rate-20260910", "ev-asset-static-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "torso.lean",
+      "semanticPart": "躯干主骨（body，setup rotation=-90°）",
+      "kind": "localFk",
+      "channel": "torso",
+      "input": {
+        "type": "scalar",
+        "unit": "deg",
+        "refValue": 0,
+        "positiveLooksLike": "躯干向屏幕右倾：+30 倾斜明显、双脚被 IK 钉住原地、头部保持水平（不随动）",
+        "negativeLooksLike": "躯干向屏幕左倾：−30 对称",
+        "default": 0
+      },
+      "binding": { "bone": "body", "property": "rotate", "sign": 1 },
+      "mapsTo": { "role": "body.root", "property": "rotate" },
+      "domain": { "min": -30, "max": 30, "verifiedMin": -20, "verifiedMax": 20 },
+      "rate": { "maxPerSec": 100 },
+      "ownership": {
+        "writes": ["bone:body/rotate"],
+        "dependsOn": [
+          "ancestor:bone",
+          "descendant:hand_L/hand_R/leg_L1/leg_R1（手臂与腿链随躯干变换）",
+          "ik:leg_L/leg_R（mix=1 持续求解：躯干倾斜时双脚保持在原地、腿部再弯折——探针画面实证）",
+          "sibling:face（头部不随动——±30 画面实证；自然倾斜需组合 head.nod）"
+        ]
+      },
+      "behavior": "调大=右倾、调小=左倾、归零=直立；头不跟随，倾身倾听类动作必须头+躯干两曲线组合",
+      "conditions": ["verified 上限 ±20（±30 复核为'强但连贯'，留余量收敛到 ±20）"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-rate-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "torso.bob",
+      "semanticPart": "躯干整体位移（呼吸/重心；注意头部不随动）",
+      "kind": "localFk",
+      "channel": "torso",
+      "input": {
+        "type": "vec2",
+        "unit": "H",
+        "refValue": [0, 0],
+        "positiveLooksLike": "y+ 躯干上移（+0.02 肩线接近下颌）；x+ 向屏幕右移（头部留在原位）",
+        "negativeLooksLike": "y− 躯干下沉：−0.02 起颈部露出/头身分离感（反例已留存）；x− 向屏幕左移",
+        "default": [0, 0]
+      },
+      "binding": { "bone": "body", "property": "translate", "space": "parentLocal", "sign": 1 },
+      "mapsTo": { "role": "body.root", "property": "translate" },
+      "domain": { "min": -0.02, "max": 0.02, "verifiedMin": -0.01, "verifiedMax": 0.01 },
+      "rate": { "maxPerSec": 0.03 },
+      "ownership": {
+        "writes": ["bone:body/translate"],
+        "dependsOn": ["ancestor:bone", "descendant:手臂与腿链（整体平移）", "ik:leg_L/leg_R（脚目标在 root 下，躯干平移时腿再弯折）", "sibling:face（头部不随位移——头身分离反例）"]
+      },
+      "behavior": "小幅 y 波动=呼吸感（0.008H/1.2s 为 P1 待机已验证节奏）；x 小幅=重心偏移；超出 ±0.02H 立即头身分离",
+      "conditions": ["原动画 body 平移曲线恒为 0（写集覆盖但无位移节奏可引）；速率上限按'已验证幅度 0.01H 于最短片段 0.4s 内走完'推导并留余量", "头部/面部表情不随躯干位移"],
+      "evidenceIds": ["ev-probe-20260910-kinetic", "ev-bob-separation-20260910", "ev-rate-20260910"],
+      "status": "verified"
+    },
+    {
+      "controlId": "face.eyeL.state",
+      "semanticPart": "eye_L Slot 附件（屏幕左眼形状变体）",
+      "kind": "slotState",
+      "channel": "face",
+      "input": {
+        "type": "enum",
+        "unit": "-",
+        "refValue": "eye_L",
+        "positiveLooksLike": "-",
+        "negativeLooksLike": "-",
+        "default": "eye_L",
+        "enumValues": ["eye_L", "eye_L2", "eye_L3", "eye_L4", "eye_L5", "eye_2_1", "eye_3_1", "eye_4_1"]
+      },
+      "binding": { "slot": "eye_L", "property": "attachment" },
+      "mapsTo": { "role": "face.eyes", "property": "attachment" },
+      "domain": {},
+      "ownership": {
+        "writes": ["slot:eye_L/attachment"],
+        "dependsOn": ["pair:eye_R（必须成对切换）", "基础动画持续写表情附件（接管后混出交还）"],
+        "affectedAttachments": ["eye_L 系全部 8 个附件"]
+      },
+      "behavior": "机制已验证（配对探针全目录通过）；但单独写左眼会造成左右不对称——不对在线单独开放",
+      "conditions": ["只经 face.eyes.pair 组合控制间接写入"],
+      "evidenceIds": ["ev-eyes-static-20260910", "ev-probe-20260910-eyes"],
+      "status": "candidate"
+    },
+    {
+      "controlId": "face.eyeR.state",
+      "semanticPart": "eye_R Slot 附件（屏幕右眼形状变体）",
+      "kind": "slotState",
+      "channel": "face",
+      "input": {
+        "type": "enum",
+        "unit": "-",
+        "refValue": "eye_R",
+        "positiveLooksLike": "-",
+        "negativeLooksLike": "-",
+        "default": "eye_R",
+        "enumValues": ["eye_R", "eye_R2", "eye_R3", "eye_R4", "eye_R5", "eye_R5_2", "eye_2_2", "eye_3_2", "eye_4_2"]
+      },
+      "binding": { "slot": "eye_R", "property": "attachment" },
+      "mapsTo": { "role": "face.eyeR", "property": "attachment" },
+      "domain": {},
+      "ownership": {
+        "writes": ["slot:eye_R/attachment"],
+        "dependsOn": ["pair:eye_L"],
+        "affectedAttachments": ["eye_R 系全部 9 个附件"]
+      },
+      "behavior": "同左眼：仅经 face.eyes.pair 间接写入",
+      "conditions": ["只经 face.eyes.pair 组合控制间接写入；eye_R5_2 无配对伙伴，不在开放映射内"],
+      "evidenceIds": ["ev-eyes-static-20260910", "ev-probe-20260910-eyes"],
+      "status": "candidate"
+    },
+    {
+      "controlId": "face.eyes.pair",
+      "semanticPart": "双眼形状（成对组合控制；左右眼固定映射）",
+      "kind": "composite",
+      "channel": "face",
+      "input": {
+        "type": "enum",
+        "unit": "-",
+        "refValue": "open",
+        "positiveLooksLike": "-",
+        "negativeLooksLike": "-",
+        "default": "open",
+        "enumValues": ["open", "blink", "squeeze", "dizzy", "sleepy", "wink"]
+      },
+      "binding": {
+        "property": "attachment",
+        "compositeOf": ["face.eyeL.state", "face.eyeR.state"],
+        "compositeEntries": [
+          { "key": "open", "targets": [ { "controlId": "face.eyeL.state", "value": "eye_L" }, { "controlId": "face.eyeR.state", "value": "eye_R" } ] },
+          { "key": "blink", "targets": [ { "controlId": "face.eyeL.state", "value": "eye_2_1" }, { "controlId": "face.eyeR.state", "value": "eye_2_2" } ] },
+          { "key": "squeeze", "targets": [ { "controlId": "face.eyeL.state", "value": "eye_3_1" }, { "controlId": "face.eyeR.state", "value": "eye_3_2" } ] },
+          { "key": "dizzy", "targets": [ { "controlId": "face.eyeL.state", "value": "eye_4_1" }, { "controlId": "face.eyeR.state", "value": "eye_4_2" } ] },
+          { "key": "sleepy", "targets": [ { "controlId": "face.eyeL.state", "value": "eye_L2" }, { "controlId": "face.eyeR.state", "value": "eye_R2" } ] },
+          { "key": "wink", "targets": [ { "controlId": "face.eyeL.state", "value": "eye_L5" }, { "controlId": "face.eyeR.state", "value": "eye_R5" } ] }
+        ]
+      },
+      "domain": {},
+      "ownership": {
+        "writes": [],
+        "dependsOn": ["接触/占用：基础动画表情切换（接管后混出交还）"]
+      },
+      "behavior": "open=正常圆眼；blink=弯月笑眼（可用 0.1-0.15s 短窗做眨眼）；squeeze=用力闭眼（><）；dizzy=螺旋晕；sleepy=困倦半闭；wink=屏幕左眼闭右眼睁（不对称飞眼）",
+      "conditions": ["附件曲线只允许 stepped；blink 短窗眨眼与 stand 原生眨眼混出衔接由入场/退出策略保证", "未登记变体：eye_L3/R3（与正常眼差异不可辨）、eye_L4/R4（不可见留空）不开放"],
+      "evidenceIds": ["ev-probe-20260910-eyes", "ev-eyes-static-20260910"],
+      "status": "verified"
+    }
+  ],
+  "rules": [
+    {
+      "ruleId": "lafei8-view-front-only",
+      "type": "requiresVariant",
+      "target": "*",
+      "condition": { "view": "front" },
+      "params": { "allowedViews": ["front"] },
+      "severity": "error",
+      "explanation": "唯一 default 皮肤 67 附件无背面部件；move_left 等为朝向行为变体而非背面。镜像正面不等于背面（Spec 3.5）。",
+      "evidenceRefs": ["ev-backabsent-20260907"],
+      "version": 1
+    },
+    {
+      "ruleId": "lafei8-cap-eyes-pair-l",
+      "type": "requiresCapability",
+      "target": "face.eyeL.state",
+      "condition": { "requiresCapability": "face.eyes.pair" },
+      "params": { "capability": "face.eyes.pair" },
+      "severity": "error",
+      "explanation": "左右眼必须成对切换；单眼控制仅可经 face.eyes.pair 组合控制写入。",
+      "evidenceRefs": ["ev-probe-20260910-eyes"],
+      "version": 1
+    },
+    {
+      "ruleId": "lafei8-cap-eyes-pair-r",
+      "type": "requiresCapability",
+      "target": "face.eyeR.state",
+      "condition": { "requiresCapability": "face.eyes.pair" },
+      "params": { "capability": "face.eyes.pair" },
+      "severity": "error",
+      "explanation": "同左眼。",
+      "evidenceRefs": ["ev-probe-20260910-eyes"],
+      "version": 1
+    },
+    {
+      "ruleId": "lafei8-range-arm-right-raise",
+      "type": "range",
+      "target": "arm.right.raise",
+      "condition": {},
+      "params": { "min": -60, "max": 90, "verifiedMin": -40, "verifiedMax": 60 },
+      "severity": "error",
+      "explanation": "超出 allowed 或 verified 一律拒绝（作者候选超界优先拒绝，不静默裁剪，Spec 9.4）；recoverable=true 允许预算内修正重试。",
+      "evidenceRefs": ["ev-probe-20260910-kinetic"],
+      "version": 2
+    },
+    {
+      "ruleId": "lafei8-range-torso-bob",
+      "type": "range",
+      "target": "torso.bob",
+      "condition": {},
+      "params": { "min": -0.02, "max": 0.02, "verifiedMin": -0.01, "verifiedMax": 0.01 },
+      "severity": "error",
+      "explanation": "逐轴检查；±0.02H 之外头身分离（反例 ev-bob-separation-20260910）。",
+      "evidenceRefs": ["ev-bob-separation-20260910"],
+      "version": 2
+    },
+    {
+      "ruleId": "lafei8-rate-head",
+      "type": "rateLimit",
+      "target": "head.nod",
+      "condition": {},
+      "params": { "maxPerSec": 200 },
+      "severity": "error",
+      "explanation": "来自原动画峰值采样：head.nod 动画师节奏 stand=191°/s（motou=206°/s 属高强度段，在线取稳态上限）。",
+      "evidenceRefs": ["ev-rate-20260910"],
+      "version": 2
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "ev-asset-static-20260910",
+      "kind": "static",
+      "input": "官方 spine-ts 3.6.53 无头加载 lafei_8（JSON+atlas），全量结构提取",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "79 骨 / 42 Slot / 20 动画；body(rot=-90) 与 face(rot=+90) 同父 bone（兄弟）；hand_R=body 子(rot=27.68)、hand_R3=hand_R 子(rot=-1.99)；hand_L=-34.38、hand_L3=11.06；leg_L/leg_R 为 root 子（IK 目标），leg_L1/leg_R1 为 body 子；IK 两条：[leg_L1,leg_L3]→leg_L、[leg_R1,leg_R3]→leg_R，bendPositive=false",
+      "mediaPath": "experiments/rig-calibration/lafei_8/reference-pose.json",
+      "observation": "与 characters/lafei_8.character.json 记录一致；兄弟头身拓扑与两级手臂链确认为静态事实",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "结构清单与拓扑；不构成任何数值幅度或视觉质量的验证",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-writecoverage-20260910",
+      "kind": "static",
+      "input": "20 段原动画逐 Timeline 写集覆盖提取",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "全部动画写全部关键骨（rotate+scale+translate）与 eye_L/eye_R 附件；无闲置骨骼",
+      "mediaPath": "experiments/rig-calibration/lafei_8/write-coverage.json",
+      "observation": "基础层完全覆盖→任何控制叠加都是绝对接管+交还语义；不存在零冲突叠加通道",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "作用链说明的依据",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-probe-20260910-kinetic",
+      "kind": "probe",
+      "input": "8 个运动控制 ± 梯度探针（隔离实例、setup 参考、freezeAt=0.5s；−60…+90 共 81 步）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "局部角=setup+值全部精确命中；平移 1H=335 单位；骨骼原点不动、末端随动（旋转绕原点语义）；画面目视：右臂+=前上举（+90 手入脸区）、左臂+=外侧平举、头±40 双向自然、躯干±30 连贯且头不随动/双脚 IK 钉地、bob −0.02 起颈部露出",
+      "mediaPath": "experiments/media/rig-calibration/lafei_8/（89 帧 PNG，本地）",
+      "observation": "屏幕左右归属实测：hand_R=屏幕右、hand_L=屏幕左、eye_L=屏幕左；左右臂同为 + 时视觉方向不同（右=前上举、左=侧举），非镜像",
+      "reviewer": "dev-agent (GLM-5.3)，逐帧目视复核 14 张关键帧",
+      "scope": "front、default、setup 参考、无基础动画（隔离实例）",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-probe-20260910-eyes",
+      "kind": "probe",
+      "input": "双眼配对附件枚举探针（8 组配对截图）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "open=eye_L/eye_R 正常圆眼；blink=eye_2_1/eye_2_2 弯月笑眼；squeeze=eye_3_1/eye_3_2 用力闭眼；dizzy=eye_4_1/eye_4_2 螺旋晕；sleepy=eye_L2/eye_R2 困倦半闭；wink=eye_L5/eye_R5 屏幕左眼闭右眼睁",
+      "mediaPath": "experiments/media/rig-calibration/lafei_8/eyes_*.png（本地）",
+      "observation": "成对切换机制可行；L3/R3 与正常眼差异不可辨、L4/R4 不可见——两者不开放；wink 为不对称配对（单侧闭）",
+      "reviewer": "dev-agent (GLM-5.3)，逐图目视识别",
+      "scope": "front、default、setup 参考",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-rate-20260910",
+      "kind": "probe",
+      "input": "原动画逐帧（dt=1/30s）骨骼角速度峰值采样（20 段动画 × 6 骨 + body 位移）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "baseAnim": "全部 20 段",
+      "runtimeVersion": "3.6.53",
+      "samples": "arm.right.raise 峰 541°/s（stand）；arm.right.forearm 508（stand）；arm.left.raise 385（stand）；arm.left.forearm 973（motou，stand@15.3s 的 10546°/s 为时间线阶跃伪影已排除）；head.nod 191（stand）；torso.lean 68（stand）；body 平移曲线恒 0",
+      "mediaPath": "experiments/rig-calibration/lafei_8/rate-samples.json",
+      "observation": "速率上限取'动画师稳态节奏（stand）'向上取整；高强度段（attack/motou/victory）峰值仅作参考不作在线上限",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "3.6.53 采样语义；torso.bob 速率按已验证幅度×最短片段推导（原动画无位移节奏）",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-bob-separation-20260910",
+      "kind": "probe",
+      "input": "torso.bob.y=−0.08 与 −0.02 探针（反例留存）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "−0.08H（−26.8 单位）头身明显分离、颈部露出；−0.02H 已见颈部露出",
+      "mediaPath": "experiments/media/rig-calibration/lafei_8/torso.bob.y_0-0.08.png（本地）",
+      "observation": "头部是 bone 子节点不随 body 位移——位移超过 ±0.02H 即头身分离；首次失败版本按 Spec 3.3-8 保留",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "front、setup 参考； ruled lafei8-range-torso-bob",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-backabsent-20260907",
+      "kind": "static",
+      "input": "default 皮肤 67 附件全量清单检查",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "无 back/back_hair 等背面附件；move_left/attack_left 与正向版本写集一致（朝向行为变体）",
+      "observation": "无背面素材；镜像不得充当背面",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "front 视图资产边界",
+      "status": "verified",
+      "date": "2026-09-07"
+    },
+    {
+      "evidenceId": "ev-eyes-static-20260910",
+      "kind": "static",
+      "input": "default 皮肤 eye_L/eye_R Slot 附件枚举提取",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "eye_L 8 变体：eye_L,eye_L2..L5,eye_2_1,eye_3_1,eye_4_1；eye_R 9 变体：eye_R,R2..R5,R5_2,eye_2_2,eye_3_2,eye_4_2",
+      "observation": "眼形变体成对命名（*_1 左 / *_2 右）；独立嘴部 Slot 不存在",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "附件清单",
+      "status": "verified",
+      "date": "2026-09-10"
+    },
+    {
+      "evidenceId": "ev-height-20260907",
+      "kind": "probe",
+      "input": "setup/stand/walk 三姿态附件世界包围盒测量",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "runtimeVersion": "3.6.53",
+      "samples": "333.8 / 332.8 / 337.0；脚底基准 y≈-2.4",
+      "observation": "H=335 原生单位；纹理尺寸（512/3072）不是身高",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "front 视图、default 皮肤",
+      "status": "verified",
+      "date": "2026-09-07"
+    },
+    {
+      "evidenceId": "ev-twotrack-20260908",
+      "kind": "probe",
+      "input": "双轨道旋转叠加采样（base=10°+overlay=40°）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "baseAnim": "stand@采样点",
+      "runtimeVersion": "3.6.53",
+      "samples": "合成=40°（满权重绝对接管，非 50°）；混合期平滑过渡；混出交还基础层",
+      "mediaPath": "tests/compiler.test.ts（断言）",
+      "observation": "高层轨道对所写属性在满权重时绝对接管——指导书控制器叠加语义的基础",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "3.6.53 运行时语义（非 lafei 特有）",
+      "status": "verified",
+      "date": "2026-09-08"
+    },
+    {
+      "evidenceId": "ev-stand-wave-20260908",
+      "kind": "video",
+      "input": "原动画勘探：stand[4.9-7.3] 时间窗切片叠加播放",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "baseAnim": "stand@4.9-7.3",
+      "runtimeVersion": "3.6.53",
+      "samples": "手世界坐标 y 过头顶（worldY 检验）+ 转头",
+      "mediaPath": "experiments/media/p1/overlay-wave.mp4",
+      "observation": "原动画存在真实挥手段且切片叠加自然；说明手臂大角度旋转在画面上可读。注意：这是原动画切片证据，不构成本档案任何控制器的数值标定",
+      "reviewer": "dev-agent (GLM-5.3) + 用户验收",
+      "scope": "front、stand 基础动画",
+      "status": "verified",
+      "date": "2026-09-08"
+    },
+    {
+      "evidenceId": "ev-walkspeed-20260908",
+      "kind": "probe",
+      "input": "walk 动画步幅世界坐标测量（44.9 单位 / 1.17s）",
+      "refPose": "setup",
+      "skinView": "default/front",
+      "baseAnim": "walk@整周期",
+      "runtimeVersion": "3.6.53",
+      "samples": "0.115 H/s",
+      "observation": "行走速度标定；原速度 0.567 H/s 快 5 倍为脚滑根因",
+      "reviewer": "dev-agent (GLM-5.3)",
+      "scope": "walk 基础动画",
+      "status": "verified",
+      "date": "2026-09-08"
+    }
+  ]
+}

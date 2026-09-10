@@ -285,6 +285,22 @@
         </section>
 
         <section>
+          <h2>Author 在线通路 V1.1（指导书 · 拉菲档案）</h2>
+          <label for="author-goal">动作目标（goal）</label>
+          <input type="text" id="author-goal" value="向用户挥手" />
+          <div class="row" style="margin-top: 8px">
+            <button id="btn-author-context">查看请求上下文</button>
+            <button id="btn-author-mock" class="primary">Mock 在线生成</button>
+          </div>
+          <label for="author-candidate">候选 JSON（V1.1 响应，可导入）</label>
+          <textarea id="author-candidate" spellcheck="false" placeholder='{"status":"motion", ...}'></textarea>
+          <div class="row" style="margin-top: 8px">
+            <button id="btn-author-import" class="primary">导入候选→验证→播放</button>
+          </div>
+          <div id="author-diag" class="note">未接入真实 LLM（无密钥）：Mock 为确定性模板，仅做管线工程验收（Spec 11.2）。</div>
+        </section>
+
+        <section>
           <h2>原动画切片叠加（专业数据复用）</h2>
           <label for="overlay-source">源动画</label>
           <select id="overlay-source" disabled></select>

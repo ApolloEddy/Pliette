@@ -18,6 +18,13 @@ import { spine36 as spine } from "spine-webgl";
 import { LabRecorder } from "./recorder.js";
 import { createDialogueAdapter } from "../dialogue/adapter.js";
 import { MockTts } from "../speech/adapter.js";
+import { parseControlProfile, type ControlProfile } from "../rig/controlProfile.js";
+import { assembleRequest } from "../motion/author/context.js";
+import { validateCandidate } from "../motion/author/validateV11.js";
+import { MockAuthorClient, importCandidateFile } from "../motion/author/client.js";
+import { AuthorBroker, type PlaybackHooks } from "../motion/author/authorBroker.js";
+import { formatDiagnostic, type AuthorDiagnostic } from "../motion/author/diagnostics.js";
+import lafeiProfileJson from "../../characters/lafei_8.rig-profile.json";
 
 interface AssetEntry extends AssetSourceConfig {
   label: string;
@@ -165,7 +172,7 @@ function guessFromNames(names: string[], role: string): string | null {
     "arm.left": [/hand[_-]?l3/i, /handl3/i, /hand[_-]?l/i, /arml/i],
     "arm.right": [/hand[_-]?r3/i, /handr3/i, /hand[_-]?r/i, /armr/i],
     "arm.upper.left": [/^hand[_-]?l$/i, /arm[_-]?upper[_-]?l/i, /shoulder[_-]?l/i],
-    "arm.upper.right": [/^hand[_-]?r$/i, /arm[_-]?upper[_-]?r/i, /shoulder[_-]?r/i],
+    "arm.upper.right": [/^hand[_-]?r$/i, /arm[_-]?upper[_-]?r/i, /shoulder[_-]?r/i, /front[_-]?upper[_-]?arm/i, /upper[_-]?arm/i],
     "body.root": [/^(body|hip|torso)$/i],
   };
   for (const re of patterns[role] ?? []) {
@@ -702,6 +709,183 @@ function wireOverlayPanel(): void {
   $("btn-overlay-clear").addEventListener("click", clearOverlays);
 }
 
+/* ---------------- Author 在线通路 V1.1（指导书 Spec 10.1 最小调试入口） ---------------- */
+
+let controlProfile: ControlProfile | null = null;
+let authorBroker: AuthorBroker | null = null;
+let authorStateVersion = 1;
+
+function authorPlayHooks(): PlaybackHooks {
+  return {
+    play: (pb, requestId) => {
+      if (!pb) return "invalid";
+      playCompiledOnView(flatView, null, pb.compiled);
+      playCompiledOnView(actor.view, null, pb.compiled);
+      log(`Author 播放 ${pb.compiled.id}（${requestId}，通道 ${pb.channels.join("+")}，${pb.durationSec}s，混入 ${pb.mixInSec}s/混出 ${pb.mixOutSec}s）`, "good");
+      return `${requestId}`;
+    },
+    cancel: (instanceId) => {
+      for (const view of [flatView, actor.view]) view.state?.setEmptyAnimation(0, 0.15);
+      log(`Author 局部取消 ${instanceId}（0.15s 混出交还基础层）`);
+    },
+  };
+}
+
+function renderAuthorDiag(lines: string[], cls = ""): void {
+  const box = $("author-diag");
+  box.className = cls ? `note ${cls}` : "note";
+  box.innerHTML = "";
+  for (const l of lines) {
+    const div = document.createElement("div");
+    div.textContent = l;
+    box.appendChild(div);
+  }
+}
+
+function authorSnapshotState(): { stateVersion: number; occupiedChannels: string[] } {
+  const snap = scheduler.snapshot();
+  return { stateVersion: authorStateVersion, occupiedChannels: Object.keys(snap.ownership) };
+}
+
+function wireAuthorPanel(): void {
+  try {
+    controlProfile = parseControlProfile(lafeiProfileJson);
+    authorBroker = new AuthorBroker(authorPlayHooks());
+  } catch (e) {
+    renderAuthorDiag([`档案解析失败：${(e as Error).message}`], "bad");
+    return;
+  }
+
+  $("btn-author-context").addEventListener("click", () => {
+    if (!controlProfile || !flatView.skeletonData) {
+      log("档案或资产未就绪", "warn");
+      return;
+    }
+    const request = assembleRequest(controlProfile, {
+      requestId: `lab-${Date.now().toString(36)}`,
+      contextId: `ctx-${Date.now().toString(36)}`,
+      goal: ($("author-goal") as HTMLInputElement).value || "测试",
+      runtimeState: {
+        monoClockMs: Math.round(performance.now()),
+        viewId: controlProfile.identity.viewId,
+        skinId: controlProfile.identity.skinId,
+        stateVersion: authorStateVersion,
+        occupiedChannels: authorSnapshotState().occupiedChannels,
+        contacts: [],
+      },
+    });
+    ($("author-candidate") as HTMLTextAreaElement).value = JSON.stringify(request, null, 2);
+    renderAuthorDiag([
+      `请求包已生成：profileDigest=${request.profileRef.profileDigest}（rev ${request.profileRef.profileRevision}）`,
+      `开放控制 ${request.availableControls.length} 个；必带规则 ${request.mandatoryRules.length} 条；指导片段 ${request.guideExcerpts.length} 段`,
+      `预算：时长 ${request.generationBudget.minDurationSec}~${request.generationBudget.maxDurationSec}s、控制 ≤${request.generationBudget.maxControls}、键/曲线 ≤${request.generationBudget.maxKeysPerCurve}、总键 ≤${request.generationBudget.maxTotalKeys}、截止 ${request.generationBudget.deadlineMs}ms`,
+    ]);
+  });
+
+  $("btn-author-mock").addEventListener("click", async () => {
+    if (!controlProfile || !flatView.skeletonData || !authorBroker) return;
+    const requestId = `lab-${Date.now().toString(36)}`;
+    const request = assembleRequest(controlProfile, {
+      requestId,
+      contextId: `ctx-${Date.now().toString(36)}`,
+      goal: ($("author-goal") as HTMLInputElement).value || "向用户挥手",
+      runtimeState: {
+        monoClockMs: Math.round(performance.now()),
+        viewId: controlProfile.identity.viewId,
+        skinId: controlProfile.identity.skinId,
+        stateVersion: authorStateVersion,
+        occupiedChannels: authorSnapshotState().occupiedChannels,
+        contacts: [],
+      },
+    });
+    const begin = authorBroker.begin(controlProfile.identity.profileId, requestId, request.contextId, authorStateVersion, request.generationBudget.deadlineMs);
+    if (!begin.ok) {
+      renderAuthorDiag([`begin 失败：${begin.reason}`], "bad");
+      return;
+    }
+    const client = new MockAuthorClient(120);
+    try {
+      const gen = await client.generate(request, controlProfile);
+      const result = validateCandidate(gen.raw, request, controlProfile, { skeletonData: flatView.skeletonData });
+      const snap = authorSnapshotState();
+      const commit = authorBroker.commit(controlProfile.identity.profileId, {
+        request,
+        response: result.response!,
+        compiled: result.compiled,
+        current: {
+          monoClockMs: Math.round(performance.now()),
+          viewId: controlProfile.identity.viewId,
+          skinId: controlProfile.identity.skinId,
+          stateVersion: snap.stateVersion,
+          occupiedChannels: snap.occupiedChannels,
+          contacts: [],
+        },
+        occupiedChannels: new Set(snap.occupiedChannels),
+      });
+      const lines = [
+        `客户端 ${client.name}：${gen.bytes}B、latency≈${(gen.meta.latencyMs as number) ?? 0}ms`,
+        `校验：${result.ok ? "通过" : "失败"}`,
+        ...result.findings.map((f) => formatDiagnostic(f as AuthorDiagnostic)),
+        `提交：${commit.accepted ? `已接纳并播放（通道 ${commit.playback?.channels.join("+")}）` : `拒绝（fallback=${commit.fallback}）`}`,
+        ...(begin.superseded ? [`单飞：旧请求 ${begin.superseded} 已被替换`] : []),
+      ];
+      renderAuthorDiag(lines, commit.accepted ? "good" : "bad");
+    } catch (e) {
+      renderAuthorDiag([`生成失败：${(e as Error).message}`], "bad");
+    }
+  });
+
+  $("btn-author-import").addEventListener("click", () => {
+    if (!controlProfile || !flatView.skeletonData || !authorBroker) return;
+    const text = ($("author-candidate") as HTMLTextAreaElement).value;
+    const imported = importCandidateFile(text);
+    if (imported.error) {
+      renderAuthorDiag([`导入失败：${formatDiagnostic(imported.error)}`], "bad");
+      return;
+    }
+    const requestId = `import-${Date.now().toString(36)}`;
+    const request = assembleRequest(controlProfile, {
+      requestId,
+      contextId: `ctx-${Date.now().toString(36)}`,
+      goal: "候选导入（Lab）",
+      runtimeState: {
+        monoClockMs: Math.round(performance.now()),
+        viewId: controlProfile.identity.viewId,
+        skinId: controlProfile.identity.skinId,
+        stateVersion: authorStateVersion,
+        occupiedChannels: authorSnapshotState().occupiedChannels,
+        contacts: [],
+      },
+    });
+    const result = validateCandidate(imported.raw, request, controlProfile, { skeletonData: flatView.skeletonData });
+    const lines = [
+      `校验：${result.ok ? "通过" : "失败"}`,
+      ...result.findings.map((f) => formatDiagnostic(f as AuthorDiagnostic)),
+    ];
+    if (result.ok && result.response?.status === "motion") {
+      const begin = authorBroker.begin(controlProfile.identity.profileId, requestId, request.contextId, authorStateVersion, request.generationBudget.deadlineMs);
+      const snap = authorSnapshotState();
+      const commit = authorBroker.commit(controlProfile.identity.profileId, {
+        request,
+        response: result.response,
+        compiled: result.compiled,
+        current: {
+          monoClockMs: Math.round(performance.now()),
+          viewId: controlProfile.identity.viewId,
+          skinId: controlProfile.identity.skinId,
+          stateVersion: snap.stateVersion,
+          occupiedChannels: snap.occupiedChannels,
+          contacts: [],
+        },
+        occupiedChannels: new Set(snap.occupiedChannels),
+      });
+      lines.push(`提交：${commit.accepted ? "已接纳并播放" : `拒绝（fallback=${commit.fallback}）`}`);
+      if (begin.superseded) lines.push(`单飞：旧请求 ${begin.superseded} 已被替换`);
+    }
+    renderAuthorDiag(lines, lines.length > 2 ? "bad" : "good");
+  });
+}
+
 /* ---------------- 自动待机行为（?auto=1）：stand 打底 + 随机表情/动作切片 ---------------- */
 
 const AUTO_GESTURES = ["happy", "shy", "dizzy", "fresh", "wave", "pump"];
@@ -1124,6 +1308,66 @@ function wireChatPanel(): void {
 /** URL 参数支持确定性截图：?asset=lafei_8&view=flat&anim=walk&probe=6&motion=nod_c1&poseAt=0.28 */
 const bootParams = new URLSearchParams(location.search);
 
+/** 控制探针（指导书 M1）：隔离实例 + setup 参考姿态 + 单控制定值，冻结于 freezeAt 供截图/采样。 */
+function runControlProbe(spec: string, freezeAt: number): void {
+  const curves: MotionDraft["curves"] = [];
+  const channels = new Set<string>();
+  for (const part of spec.split(";")) {
+    const [role, property, rawValue] = part.split("|");
+    if (!role || !property || rawValue == null) {
+      log(`probeControl 格式错误：${part}`, "bad");
+      return;
+    }
+    const binding = currentRig.bones[role];
+    if (!binding) {
+      log(`probeControl：RigProfile ${currentRig.id} 无角色 ${role}`, "bad");
+      return;
+    }
+    channels.add(binding.channel);
+    let value: number | [number, number] | string;
+    if (property === "translate" || property === "scale") value = JSON.parse(rawValue) as [number, number];
+    else if (property === "attachment") value = rawValue;
+    else value = Number(rawValue);
+    curves.push({
+      role,
+      property: property as "rotate" | "translate" | "scale" | "attachment",
+      mode: "relativeToReference",
+      keys: [
+        { t: 0, value, ease: "stepped" },
+        { t: 1, value },
+      ],
+    });
+  }
+  const draft: MotionDraft = {
+    schemaVersion: 1,
+    id: `probe_${Date.now().toString(36)}`,
+    rigProfile: currentRig.id,
+    durationSec: 1,
+    channels: [...channels],
+    curves,
+    approval: "draft",
+  };
+  const { motion, diagnostics } = compileDraft(draft, currentRig, flatView.skeletonData!);
+  const errors = diagnostics.filter((d) => d.level === "error");
+  if (!motion || errors.length > 0) {
+    log(`探针编译失败：${errors.map((d) => `${d.code} ${d.message}`).join("; ")}`, "bad");
+    return;
+  }
+  for (const view of [flatView, actor.view]) {
+    view.state?.clearTracks();
+    view.skeleton?.setToSetupPose();
+  }
+  playCompiledOnView(flatView, null, motion);
+  playCompiledOnView(actor.view, null, motion);
+  for (const view of [flatView, actor.view]) {
+    view.state?.update(freezeAt);
+    view.paused = true;
+  }
+  $("btn-play").textContent = "播放";
+  log(`控制探针冻结：${spec} @ t=${freezeAt}s（setup 参考，隔离实例）`);
+}
+
+
 function applyBootParams(): Promise<void> {
   const assetName = bootParams.get("asset");
   const proceed = () => {
@@ -1147,6 +1391,12 @@ function applyBootParams(): Promise<void> {
     if (probe != null && probe !== "") {
       ($("probe-angle") as HTMLInputElement).value = probe;
       applyProbe(true);
+    }
+    const probeControl = bootParams.get("probeControl");
+    if (probeControl) {
+      // 控制探针（指导书 Spec 5.1）：probeControl=role|property|value;role|property|value
+      // 隔离实例：清空全部轨道 → setup 参考姿态 → 单值定帧。value：rotate=数值、translate=[x,y]、attachment=名称
+      runControlProbe(probeControl, Number(bootParams.get("freezeAt")) > 0 ? Number(bootParams.get("freezeAt")) : 0.5);
     }
     if (bootParams.get("bench") === "1") {
       const benchSec = Number(bootParams.get("benchSec")) || 6;
@@ -1298,6 +1548,7 @@ function boot(): void {
   wireP1Panel();
   wireOverlayPanel();
   wireChatPanel();
+  wireAuthorPanel();
   (window as unknown as { __labDebug: unknown }).__labDebug = {
     flatView,
     actorView: actor.view,
@@ -1306,6 +1557,44 @@ function boot(): void {
     skeleton: () => flatView.skeleton,
     eyeSlot: () => flatView.skeleton?.findSlot("eye_L"),
     emit: emitEvent,
+    /** 探针：重置到 setup 参考姿态并清空全部轨道（隔离实例） */
+    resetToSetup: () => {
+      for (const view of [flatView, actor.view]) {
+        view.state?.clearTracks();
+        view.skeleton?.setToSetupPose();
+        view.state?.update(0);
+      }
+    },
+    /** 探针：采样骨骼世界状态（局部角≠世界姿态——以世界坐标为准，Spec 5.1） */
+    sampleWorld: (names: string[]) => {
+      const sk = flatView.skeleton;
+      if (!sk) return null;
+      sk.updateWorldTransform();
+      return names.map((n) => {
+        const b = sk.findBone(n);
+        if (!b) return { name: n, missing: true };
+        return {
+          name: n,
+          x: b.worldX,
+          y: b.worldY,
+          rotation: b.rotation,
+          worldScaleX: b.getWorldScaleX(),
+          worldScaleY: b.getWorldScaleY(),
+          a: b.a,
+          b: b.b,
+          c: b.c,
+          d: b.d,
+        };
+      });
+    },
+    /** 探针：编译并隔离预览一份 Draft（不清其他视图状态），返回诊断与写集 */
+    applyProbeDraft: (draft: MotionDraft) => {
+      const { motion, diagnostics } = compileDraft(draft, currentRig, flatView.skeletonData!);
+      if (!motion) return { ok: false, diagnostics };
+      playCompiledOnView(flatView, null, motion);
+      playCompiledOnView(actor.view, null, motion);
+      return { ok: true, diagnostics, writes: motion.writes, duration: motion.durationSec };
+    },
   };
   fillDraftTemplate($("template-select") as HTMLSelectElement);
   log("Motion Lab 就绪。选择资产开始基线播放验证（Spec P0）。", "good");

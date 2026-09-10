@@ -116,6 +116,50 @@ export const LAFEI_8_FRONT_CANDIDATES: RigProfile = {
       notes: "eye_L/eye_R 各 8-9 个附件变体（睁闭/大小/形状），meimao1 slot 含 5 种眉毛；2026-09-07 真实资产核查确认",
       status: "candidate",
     },
+    "face.eyeR": {
+      bone: "eye_R",
+      kind: "slotState",
+      channel: "face",
+      notes: "eye_R slot 9 个附件变体；与 face.eyes（eye_L）必须成对切换（配对语义待标定，指导书 Spec 3.5）",
+      status: "candidate",
+    },
+  },
+};
+
+/** spineboy 官方示例的绑定（M4 第二骨架，Spec 5.3：机制验证，非产品标定）。 */
+export const SPINEBOY_BINDINGS: RigProfile = {
+  id: "spineboy.front.cp1",
+  characterId: "spineboy",
+  view: "front",
+  skeletonExportVersion: "3.6.32",
+  heightUnits: null,
+  capabilities: [],
+  bones: {
+    "head.main": {
+      bone: "head",
+      chain: ["root", "hip", "torso", "torso2", "torso3", "neck", "head"],
+      kind: "localFk",
+      channel: "head",
+      notes: "头在躯干链内（子级）——躯干旋转带动头部（与拉菲兄弟拓扑相反）",
+      status: "verified",
+    },
+    "body.root": {
+      bone: "hip",
+      chain: ["root", "hip"],
+      kind: "localFk",
+      channel: "torso",
+      setupRotationDeg: 0,
+      notes: "上身链根；旋转时头/臂随动，双脚被腿 IK 钉住",
+      status: "verified",
+    },
+    "arm.upper.right": {
+      bone: "front-upper-arm",
+      chain: ["torso3", "front-upper-arm"],
+      kind: "localFk",
+      channel: "rightArm",
+      notes: "side-view：front=屏幕右臂；rear-upper-arm 未开放",
+      status: "verified",
+    },
   },
 };
 

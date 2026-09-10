@@ -1,0 +1,8650 @@
+{
+  "asset": "lafei_8",
+  "exportVersion": "3.6.52",
+  "generated": "2026-09-09",
+  "animations": [
+    {
+      "animation": "attack",
+      "duration": 1,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "bushuang1": [
+          "attachment"
+        ],
+        "bushuang2": [
+          "attachment"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "attack_left",
+      "duration": 1,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "bushuang1": [
+          "attachment"
+        ],
+        "bushuang2": [
+          "attachment"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "dance",
+      "duration": 1.1699999570846558,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "hand_L2": [
+          "attachment"
+        ],
+        "hand_R2": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "kele": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": []
+    },
+    {
+      "animation": "dead",
+      "duration": 0.833329975605011,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "motou",
+      "duration": 7.329999923706055,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "dangao": [
+          "attachment"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "hand_L2": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "drawOrder",
+        "event"
+      ]
+    },
+    {
+      "animation": "move",
+      "duration": 6,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "move_left",
+      "duration": 6,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "normal",
+      "duration": 4.670000076293945,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "sit",
+      "duration": 1.3300000429153442,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "kele": [
+          "attachment"
+        ],
+        "lanzi": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "skill",
+      "duration": 6,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "sleep",
+      "duration": 4,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "kele": [
+          "attachment"
+        ],
+        "lanzi": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ],
+        "sleep2": [
+          "attachment",
+          "color"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "stand",
+      "duration": 20.329999923706055,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "lanzi": [
+          "attachment",
+          "color"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "stand2",
+      "duration": 20.329999923706055,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "lanzi": [
+          "attachment",
+          "color"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "event"
+      ]
+    },
+    {
+      "animation": "touch",
+      "duration": 0.666670024394989,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "event"
+      ]
+    },
+    {
+      "animation": "tuozhuai",
+      "duration": 0.833329975605011,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "bushuang1": [
+          "attachment"
+        ],
+        "bushuang2": [
+          "attachment"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "tuozhuai2",
+      "duration": 0.833329975605011,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "bushuang1": [
+          "attachment"
+        ],
+        "bushuang2": [
+          "attachment"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint"
+      ]
+    },
+    {
+      "animation": "victory",
+      "duration": 7.329999923706055,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "shear",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "sleep2": [
+          "rotate",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "dangao": [
+          "attachment",
+          "color"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "hand_L2": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "drawOrder",
+        "event"
+      ]
+    },
+    {
+      "animation": "walk",
+      "duration": 1.1699999570846558,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "lanzi": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "IkConstraint",
+        "drawOrder"
+      ]
+    },
+    {
+      "animation": "wash",
+      "duration": 2.6700000762939453,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "body": [
+          "attachment"
+        ],
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "hand_L": [
+          "attachment"
+        ],
+        "hand_L2": [
+          "attachment"
+        ],
+        "hand_R": [
+          "attachment"
+        ],
+        "hand_R2": [
+          "attachment"
+        ],
+        "honyun": [
+          "attachment"
+        ],
+        "hudieji": [
+          "attachment"
+        ],
+        "kele": [
+          "attachment"
+        ],
+        "leg_L1": [
+          "attachment"
+        ],
+        "leg_L2": [
+          "attachment"
+        ],
+        "leg_R1": [
+          "attachment"
+        ],
+        "leg_R2": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ],
+        "tougu": [
+          "attachment"
+        ],
+        "waitao_L": [
+          "attachment"
+        ],
+        "waitao_L2": [
+          "attachment"
+        ],
+        "waitao_R": [
+          "attachment"
+        ],
+        "waitao_R2": [
+          "attachment"
+        ]
+      },
+      "global": [
+        "drawOrder"
+      ]
+    },
+    {
+      "animation": "yun",
+      "duration": 2,
+      "bones": {
+        "body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bone": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "bushuang2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "dangao": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "erduo_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "eye_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "face": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_F5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_L9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R10": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R6": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R8": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hair_R9": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hand_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "hudieji": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "kele": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "lanzi": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "leg_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_body": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_hand_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_leg_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mao_tail": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_L7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R5": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "mawei_R7": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "meimao1": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "root": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_L4": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R2": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R3": [
+          "rotate",
+          "scale",
+          "translate"
+        ],
+        "waitao_R4": [
+          "rotate",
+          "scale",
+          "translate"
+        ]
+      },
+      "slots": {
+        "eye_L": [
+          "attachment"
+        ],
+        "eye_R": [
+          "attachment"
+        ],
+        "mao_body": [
+          "attachment"
+        ],
+        "mao_hand_L": [
+          "attachment"
+        ],
+        "mao_hand_R": [
+          "attachment"
+        ],
+        "mao_leg_L": [
+          "attachment"
+        ],
+        "mao_leg_R": [
+          "attachment"
+        ],
+        "mao_tail": [
+          "attachment"
+        ],
+        "meimao1": [
+          "attachment"
+        ]
+      },
+      "global": []
+    }
+  ],
+  "subtrees": {
+    "body": [
+      "hand_L",
+      "hand_L3",
+      "hand_R",
+      "hand_R3",
+      "hudieji",
+      "kele",
+      "leg_L1",
+      "leg_L3",
+      "leg_R1",
+      "leg_R3",
+      "waitao_L2",
+      "waitao_L3",
+      "waitao_L4",
+      "waitao_R2",
+      "waitao_R3",
+      "waitao_R4"
+    ],
+    "face": [
+      "bushuang1",
+      "bushuang2",
+      "erduo_L",
+      "erduo_L2",
+      "erduo_L3",
+      "erduo_R",
+      "erduo_R2",
+      "erduo_R3",
+      "eye_L",
+      "eye_R",
+      "hair_F",
+      "hair_F2",
+      "hair_F3",
+      "hair_F4",
+      "hair_F5",
+      "hair_L",
+      "hair_L10",
+      "hair_L2",
+      "hair_L3",
+      "hair_L4",
+      "hair_L5",
+      "hair_L6",
+      "hair_L7",
+      "hair_L8",
+      "hair_L9",
+      "hair_R",
+      "hair_R10",
+      "hair_R2",
+      "hair_R3",
+      "hair_R4",
+      "hair_R5",
+      "hair_R6",
+      "hair_R7",
+      "hair_R8",
+      "hair_R9",
+      "mawei_L",
+      "mawei_L2",
+      "mawei_L3",
+      "mawei_L4",
+      "mawei_L5",
+      "mawei_L7",
+      "mawei_R",
+      "mawei_R2",
+      "mawei_R3",
+      "mawei_R4",
+      "mawei_R5",
+      "mawei_R7",
+      "meimao1"
+    ],
+    "hand_L": [
+      "hand_L3",
+      "waitao_L2",
+      "waitao_L3",
+      "waitao_L4"
+    ],
+    "hand_R": [
+      "hand_R3",
+      "kele",
+      "waitao_R2",
+      "waitao_R3",
+      "waitao_R4"
+    ],
+    "leg_L1": [
+      "leg_L3"
+    ],
+    "leg_R1": [
+      "leg_R3"
+    ]
+  }
+}
