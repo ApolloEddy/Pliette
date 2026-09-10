@@ -1,0 +1,1085 @@
+{
+  "config": {
+    "runId": "run-llm-mimo-8s",
+    "date": "2026-09-10",
+    "profileDigest": "fnv1a64-ebdddc81287bc754",
+    "profileRevision": 2,
+    "model": "真实 LLM（config/llm.local.json）",
+    "note": "真实 LLM run：A/B 差异与 11.3 指标有效；冻结配置见本文件与档案 digest。",
+    "budgetKeys": [
+      "minDurationSec",
+      "maxDurationSec",
+      "maxControls",
+      "maxKeysPerCurve",
+      "maxTotalKeys",
+      "deadlineMs"
+    ],
+    "requests": [
+      {
+        "id": "q01",
+        "goal": "轻轻点头示意",
+        "kind": "basic"
+      },
+      {
+        "id": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic"
+      },
+      {
+        "id": "q03",
+        "goal": "害羞地挥挥手打招呼",
+        "kind": "basic"
+      },
+      {
+        "id": "q04",
+        "goal": "身体前倾认真倾听",
+        "kind": "basic"
+      },
+      {
+        "id": "q05",
+        "goal": "深呼吸一样起伏一下",
+        "kind": "basic"
+      },
+      {
+        "id": "q06",
+        "goal": "眨左眼 wink",
+        "kind": "basic"
+      },
+      {
+        "id": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo"
+      },
+      {
+        "id": "q08",
+        "goal": "倾身倾听并且眨眨眼",
+        "kind": "combo"
+      },
+      {
+        "id": "q09",
+        "goal": "向两边张开手臂再放下",
+        "kind": "combo"
+      },
+      {
+        "id": "q10",
+        "goal": "晕头晕脑地摇摇晃晃",
+        "kind": "combo"
+      }
+    ],
+    "runsPerGroup": 2
+  },
+  "results": [
+    {
+      "group": "A",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 471,
+      "latencyMs": 3549,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 436,
+      "latencyMs": 4649,
+      "validateOk": true,
+      "commitAccepted": false,
+      "status": "unsupported",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 749,
+      "latencyMs": 4546,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q03-g1\",\"contextId\":\"run-llm-mimo-8s-A-q03-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"shy-wave-greeting\",\"durationSec\":1.8,\"curves\":[{\"controlId\":\"arm.right.raise\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.4,\"value\":35,\"ease\":\"smooth\"},{\"timeSec\":0.8,\"value\":25,\"ea",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 draft.未知字段 face）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 1039,
+      "latencyMs": 7448,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 1200,
+      "latencyMs": 7668,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 461,
+      "latencyMs": 2338,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 687,
+      "latencyMs": 4298,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q07-g1\",\"contextId\":\"run-llm-mimo-8s-A-q07-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":0.8,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.2,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.4,\"value\":-10,\"ease\":\"smooth\"},",
+      "findings": [
+        "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 262.0/s）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 905,
+      "latencyMs": 7499,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 440,
+      "latencyMs": 3936,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q09-g1\",\"contextId\":\"run-llm-mimo-8s-A-q09-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"arm-open-close\",\"durationSec\":2,\"curves\":[{\"controlId\":\"arm.left.raise\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":60,\"ease\":\"smooth\"},{\"timeSec\":1.4,\"value\":60,\"ease\":\"s",
+      "findings": [
+        "[RANGE_VIOLATION] value/arm.left.raise@0.6-0.6s: 超出已验证域（作者候选超界优先拒绝，Spec 9.4）（期望 verified [-40, 45]（逐轴），实际 60）",
+        "[RANGE_VIOLATION] value/arm.left.raise@1.4-1.4s: 超出已验证域（作者候选超界优先拒绝，Spec 9.4）（期望 verified [-40, 45]（逐轴），实际 60）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q10",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 8000ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 433,
+      "latencyMs": 3300,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 408,
+      "latencyMs": 3442,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q02-g2\",\"contextId\":\"run-llm-mimo-8s-A-q02-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"blink\",\"durationSec\":0.15,\"curves\":[{\"controlId\":\"face.eyes.pair\",\"keys\":[{\"timeSec\":0,\"value\":\"open\",\"ease\":\"stepped\"},{\"timeSec\":0.05,\"value\":\"blink\",\"ease\":\"stepped\"},{\"timeSec\":0.15,\"value\":\"ope",
+      "findings": [
+        "[RANGE_VIOLATION] value: 时长超出请求预算（期望 [0.4, 2]s，实际 0.15s）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 524,
+      "latencyMs": 2551,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 829,
+      "latencyMs": 5647,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 504,
+      "latencyMs": 4349,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 462,
+      "latencyMs": 3444,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 686,
+      "latencyMs": 5337,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q07-g2\",\"contextId\":\"run-llm-mimo-8s-A-q07-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":0.8,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.2,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.4,\"value\":-5,\"ease\":\"smooth\"},{",
+      "findings": [
+        "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 209.6/s）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 816,
+      "latencyMs": 5845,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q08-g2\",\"contextId\":\"run-llm-mimo-8s-A-q08-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"leaning-listen-blink\",\"durationSec\":1.8,\"curves\":[{\"controlId\":\"torso.lean\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":-12,\"ease\":\"smooth\"},{\"timeSec\":1.8,\"value\":-8}]}],",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 draft.未知字段 head.nod）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 635,
+      "latencyMs": 4692,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "A",
+      "req": "q10",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 8000ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 468,
+      "latencyMs": 4521,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 415,
+      "latencyMs": 3521,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q02-g1\",\"contextId\":\"run-llm-mimo-8s-B-q02-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"blink-motion\",\"durationSec\":0.12,\"curves\":[{\"controlId\":\"face.eyes.pair\",\"keys\":[{\"timeSec\":0,\"value\":\"open\",\"ease\":\"stepped\"},{\"timeSec\":0.06,\"value\":\"blink\",\"ease\":\"stepped\"},{\"timeSec\":0.12,\"valu",
+      "findings": [
+        "[RANGE_VIOLATION] value: 时长超出请求预算（期望 [0.4, 2]s，实际 0.12s）"
+      ]
+    },
+    {
+      "group": "B",
+      "req": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 1161,
+      "latencyMs": 7542,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 806,
+      "latencyMs": 5705,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 466,
+      "latencyMs": 3759,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 460,
+      "latencyMs": 4301,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 598,
+      "latencyMs": 3937,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q07-g1\",\"contextId\":\"run-llm-mimo-8s-B-q07-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":0.6,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.15,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.35,\"value\":-5,\"ease\":\"smooth\"}",
+      "findings": [
+        "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(0.6)，实际 0.4）"
+      ]
+    },
+    {
+      "group": "B",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 1,
+      "bytes": 820,
+      "latencyMs": 6150,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q08-g1\",\"contextId\":\"run-llm-mimo-8s-B-q08-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"lean-listen-blink\",\"durationSec\":1.2,\"curves\":[{\"controlId\":\"torso.lean\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":1.2,\"value\":0}]},{\"cont",
+      "findings": [
+        "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(1.2)，实际 0.8）",
+        "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键携带无效 ease（期望 末键无 ease，实际 stepped）"
+      ]
+    },
+    {
+      "group": "B",
+      "req": "q09",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 8000ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q10",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 8000ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 689,
+      "latencyMs": 5886,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 456,
+      "latencyMs": 4224,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q03",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 8000ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 843,
+      "latencyMs": 5563,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 508,
+      "latencyMs": 3959,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 462,
+      "latencyMs": 3096,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 688,
+      "latencyMs": 4185,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q07-g2\",\"contextId\":\"run-llm-mimo-8s-B-q07-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":1.2,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.3,\"value\":30,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":-20,\"ease\":\"smooth\"},",
+      "findings": [
+        "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 343.4/s）"
+      ]
+    },
+    {
+      "group": "B",
+      "req": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 905,
+      "latencyMs": 7737,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 635,
+      "latencyMs": 4673,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "B",
+      "req": "q10",
+      "goal": "晕头晕脑地摇摇晃晃",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 1298,
+      "latencyMs": 6930,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q10-g2\",\"contextId\":\"run-llm-mimo-8s-B-q10-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"dizzy-sway\",\"durationSec\":1.2,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.3,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":-10,\"ease\":\"smooth\"}",
+      "findings": [
+        "[RATE_VIOLATION] sample/torso.bob: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 0.03/s，实际 16.7/s）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q01",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q01",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q02",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "findings": [
+        "[RANGE_VIOLATION] value: 时长超出请求预算（期望 [0.4, 2]s，实际 0.12s）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q02",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q03",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q03",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q04",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q04",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q05",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q05",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q06",
+      "gen": 1,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q06",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q07",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "findings": [
+        "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(0.6)，实际 0.4）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q07",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "findings": [
+        "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 343.4/s）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q08",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "findings": [
+        "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(1.2)，实际 0.8）",
+        "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键携带无效 ease（期望 末键无 ease，实际 stepped）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q08",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q09",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q09",
+      "gen": 2,
+      "validateOk": true,
+      "commitAccepted": true,
+      "status": "motion",
+      "findings": []
+    },
+    {
+      "group": "C",
+      "req": "q10",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q10",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "motion",
+      "findings": [
+        "[RATE_VIOLATION] sample/torso.bob: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 0.03/s，实际 16.7/s）"
+      ]
+    }
+  ],
+  "summary": {
+    "原始候选校验通过率": {
+      "A": "12/20（60%）",
+      "B": "12/20（60%）"
+    },
+    "程序接纳率_C": "12/20（60%）",
+    "拒绝明细": [
+      {
+        "group": "A",
+        "req": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic",
+        "gen": 1,
+        "bytes": 436,
+        "latencyMs": 4649,
+        "validateOk": true,
+        "commitAccepted": false,
+        "status": "unsupported",
+        "findings": []
+      },
+      {
+        "group": "A",
+        "req": "q03",
+        "goal": "害羞地挥挥手打招呼",
+        "kind": "basic",
+        "gen": 1,
+        "bytes": 749,
+        "latencyMs": 4546,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q03-g1\",\"contextId\":\"run-llm-mimo-8s-A-q03-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"shy-wave-greeting\",\"durationSec\":1.8,\"curves\":[{\"controlId\":\"arm.right.raise\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.4,\"value\":35,\"ease\":\"smooth\"},{\"timeSec\":0.8,\"value\":25,\"ea",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 draft.未知字段 face）"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo",
+        "gen": 1,
+        "bytes": 687,
+        "latencyMs": 4298,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q07-g1\",\"contextId\":\"run-llm-mimo-8s-A-q07-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":0.8,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.2,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.4,\"value\":-10,\"ease\":\"smooth\"},",
+        "findings": [
+          "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 262.0/s）"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q09",
+        "goal": "向两边张开手臂再放下",
+        "kind": "combo",
+        "gen": 1,
+        "bytes": 440,
+        "latencyMs": 3936,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q09-g1\",\"contextId\":\"run-llm-mimo-8s-A-q09-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"arm-open-close\",\"durationSec\":2,\"curves\":[{\"controlId\":\"arm.left.raise\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":60,\"ease\":\"smooth\"},{\"timeSec\":1.4,\"value\":60,\"ease\":\"s",
+        "findings": [
+          "[RANGE_VIOLATION] value/arm.left.raise@0.6-0.6s: 超出已验证域（作者候选超界优先拒绝，Spec 9.4）（期望 verified [-40, 45]（逐轴），实际 60）",
+          "[RANGE_VIOLATION] value/arm.left.raise@1.4-1.4s: 超出已验证域（作者候选超界优先拒绝，Spec 9.4）（期望 verified [-40, 45]（逐轴），实际 60）"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic",
+        "gen": 2,
+        "bytes": 408,
+        "latencyMs": 3442,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q02-g2\",\"contextId\":\"run-llm-mimo-8s-A-q02-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"blink\",\"durationSec\":0.15,\"curves\":[{\"controlId\":\"face.eyes.pair\",\"keys\":[{\"timeSec\":0,\"value\":\"open\",\"ease\":\"stepped\"},{\"timeSec\":0.05,\"value\":\"blink\",\"ease\":\"stepped\"},{\"timeSec\":0.15,\"value\":\"ope",
+        "findings": [
+          "[RANGE_VIOLATION] value: 时长超出请求预算（期望 [0.4, 2]s，实际 0.15s）"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo",
+        "gen": 2,
+        "bytes": 686,
+        "latencyMs": 5337,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q07-g2\",\"contextId\":\"run-llm-mimo-8s-A-q07-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":0.8,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.2,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.4,\"value\":-5,\"ease\":\"smooth\"},{",
+        "findings": [
+          "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 209.6/s）"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q08",
+        "goal": "倾身倾听并且眨眨眼",
+        "kind": "combo",
+        "gen": 2,
+        "bytes": 816,
+        "latencyMs": 5845,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-A-q08-g2\",\"contextId\":\"run-llm-mimo-8s-A-q08-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"leaning-listen-blink\",\"durationSec\":1.8,\"curves\":[{\"controlId\":\"torso.lean\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":-12,\"ease\":\"smooth\"},{\"timeSec\":1.8,\"value\":-8}]}],",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 draft.未知字段 head.nod）"
+        ]
+      },
+      {
+        "group": "B",
+        "req": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic",
+        "gen": 1,
+        "bytes": 415,
+        "latencyMs": 3521,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q02-g1\",\"contextId\":\"run-llm-mimo-8s-B-q02-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"blink-motion\",\"durationSec\":0.12,\"curves\":[{\"controlId\":\"face.eyes.pair\",\"keys\":[{\"timeSec\":0,\"value\":\"open\",\"ease\":\"stepped\"},{\"timeSec\":0.06,\"value\":\"blink\",\"ease\":\"stepped\"},{\"timeSec\":0.12,\"valu",
+        "findings": [
+          "[RANGE_VIOLATION] value: 时长超出请求预算（期望 [0.4, 2]s，实际 0.12s）"
+        ]
+      },
+      {
+        "group": "B",
+        "req": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo",
+        "gen": 1,
+        "bytes": 598,
+        "latencyMs": 3937,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q07-g1\",\"contextId\":\"run-llm-mimo-8s-B-q07-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":0.6,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.15,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.35,\"value\":-5,\"ease\":\"smooth\"}",
+        "findings": [
+          "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(0.6)，实际 0.4）"
+        ]
+      },
+      {
+        "group": "B",
+        "req": "q08",
+        "goal": "倾身倾听并且眨眨眼",
+        "kind": "combo",
+        "gen": 1,
+        "bytes": 820,
+        "latencyMs": 6150,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q08-g1\",\"contextId\":\"run-llm-mimo-8s-B-q08-g1-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"lean-listen-blink\",\"durationSec\":1.2,\"curves\":[{\"controlId\":\"torso.lean\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":1.2,\"value\":0}]},{\"cont",
+        "findings": [
+          "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(1.2)，实际 0.8）",
+          "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键携带无效 ease（期望 末键无 ease，实际 stepped）"
+        ]
+      },
+      {
+        "group": "B",
+        "req": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo",
+        "gen": 2,
+        "bytes": 688,
+        "latencyMs": 4185,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q07-g2\",\"contextId\":\"run-llm-mimo-8s-B-q07-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"nod-blink\",\"durationSec\":1.2,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.3,\"value\":30,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":-20,\"ease\":\"smooth\"},",
+        "findings": [
+          "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 343.4/s）"
+        ]
+      },
+      {
+        "group": "B",
+        "req": "q10",
+        "goal": "晕头晕脑地摇摇晃晃",
+        "kind": "combo",
+        "gen": 2,
+        "bytes": 1298,
+        "latencyMs": 6930,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "rawSnippet": "{\"status\":\"motion\",\"requestId\":\"run-llm-mimo-8s-B-q10-g2\",\"contextId\":\"run-llm-mimo-8s-B-q10-g2-ctx\",\"profileDigest\":\"fnv1a64-ebdddc81287bc754\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"dizzy-sway\",\"durationSec\":1.2,\"curves\":[{\"controlId\":\"head.nod\",\"keys\":[{\"timeSec\":0,\"value\":0,\"ease\":\"smooth\"},{\"timeSec\":0.3,\"value\":15,\"ease\":\"smooth\"},{\"timeSec\":0.6,\"value\":-10,\"ease\":\"smooth\"}",
+        "findings": [
+          "[RATE_VIOLATION] sample/torso.bob: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 0.03/s，实际 16.7/s）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q02",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "findings": [
+          "[RANGE_VIOLATION] value: 时长超出请求预算（期望 [0.4, 2]s，实际 0.12s）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q03",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q07",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "findings": [
+          "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(0.6)，实际 0.4）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q07",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "findings": [
+          "[RATE_VIOLATION] sample/head.nod: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 200/s，实际 343.4/s）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q08",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "findings": [
+          "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键必须收在时长处（期望 末键=durationSec(1.2)，实际 0.8）",
+          "[INVALID_TIMELINE] timeline/face.eyes.pair: 曲线 face.eyes.pair 末键携带无效 ease（期望 末键无 ease，实际 stepped）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q09",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q10",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q10",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "motion",
+        "findings": [
+          "[RATE_VIOLATION] sample/torso.bob: 满权重段真实轨迹速率超限（隔离实例采样）（期望 ≤ 0.03/s，实际 16.7/s）"
+        ]
+      }
+    ],
+    "免责": "Mock 输出确定性模板，A/B 差异无信息量；视觉通过率/延迟 p95/实际执行成功率等 Spec 11.3 指标必须等真实 LLM 实测，本 run 仅为管线工程验收。"
+  }
+}

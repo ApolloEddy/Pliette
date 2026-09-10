@@ -17,13 +17,49 @@ import { loadSkeleton } from "../src/assets/loader.js";
 import { parseControlProfile } from "../src/rig/controlProfile.js";
 import { assembleRequest } from "../src/motion/author/context.js";
 import { validateCandidate } from "../src/motion/author/validateV11.js";
-import { MockAuthorClient } from "../src/motion/author/client.js";
+import { MockAuthorClient, LlmAuthorClient, type AuthorClient } from "../src/motion/author/client.js";
 import { AuthorBroker } from "../src/motion/author/authorBroker.js";
 import { formatDiagnostic } from "../src/motion/author/diagnostics.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "..");
-const runId = process.argv[2] ?? "run1";
+const useLlm = process.argv.includes("--llm");
+// runId：第一个非 --llm 的位置参数；缺省 mock=run1 / llm=run-llm
+const positional = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+const runId = positional[0] ?? (useLlm ? "run-llm" : "run1");
+
+/** LLM 客户端装配：config/llm.local.json（gitignored，不含密钥）+ apiKeyEnv 指定的环境变量。 */
+function readLlmBudget(): { deadlineMs: number; maxOutputBytes: number } {
+  if (useLlm) {
+    try {
+      const cfg = JSON.parse(readFileSync(resolve(root, "config/llm.local.json"), "utf-8"));
+      if (typeof cfg.deadlineMs === "number") return { deadlineMs: cfg.deadlineMs, maxOutputBytes: 32 * 1024 };
+    } catch {}
+  }
+  return { deadlineMs: 2500, maxOutputBytes: 32 * 1024 };
+}
+
+function buildClient(budget: { deadlineMs: number; maxOutputBytes: number }): AuthorClient | null {
+  if (!useLlm) return new MockAuthorClient(5);
+  const cfgPath = resolve(root, "config/llm.local.json");
+  let cfg: { endpoint?: string; model?: string; temperature?: number; apiKeyEnv?: string; apiKey?: string };
+  try {
+    cfg = JSON.parse(readFileSync(cfgPath, "utf-8"));
+  } catch {
+    console.error(`⛔ 未找到 ${cfgPath}（--llm 需要）；或先用 Mock 跑 run1`);
+    return null;
+  }
+  const envName = cfg.apiKeyEnv ?? "";
+  const apiKey = cfg.apiKey ?? (envName ? process.env[envName] : undefined);
+  if (!cfg.endpoint || !cfg.model || !apiKey) {
+    console.error(`⛔ LLM 配置不完整：endpoint/model/${envName || "apiKey"} 缺失（密钥应放环境变量，不写入本文件）`);
+    return null;
+  }
+  return new LlmAuthorClient(
+    { endpoint: cfg.endpoint, apiKey, model: cfg.model, temperature: cfg.temperature, reasoningEffort: cfg.reasoningEffort },
+    { deadlineMs: budget.deadlineMs, maxBytes: budget.maxOutputBytes, label: runId },
+  );
+}
 
 // ---- 冻结配置 ----
 const profileSrc = JSON.parse(readFileSync(resolve(root, "characters/lafei_8.rig-profile.json"), "utf-8"));
@@ -56,8 +92,10 @@ const config = {
   date: new Date().toISOString().slice(0, 10),
   profileDigest: profile.profileDigest,
   profileRevision: profile.identity.profileRevision,
-  model: "mock-author(deterministic) —— LLM 实测未执行（无密钥）",
-  note: "工程验收 run：验证实验框架/统计/记录格式。A/B 质量差异需真实 LLM。",
+  model: useLlm ? "真实 LLM（config/llm.local.json）" : "mock-author(deterministic) —— LLM 实测未执行（无密钥）",
+  note: useLlm
+    ? "真实 LLM run：A/B 差异与 11.3 指标有效；冻结配置见本文件与档案 digest。"
+    : "工程验收 run：验证实验框架/统计/记录格式。A/B 质量差异需真实 LLM。",
   budgetKeys: ["minDurationSec", "maxDurationSec", "maxControls", "maxKeysPerCurve", "maxTotalKeys", "deadlineMs"],
   requests: REQUESTS,
   runsPerGroup: 2,
@@ -91,7 +129,9 @@ function buildRequest(groupId: "A" | "B", req: (typeof REQUESTS)[number], gen: n
 
 // ---- 执行 ----
 const broker = new AuthorBroker({ play: () => "sink", cancel: () => {} });
-const client = new MockAuthorClient(5);
+const client = buildClient(readLlmBudget());
+if (!client) process.exit(1);
+console.log(`客户端：${client.name}`);
 const results: Record<string, unknown>[] = [];
 let bRawCache = new Map<string, unknown>();
 
@@ -112,10 +152,23 @@ for (const group of ["A", "B"] as const) {
       }
       if (group === "B") bRawCache.set(`${req.id}-g${gen}`, raw);
       const v = validateCandidate(raw, request, profile, { skeletonData: bundle.skeletonData });
+      const findings = v.findings.map((f) => formatDiagnostic(f));
+      if (!v.ok || !v.response) {
+        // 程序筛选（C 组统计的"拒绝"）：候选未通过校验，不进入提交阶段
+        results.push({
+          group, req: req.id, goal: req.goal, kind: req.kind, gen, bytes,
+          latencyMs: Math.round(performance.now() - t0),
+          validateOk: false, commitAccepted: false,
+          status: v.response?.status ?? "invalid",
+          rawSnippet: JSON.stringify(raw).slice(0, 400),
+          findings,
+        });
+        continue;
+      }
       broker.begin(profile.identity.profileId, request.requestId, request.contextId, 1, request.generationBudget.deadlineMs);
       const commit = broker.commit(profile.identity.profileId, {
         request,
-        response: v.response!,
+        response: v.response,
         compiled: v.compiled,
         current: { monoClockMs: 0, viewId: "front", skinId: "default", stateVersion: 1, occupiedChannels: [], contacts: [] },
         occupiedChannels: new Set(),
@@ -130,8 +183,8 @@ for (const group of ["A", "B"] as const) {
         latencyMs: Math.round(performance.now() - t0),
         validateOk: v.ok,
         commitAccepted: commit.accepted,
-        status: v.response?.status,
-        findings: v.findings.map((f) => formatDiagnostic(f)),
+        status: v.response.status,
+        findings,
       });
     }
   }
@@ -144,10 +197,19 @@ for (const req of REQUESTS) {
     const raw = bRawCache.get(`${req.id}-g${gen}`);
     const request = buildRequest("B", req, gen);
     const v = validateCandidate(raw, request, profile, { skeletonData: bundle.skeletonData });
+    if (!v.ok || !v.response) {
+      // 校验未通过 = 程序筛选拒绝（真实 LLM 的候选会有相当比例落在这里）
+      results.push({
+        group: "C", req: req.id, gen, validateOk: false, commitAccepted: false,
+        status: v.response?.status ?? "invalid",
+        findings: v.findings.map((f) => formatDiagnostic(f)),
+      });
+      continue;
+    }
     brokerC.begin(profile.identity.profileId, request.requestId, request.contextId, 1, request.generationBudget.deadlineMs);
     const commit = brokerC.commit(profile.identity.profileId, {
       request,
-      response: v.response!,
+      response: v.response,
       compiled: v.compiled,
       current: { monoClockMs: 0, viewId: "front", skinId: "default", stateVersion: 1, occupiedChannels: [], contacts: [] },
       occupiedChannels: new Set(),
@@ -158,6 +220,7 @@ for (const req of REQUESTS) {
       gen,
       validateOk: v.ok,
       commitAccepted: commit.accepted,
+      status: v.response.status,
       findings: v.findings.map((f) => formatDiagnostic(f)),
     });
   }

@@ -1,0 +1,95 @@
+{
+  "status": "motion",
+  "requestId": "qual-llm_lean_blink",
+  "contextId": "qual-llm_lean_blink-ctx",
+  "profileDigest": "fnv1a64-ebdddc81287bc754",
+  "draft": {
+    "schemaVersion": "pliette.motion-draft/1.1",
+    "id": "qual-llm_lean_blink",
+    "durationSec": 1.5,
+    "curves": [
+      {
+        "controlId": "torso.lean",
+        "keys": [
+          {
+            "timeSec": 0,
+            "value": 0,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.3,
+            "value": 8,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.8,
+            "value": 8,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 1.2,
+            "value": 0,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 1.5,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "controlId": "head.nod",
+        "keys": [
+          {
+            "timeSec": 0,
+            "value": 0,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.4,
+            "value": 6,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.9,
+            "value": 6,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 1.3,
+            "value": 0,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 1.5,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "controlId": "face.eyes.pair",
+        "keys": [
+          {
+            "timeSec": 0,
+            "value": "open",
+            "ease": "stepped"
+          },
+          {
+            "timeSec": 0.6,
+            "value": "blink",
+            "ease": "stepped"
+          },
+          {
+            "timeSec": 0.75,
+            "value": "open",
+            "ease": "stepped"
+          },
+          {
+            "timeSec": 1.5,
+            "value": "open"
+          }
+        ]
+      }
+    ]
+  }
+}

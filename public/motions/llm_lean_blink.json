@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "id": "qual-llm_lean_blink",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 1.5,
+  "channels": [
+    "torso",
+    "head",
+    "face"
+  ],
+  "curves": [
+    {
+      "role": "body.root",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.3,
+          "value": 8,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.8,
+          "value": 8,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 1.2,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 1.5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "role": "head.main",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.4,
+          "value": 6,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.9,
+          "value": 6,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 1.3,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 1.5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "role": "face.eyes",
+      "property": "attachment",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": "eye_L",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.6,
+          "value": "eye_2_1",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.75,
+          "value": "eye_L",
+          "ease": "stepped"
+        },
+        {
+          "t": 1.5,
+          "value": "eye_L"
+        }
+      ]
+    },
+    {
+      "role": "face.eyeR",
+      "property": "attachment",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": "eye_R",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.6,
+          "value": "eye_2_2",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.75,
+          "value": "eye_R",
+          "ease": "stepped"
+        },
+        {
+          "t": 1.5,
+          "value": "eye_R"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "kind": "llm",
+    "note": "translated from pliette.motion-draft/1.1"
+  },
+  "approval": "draft"
+}

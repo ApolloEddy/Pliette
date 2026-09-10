@@ -1,0 +1,69 @@
+{
+  "runId": "run-llm-mimo",
+  "date": "2026-09-10",
+  "profileDigest": "fnv1a64-ebdddc81287bc754",
+  "profileRevision": 2,
+  "model": "真实 LLM（config/llm.local.json）",
+  "note": "真实 LLM run：A/B 差异与 11.3 指标有效；冻结配置见本文件与档案 digest。",
+  "budgetKeys": [
+    "minDurationSec",
+    "maxDurationSec",
+    "maxControls",
+    "maxKeysPerCurve",
+    "maxTotalKeys",
+    "deadlineMs"
+  ],
+  "requests": [
+    {
+      "id": "q01",
+      "goal": "轻轻点头示意",
+      "kind": "basic"
+    },
+    {
+      "id": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic"
+    },
+    {
+      "id": "q03",
+      "goal": "害羞地挥挥手打招呼",
+      "kind": "basic"
+    },
+    {
+      "id": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic"
+    },
+    {
+      "id": "q05",
+      "goal": "深呼吸一样起伏一下",
+      "kind": "basic"
+    },
+    {
+      "id": "q06",
+      "goal": "眨左眼 wink",
+      "kind": "basic"
+    },
+    {
+      "id": "q07",
+      "goal": "点头的同时眨眼",
+      "kind": "combo"
+    },
+    {
+      "id": "q08",
+      "goal": "倾身倾听并且眨眨眼",
+      "kind": "combo"
+    },
+    {
+      "id": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo"
+    },
+    {
+      "id": "q10",
+      "goal": "晕头晕脑地摇摇晃晃",
+      "kind": "combo"
+    }
+  ],
+  "runsPerGroup": 2
+}

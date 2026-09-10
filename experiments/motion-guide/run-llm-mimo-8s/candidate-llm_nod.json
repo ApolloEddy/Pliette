@@ -1,0 +1,61 @@
+{
+  "status": "motion",
+  "requestId": "qual-llm_nod",
+  "contextId": "qual-llm_nod-ctx",
+  "profileDigest": "fnv1a64-ebdddc81287bc754",
+  "draft": {
+    "schemaVersion": "pliette.motion-draft/1.1",
+    "id": "nod_gesture",
+    "durationSec": 0.8,
+    "curves": [
+      {
+        "controlId": "head.nod",
+        "keys": [
+          {
+            "timeSec": 0,
+            "value": 0,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.2,
+            "value": 15,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.4,
+            "value": -5,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.6,
+            "value": 10,
+            "ease": "smooth"
+          },
+          {
+            "timeSec": 0.8,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "controlId": "face.eyes.pair",
+        "keys": [
+          {
+            "timeSec": 0,
+            "value": "blink",
+            "ease": "stepped"
+          },
+          {
+            "timeSec": 0.1,
+            "value": "open",
+            "ease": "stepped"
+          },
+          {
+            "timeSec": 0.8,
+            "value": "open"
+          }
+        ]
+      }
+    ]
+  }
+}

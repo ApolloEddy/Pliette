@@ -9,7 +9,7 @@
 | M0 仓库与资产基线 | ✅ | 55/55 测试基线、复用映射表（`implementation-plan.md`） |
 | M1 主角色指导书 | ✅ | 拉菲档案 v2（8 开放控制/6 规则/12 证据），探针 89 步 + 速率挖掘出证，指导书生成 |
 | M2 候选通路与验证 | ✅ | 协议 V1.1/规则解释器/翻译/官方编译/隔离采样/AuthorBroker/14 诊断码，测试 94/94 |
-| M3 受限在线与实验 | ⚠️ 部分 | 管线全链路本地验收（Mock+候选导入+Lab 面板+A/B/C 骨架+浸泡）；**LLM 实测未做（无密钥）** |
+| M3 受限在线与实验 | ✅（工程+首轮实测） | Mock 全链路验收 + **真实 LLM（mimo-v2.5）A/B/C 首轮实测**（见 §2）；11.4 在线门槛未达标，在线 Author 保持关闭 |
 | M4 第二骨架与总验收 | ✅（机制级） | spineboy（官方示例）标定+档案+指导书+跨角色隔离测试；类型限制已注明 |
 
 测试：**94/94 通过**（新增 control-profile 13、author-pipeline 20、cross-character 6，原 55 全保留）。
@@ -31,14 +31,18 @@
 
 **首轮质量改善多少；程序拒绝了多少；有哪些剩余视觉问题？**
 - A/B/C run1（Mock，`experiments/motion-guide/run1/`）：A/B 校验通过 20/20，C 接纳 20/20。**该 run 只证明实验框架与统计管线正确，不证明指导书对生成质量的改善**——Mock 输出与上下文无关，A/B 差异无信息量。
-- 视觉通过率、实际执行成功率、p95 延迟等 Spec 11.3 指标：**未测**（无 LLM 密钥，见 §3 阻塞）。
+- **真实 LLM 首轮实测**（mimo-v2.5，reasoning_effort=none，`experiments/motion-guide/run-llm-mimo-8s/`）：A/B/C 各 12/20（60%）。失败分布真实多样：5 次超 8s 截止、时长出预算（0.12s<0.4s）、幅度超 verified（60>45）、轨迹速率超限（262°/s>200）、偶发自造字段。A 与 B 通过率相同（n=20 太小，且校验通过率只是代理指标——视觉通过率须人工评分，未做）。
+- 视觉通过率（人工评分）、实际执行成功率：**未测**（需看画面评分流程）。11.4 在线门槛（B 首轮视觉 ≥90%、p95 ≤2000ms）**未达标**：延迟实测中位 ~4.5s。→ 在线 Author 保持关闭，保留 Select/Tune。
 - 剩余视觉问题（已知）：躯干位移超 ±0.02H 头身分离（反例已入档案）；拉菲兄弟拓扑下"倾身"必须双曲线组合，单给 torso.lean 视觉不自然（指导书已写明）；spineboy rear 臂未开放。
 
 **请求到动作的完整延迟是多少，在什么硬件、服务和设置下测得？**
-- 未测 LLM 端到端。管线本地耗时（开发机，Mock 120ms 模拟延迟）：校验+编译+采样 <5ms（vitest 计时），Lab Mock 全链路（含模拟延迟）~0.5s 内完成提交。请求截止 2500ms 从提交计时，超期响应在 AuthorBroker 拒绝（DEADLINE_EXCEEDED，测试覆盖）。
+- 真实测量（开发机、mimo-v2.5、reasoning_effort=none、max_tokens=1536）：被接纳候选 2338~7737ms，中位约 4.5s；5/60 次超 8000ms 截止被丢弃。
+- 截止调整记录（Spec 8.4）：默认 2500ms 实测 58% 超时 → 记录后调整为 8000ms（`config/llm.local.json` 的 deadlineMs）。
+- 管线本地开销：校验+编译+采样 <5ms（vitest 计时）——延迟大头完全在 LLM 服务端。
 
 **新动作是否真正由 LLM 创作？**
-- 本轮全部候选来自 Mock 模板与候选导入，**没有 LLM 创作结果**。协议、校验、编译、调度、拒绝统计均为真实实现——LLM 接入后（`config/llm.local.json` 填 endpoint/apiKey/model）`LlmAuthorClient` 即为生产路径，Select 层（对话）不受影响。
+- **是（首轮实测已发生）**：run-llm-mimo-8s 中 B 组 12 个候选由模型在登记 controlId 与标定域内创作了全新数值曲线，经七步验证后接纳播放；原始输出留存 `experiments/motion-guide/run-llm-mimo-8s/candidate-llm_nod.json`，翻译后可播放草稿 `public/motions/llm_nod.json`、`llm_lean_blink.json`（点头+眨眼组合，截图复核角色完好、眼睛按配对归位）。
+- 未达标候选同样是有效证据：校验层如实拒绝超速/超域/超预算并记录原因——程序边界真实生效。
 
 **如何启动、复现实验、切换角色、关闭在线生成并回到已有播放？**
 - Lab：`npm run dev` → `http://localhost:5174/?asset=lafei_8&view=flat`，右侧「Author 在线通路 V1.1」面板：查看请求上下文 / Mock 在线生成 / 候选导入验证播放。

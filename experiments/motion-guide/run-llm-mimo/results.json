@@ -1,0 +1,873 @@
+{
+  "config": {
+    "runId": "run-llm-mimo",
+    "date": "2026-09-10",
+    "profileDigest": "fnv1a64-ebdddc81287bc754",
+    "profileRevision": 2,
+    "model": "真实 LLM（config/llm.local.json）",
+    "note": "真实 LLM run：A/B 差异与 11.3 指标有效；冻结配置见本文件与档案 digest。",
+    "budgetKeys": [
+      "minDurationSec",
+      "maxDurationSec",
+      "maxControls",
+      "maxKeysPerCurve",
+      "maxTotalKeys",
+      "deadlineMs"
+    ],
+    "requests": [
+      {
+        "id": "q01",
+        "goal": "轻轻点头示意",
+        "kind": "basic"
+      },
+      {
+        "id": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic"
+      },
+      {
+        "id": "q03",
+        "goal": "害羞地挥挥手打招呼",
+        "kind": "basic"
+      },
+      {
+        "id": "q04",
+        "goal": "身体前倾认真倾听",
+        "kind": "basic"
+      },
+      {
+        "id": "q05",
+        "goal": "深呼吸一样起伏一下",
+        "kind": "basic"
+      },
+      {
+        "id": "q06",
+        "goal": "眨左眼 wink",
+        "kind": "basic"
+      },
+      {
+        "id": "q07",
+        "goal": "点头的同时眨眼",
+        "kind": "combo"
+      },
+      {
+        "id": "q08",
+        "goal": "倾身倾听并且眨眨眼",
+        "kind": "combo"
+      },
+      {
+        "id": "q09",
+        "goal": "向两边张开手臂再放下",
+        "kind": "combo"
+      },
+      {
+        "id": "q10",
+        "goal": "晕头晕脑地摇摇晃晃",
+        "kind": "combo"
+      }
+    ],
+    "runsPerGroup": 2
+  },
+  "results": [
+    {
+      "group": "A",
+      "req": "q01",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 497,
+      "latencyMs": 2023,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"motion\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"durationSec\":0.5,\"channels\":[{\"controlId\":\"face.eyes.pair\",\"kind\":\"enum\",\"curve\":\"stepped\",\"keys\":[{\"t\":0,\"value\":\"open\"},{\"t\":0.1,\"value\":\"blink\"},{\"t\":0.2,\"value\":\"open\"}]}]}}",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 requestId 必须为非空字符串）"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q03",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q04",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q05",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q06",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q07",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q08",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q09",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q10",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q01",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 233,
+      "latencyMs": 2437,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"unsupported\",\"reason\":\"availableControls 中没有直接控制眼睑闭合的 control。face.eyes.pair 只提供预设表情枚举（如 blink），无法精确控制“眨一下眼”的时序和闭合程度。\"}",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 未知字段 reason（unsupported 响应不允许））"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q03",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q04",
+      "goal": "身体前倾认真倾听",
+      "kind": "basic",
+      "gen": 2,
+      "bytes": 258,
+      "latencyMs": 2284,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"needs_context\",\"reason\":\"请求的目标“身体前倾认真倾听”需要组合躯干前倾（torso.lean）和头部前倾（head.nod）的曲线，但未提供具体参数，如倾斜角度、持续时间、起始/结束时间等。\"}",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 未知字段 reason（needs_context 响应不允许））"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q05",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q06",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q07",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q08",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "A",
+      "req": "q09",
+      "goal": "向两边张开手臂再放下",
+      "kind": "combo",
+      "gen": 2,
+      "bytes": 241,
+      "latencyMs": 2247,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"needs_context\",\"reason\":\"goal '向两边张开手臂再放下' 需要明确：1) 持续时间（sec）；2) 开始和结束的具体手臂角度（度）；3) 运动曲线类型（线性或平滑）。缺少这些关键参数。\"}",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 未知字段 reason（needs_context 响应不允许））"
+      ]
+    },
+    {
+      "group": "A",
+      "req": "q10",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q01",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q02",
+      "goal": "对镜头眨一下眼",
+      "kind": "basic",
+      "gen": 1,
+      "bytes": 433,
+      "latencyMs": 2494,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "rawSnippet": "{\"status\":\"motion\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"durationSec\":0.5,\"controls\":[{\"controlId\":\"face.eyes.pair\",\"kind\":\"composite\",\"keys\":[{\"t\":0,\"value\":\"open\",\"curve\":\"stepped\"},{\"t\":0.15,\"value\":\"blink\",\"curve\":\"stepped\"},{\"t\":0.3,\"value\":\"open\",\"curve\":\"stepped\"}]}]}}",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 requestId 必须为非空字符串）"
+      ]
+    },
+    {
+      "group": "B",
+      "req": "q03",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q04",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q05",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q06",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q07",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q08",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q09",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q10",
+      "gen": 1,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q01",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q02",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q03",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q04",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q05",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q06",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q07",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q08",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q09",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "B",
+      "req": "q10",
+      "gen": 2,
+      "outcome": "client_error",
+      "error": "请求截止 2500ms（从提交计时）"
+    },
+    {
+      "group": "C",
+      "req": "q01",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q01",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q02",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 requestId 必须为非空字符串）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q02",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q03",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q03",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q04",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q04",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q05",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q05",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q06",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q06",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q07",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q07",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q08",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q08",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q09",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q09",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q10",
+      "gen": 1,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    },
+    {
+      "group": "C",
+      "req": "q10",
+      "gen": 2,
+      "validateOk": false,
+      "commitAccepted": false,
+      "status": "invalid",
+      "findings": [
+        "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+      ]
+    }
+  ],
+  "summary": {
+    "原始候选校验通过率": {
+      "A": "0/20（0%）",
+      "B": "0/20（0%）"
+    },
+    "程序接纳率_C": "0/20（0%）",
+    "拒绝明细": [
+      {
+        "group": "A",
+        "req": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic",
+        "gen": 1,
+        "bytes": 497,
+        "latencyMs": 2023,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"motion\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"durationSec\":0.5,\"channels\":[{\"controlId\":\"face.eyes.pair\",\"kind\":\"enum\",\"curve\":\"stepped\",\"keys\":[{\"t\":0,\"value\":\"open\"},{\"t\":0.1,\"value\":\"blink\"},{\"t\":0.2,\"value\":\"open\"}]}]}}",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 requestId 必须为非空字符串）"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic",
+        "gen": 2,
+        "bytes": 233,
+        "latencyMs": 2437,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"unsupported\",\"reason\":\"availableControls 中没有直接控制眼睑闭合的 control。face.eyes.pair 只提供预设表情枚举（如 blink），无法精确控制“眨一下眼”的时序和闭合程度。\"}",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 未知字段 reason（unsupported 响应不允许））"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q04",
+        "goal": "身体前倾认真倾听",
+        "kind": "basic",
+        "gen": 2,
+        "bytes": 258,
+        "latencyMs": 2284,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"needs_context\",\"reason\":\"请求的目标“身体前倾认真倾听”需要组合躯干前倾（torso.lean）和头部前倾（head.nod）的曲线，但未提供具体参数，如倾斜角度、持续时间、起始/结束时间等。\"}",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 未知字段 reason（needs_context 响应不允许））"
+        ]
+      },
+      {
+        "group": "A",
+        "req": "q09",
+        "goal": "向两边张开手臂再放下",
+        "kind": "combo",
+        "gen": 2,
+        "bytes": 241,
+        "latencyMs": 2247,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"needs_context\",\"reason\":\"goal '向两边张开手臂再放下' 需要明确：1) 持续时间（sec）；2) 开始和结束的具体手臂角度（度）；3) 运动曲线类型（线性或平滑）。缺少这些关键参数。\"}",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 未知字段 reason（needs_context 响应不允许））"
+        ]
+      },
+      {
+        "group": "B",
+        "req": "q02",
+        "goal": "对镜头眨一下眼",
+        "kind": "basic",
+        "gen": 1,
+        "bytes": 433,
+        "latencyMs": 2494,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "rawSnippet": "{\"status\":\"motion\",\"draft\":{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"durationSec\":0.5,\"controls\":[{\"controlId\":\"face.eyes.pair\",\"kind\":\"composite\",\"keys\":[{\"t\":0,\"value\":\"open\",\"curve\":\"stepped\"},{\"t\":0.15,\"value\":\"blink\",\"curve\":\"stepped\"},{\"t\":0.3,\"value\":\"open\",\"curve\":\"stepped\"}]}]}}",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 requestId 必须为非空字符串）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q01",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q01",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q02",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 requestId 必须为非空字符串）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q02",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q03",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q03",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q04",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q04",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q05",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q05",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q06",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q06",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q07",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q07",
+        "gen": 2,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      },
+      {
+        "group": "C",
+        "req": "q08",
+        "gen": 1,
+        "validateOk": false,
+        "commitAccepted": false,
+        "status": "invalid",
+        "findings": [
+          "[INVALID_TIMELINE] response: 响应结构不合法（期望 严格判别联合响应，实际 响应必须是对象）"
+        ]
+      }
+    ],
+    "免责": "Mock 输出确定性模板，A/B 差异无信息量；视觉通过率/延迟 p95/实际执行成功率等 Spec 11.3 指标必须等真实 LLM 实测，本 run 仅为管线工程验收。"
+  }
+}

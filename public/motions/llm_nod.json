@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "nod_gesture",
+  "rigProfile": "lafei_8.front.v1",
+  "durationSec": 0.8,
+  "channels": [
+    "head",
+    "face"
+  ],
+  "curves": [
+    {
+      "role": "head.main",
+      "property": "rotate",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": 0,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.2,
+          "value": 15,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.4,
+          "value": -5,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.6,
+          "value": 10,
+          "ease": "bezier",
+          "bezierCP": [
+            0.25,
+            0.1,
+            0.25,
+            1
+          ]
+        },
+        {
+          "t": 0.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "role": "face.eyes",
+      "property": "attachment",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": "eye_2_1",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.1,
+          "value": "eye_L",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.8,
+          "value": "eye_L"
+        }
+      ]
+    },
+    {
+      "role": "face.eyeR",
+      "property": "attachment",
+      "mode": "relativeToReference",
+      "keys": [
+        {
+          "t": 0,
+          "value": "eye_2_2",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.1,
+          "value": "eye_R",
+          "ease": "stepped"
+        },
+        {
+          "t": 0.8,
+          "value": "eye_R"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "kind": "llm",
+    "note": "translated from pliette.motion-draft/1.1"
+  },
+  "approval": "draft"
+}

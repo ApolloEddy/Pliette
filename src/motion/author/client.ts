@@ -23,12 +23,20 @@ export class TruncatedOutputError extends Error {}
 /** 渲染系统提示：只描述协议与边界；模型知识与数值范围来自请求包（单一来源）。 */
 export function buildSystemPrompt(profile: ControlProfile): string {
   return [
-    "你是桌面角色的受限动作创作者。根据请求包中的 goal、runtimeState 与 availableControls，",
-    `输出一个 JSON 对象：status=motion（附 draft，schemaVersion=${"pliette.motion-draft/1.1"}）或 unsupported/needs_context。`,
-    "draft 只能引用 availableControls 中的 controlId；键时间从 0 到 durationSec；数值有限；",
-    "连续参数 ease 只用 linear/smooth；枚举（附件）曲线只用 stepped。",
-    "不确定就返回 unsupported；缺信息就返回 needs_context——不要猜参数。",
-    "只输出 JSON，不输出其他任何文本。",
+    "你是桌面角色的受限动作创作者。根据用户消息中的请求 JSON（goal、runtimeState、availableControls），",
+    "输出一个 JSON 对象作为响应。响应必须是下面三种形状之一（字段名一字不差，全部必需）：",
+    '1. {"status":"motion","requestId":"<原样回传>","contextId":"<原样回传>","profileDigest":"<原样回传>","draft":{...}}',
+    '2. {"status":"unsupported","requestId":"…","contextId":"…","profileDigest":"…","reasonCode":"…","details":"…"}',
+    '3. {"status":"needs_context","requestId":"…","contextId":"…","profileDigest":"…","requestedCapabilities":["…"],"details":"…"}',
+    "draft 形状：{\"schemaVersion\":\"pliette.motion-draft/1.1\",\"id\":\"…\",\"durationSec\":<有限正数>,\"curves\":[...]}，",
+    "每条 curve：{\"controlId\":\"<只能取自 availableControls>\",\"keys\":[{\"timeSec\":<秒>,\"value\":<值>,\"ease\":\"linear\"|\"smooth\"}]}；",
+    "首键 timeSec=0、末键 timeSec=durationSec（末键不带 ease）；每曲线 2~6 键；数值控制 value=数字，向量控制 value=[x,y]，枚举控制 value=字符串且只允许枚举集合内；附件/枚举段 ease 一律 \"stepped\"。",
+    "requestId、contextId、profileDigest 三项必须从请求 JSON 原样复制到响应，不得省略或改名。",
+    "两个最易犯的硬错误：① 最后一个 key 绝不带 ease 字段；② 最后一个 key 的 timeSec 必须恰好等于 durationSec。",
+    "规范小示例（仅示意形状，数值必须来自请求）：",
+    '{"status":"motion","requestId":"r1","contextId":"c1","profileDigest":"fnv1a64-xx","draft":{"schemaVersion":"pliette.motion-draft/1.1","id":"d1","durationSec":1.0,"curves":[{"controlId":"<请求提供的id>","keys":[{"timeSec":0,"value":0,"ease":"smooth"},{"timeSec":0.5,"value":10,"ease":"smooth"},{"timeSec":1.0,"value":0}]}]}}',
+    "不确定就返回 unsupported（reasonCode 简短英文标识）；缺信息就返回 needs_context——不要猜参数。",
+    "只输出一个 JSON 对象：不要 markdown 代码围栏、不要注释、不要 JSON 之外的任何文字。",
   ].join("\n");
 }
 
@@ -38,12 +46,23 @@ interface ChatCompletionResponse {
   usage?: { total_tokens?: number };
 }
 
+/** 剥离 markdown 代码围栏（```json … ```），并截取首个 { 到最后一个 } 的 JSON 主体。 */
+export function stripCodeFence(text: string): string {
+  let t = text.trim();
+  const fence = t.match(/^```[a-zA-Z]*\s*\n([\s\S]*?)\n?```$/);
+  if (fence) t = fence[1].trim();
+  const first = t.indexOf("{");
+  const last = t.lastIndexOf("}");
+  if (first >= 0 && last > first) t = t.slice(first, last + 1);
+  return t;
+}
+
 export class LlmAuthorClient implements AuthorClient {
   readonly name: string;
   private controller: AbortController | null = null;
 
   constructor(
-    private cfg: { endpoint: string; apiKey: string; model: string; temperature?: number },
+    private cfg: { endpoint: string; apiKey: string; model: string; temperature?: number; reasoningEffort?: string },
     private opts: { deadlineMs: number; maxBytes: number; fetchImpl?: typeof fetch; label?: string } ,
   ) {
     this.name = `llm-author(${cfg.model}${opts.label ? `@${opts.label}` : ""})`;
@@ -58,22 +77,41 @@ export class LlmAuthorClient implements AuthorClient {
     const started = Date.now();
     this.controller = new AbortController();
     const timer = setTimeout(() => this.controller?.abort(), this.opts.deadlineMs);
+    const buildBody = (useJsonMode: boolean) =>
+      JSON.stringify({
+        model: this.cfg.model,
+        temperature: this.cfg.temperature ?? 0.7,
+        max_tokens: request.generationBudget.maxOutputTokens,
+        ...(this.cfg.reasoningEffort ? { reasoning_effort: this.cfg.reasoningEffort } : {}),
+        ...(useJsonMode ? { response_format: { type: "json_object" } } : {}),
+        messages: [
+          { role: "system", content: buildSystemPrompt(profile) },
+          { role: "user", content: JSON.stringify(request) },
+        ],
+      });
     try {
-      const res = await this.opts.fetchImpl?.call(globalThis, this.cfg.endpoint, {
+      const doFetch = this.opts.fetchImpl ?? fetch.bind(globalThis);
+      let res = await doFetch(this.cfg.endpoint, {
         method: "POST",
         signal: this.controller.signal,
         headers: { "content-type": "application/json", authorization: `Bearer ${this.cfg.apiKey}` },
-        body: JSON.stringify({
-          model: this.cfg.model,
-          temperature: this.cfg.temperature ?? 0.7,
-          response_format: { type: "json_object" },
-          messages: [
-            { role: "system", content: buildSystemPrompt(profile) },
-            { role: "user", content: JSON.stringify(request) },
-          ],
-        }),
+        body: buildBody(true),
       });
       if (!res) throw new Error("fetch 不可用");
+      // 部分兼容端点不支持 response_format：回退普通模式重试一次（仍在同一截止内）
+      if (res.status === 400) {
+        const errText = await res.text();
+        if (/response_format|json_object/i.test(errText)) {
+          res = await doFetch(this.cfg.endpoint, {
+            method: "POST",
+            signal: this.controller.signal,
+            headers: { "content-type": "application/json", authorization: `Bearer ${this.cfg.apiKey}` },
+            body: buildBody(false),
+          });
+        } else {
+          throw new Error(`HTTP 400: ${errText.slice(0, 200)}`);
+        }
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const body = (await res.json()) as ChatCompletionResponse;
       const text = body.choices?.[0]?.message?.content ?? "";
@@ -84,9 +122,9 @@ export class LlmAuthorClient implements AuthorClient {
       }
       let raw: unknown = null;
       try {
-        raw = JSON.parse(text);
+        raw = JSON.parse(stripCodeFence(text));
       } catch {
-        throw new TruncatedOutputError("响应不是完整 JSON（截断或夹带文本）");
+        throw new TruncatedOutputError("响应不是完整 JSON（截断、围栏或夹带文本）");
       }
       return {
         text,
