@@ -1,13 +1,18 @@
 <div align="center">
 
-<img src="assets/pliette-logo-app-wordmark-white-1254.png" alt="Pliette 纸栖" width="260" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/Logo/pliette-logo-app-wordmark-white-1254.png">
+  <img src="assets/Logo/pliette-logo-app-wordmark-white-1254.png" alt="Pliette 纸栖" width="240" />
+</picture>
 
 **Pliette（纸栖）** — 让喜欢的 Spine 纸片角色住在桌面 3D 房间里：
 能看见你、听你说话，根据情境实时地说话和做动作。
 
-Spine 3.6 官方运行时 · 通道切片动作架构 · Three.js 3D 场景 · Apache-2.0
+![License](https://img.shields.io/badge/License-Apache--2.0-blue) ![Tests](https://img.shields.io/badge/tests-94%20passing-brightgreen) ![Spine](https://img.shields.io/badge/Spine%20Runtime-3.6.53-orange) ![Node](https://img.shields.io/badge/node-%E2%89%A518-green)
 
-[快速开始](#快速开始) · [架构](#架构) · [动作管线](#动作管线为什么这样做) · [路线图](#路线图) · [许可证](#许可证)
+Spine 3.6 官方运行时 · 通道切片动作架构 · 模型专属动作指导书 · Three.js 3D 场景 · Apache-2.0
+
+[快速开始](#快速开始) · [架构](#架构) · [动作管线](#动作管线为什么这样做) · [动作指导书](#动作指导书与受限-author-通路) · [许可证](#许可证)
 
 </div>
 
@@ -22,8 +27,9 @@ Pliette 是一个桌面 AI 伴侣的技术原型：你喜欢的角色生活在�
 
 我们的结论（经两轮对照实验验证）：动作质量存在于专业美术数据中，不存在于参数里。
 因此 Pliette 的动作管线 = **官方美术动画的自动勘探切片 + 身体通道叠加 + 行为层编排**，
-LLM 只负责它可靠的部分——听懂语境、选择行为、填写有界参数。详细论证见
-[docs/decision-motion-pipeline.md](docs/decision-motion-pipeline.md) 与
+LLM 负责它可靠的部分——听懂语境、选择行为（Select 层），以及在
+**经过实测标定的档案范围内**创作受限的短动作关键帧（Author 通路，见下文）。
+详细论证见 [docs/decision-motion-pipeline.md](docs/decision-motion-pipeline.md) 与
 [docs/research-realtime-motion.md](docs/research-realtime-motion.md)。
 
 ## 快速开始
@@ -35,7 +41,7 @@ git clone <repo-url> pliette && cd pliette
 npm install
 
 npm run dev          # 浏览器打开 Motion Lab（推荐先看 ?asset=lafei_8&auto=1）
-npm test             # 55 项测试
+npm test             # 94 项测试
 npm run build        # 生产构建
 npm run desktop:dev  # Electron 桌面窗口
 ```
@@ -54,6 +60,7 @@ npm run desktop:dev  # Electron 桌面窗口
 | `?anim=walk&freezeAt=2` | 指定基础动画并冻结到该秒（逐帧检查） |
 | `?gesture=wave&hand=auto&cancelAt=2.2` | 经调度器播放手势库动作，可脚本化取消 |
 | `?overlay=stand:rightArm:4.9:7.3` | 任意原动画 × 身体通道 × 时间窗切片叠加 |
+| `?probeControl=arm.upper.right\|rotate\|30&freezeAt=0.5` | 单控制标定探针（隔离实例 + setup 参考 + 定值冻结） |
 | `?scenario=a08` / `?scenario=touch` | 走向椅子坐下 / 触碰矮桌（含接触误差实测） |
 | `?eyes=eye_4_1,eye_4_2` | 眼部附件变体探针 |
 | `?event=greet` | 对话事件配方（Select 层） |
@@ -64,10 +71,12 @@ npm run desktop:dev  # Electron 桌面窗口
 | 模块 | 职责 |
 | --- | --- |
 | `src/assets/` | 官方运行时加载器（版本锁定校验）、AssetInspector、atlas 坐标缩放（支持超分贴图） |
-| `src/rig/` | RigProfile 语义绑定（局部 Fk / IK 目标 / Slot 状态）、探针 |
+| `src/rig/controlProfile.ts` | **控制档案**：角色身份（assetDigest/参考姿态 digest/坐标约定）、控制器字典（实测域/速率/写集/证据）、有限规则、确定性 profileDigest |
+| `src/rig/rigProfile.ts` | 语义绑定层（controlId → 真实骨骼的唯一映射） |
 | `src/motion/authoring/` | MotionDraft 契约与固定 Primitive（Tune 模式） |
+| `src/motion/author/` | **受限 Author 通路**：V1.1 协议、规则解释器、隔离采样验证、AuthorBroker（单飞/截止/陈旧性/幂等）、LLM 客户端 |
 | `src/motion/compiler/` | Ajv 校验、Draft→3.6 Timeline 编译、官方运行时采样验证 |
-| `src/motion/library/` | **通道切片叠加（overlay）与手势库**——本项目动作管线的核心 |
+| `src/motion/library/` | **通道切片叠加（overlay）与手势库**——动作质量的核心来源 |
 | `src/motion/parameters/` | 参数注册表、StyleProfile、Preset 与动作目录 |
 | `src/motion/runtime/` | 调度器（七通道、幂等、冲突、auto 换手、局部取消）、切片播放层 |
 | `src/render/` · `src/scene/` | Spine 透明画布 → CanvasTexture → 双面纸片；35° 主镜头房间 |
@@ -91,10 +100,39 @@ npm run desktop:dev  # Electron 桌面窗口
 对话文本 ─→ Select 层（事件配方）──────↑
 ```
 
-LLM（或任何决策器）只站在最上层选择与编排，永远不生成骨骼数据。
+LLM（或任何决策器）站在最上层选择与编排；在 Author 通路里，它还可以在档案边界内创作。
 完整的实验数据、失败模式分析与路线对比见
 [docs/decision-motion-pipeline.md](docs/decision-motion-pipeline.md) 和
 [docs/research-realtime-motion.md](docs/research-realtime-motion.md)。
+
+## 动作指导书与受限 Author 通路
+
+在 Select 之上，Pliette 为每个真实角色建立了一份**实测背书的"身体使用说明书"**，
+让 LLM 能在登记范围内创作从未保存过的数值关键帧，由程序负责验证、编译、调度与播放：
+
+```
+角色档案（唯一来源，characters/<model>.rig-profile.json）
+   ├─→ Guide Builder ─→ 角色说明书（docs/motion-guides/*.md，GENERATED）
+   └─→ 请求装配（availableControls + 依赖闭包必带规则 + 指导片段 + 预算）
+                ↓ LLM 输出 V1.1 判别联合响应（motion / unsupported / needs_context）
+        七步验证：结构→身份→控制能力→数值/时间线/预算→规则解释器
+                → 官方编译 → 隔离实例轨迹采样（域/速率复核）
+                ↓
+        AuthorBroker：单飞 / 截止 / 离散状态陈旧性 / requestId 幂等 / 原子提交播放
+```
+
+- **档案即边界**：每个控制器携带实测的 allowed/verified 域、速率上限、写集与依赖
+  （拉菲 8 个开放控制：双臂×2、头、躯干旋转/位移、眼睛配对组合；全部来自 ±探针与原动画挖掘出证）。
+- **规则确定性执行**：range / rateLimit / requiresVariant / exclusiveWrite / requiresCapability /
+  contactDependency 六种解释器，不执行任何来自 LLM 的表达式代码。
+- **首轮实测（mimo-v2.5）**：60% 候选通过七步验证并成功播放（如点头+眨眼组合，见
+  `experiments/motion-guide/run-llm-mimo-8s/`）；被拒候选的原因（超域/超速/超预算）全部留痕。
+- **如实声明**：被接纳候选中位延迟 ~4.5s，未达 p95≤2s 的在线门槛——**在线 Author 默认关闭**，
+  视觉评分与低延迟模型选型进行中（见 [docs/work-report-2026-09-10.md](docs/work-report-2026-09-10.md) 的分析）。
+
+复现：`npx vite-node scripts/build-guides.mts characters/*.rig-profile.json`（重建指导书）、
+`npx vite-node scripts/run-abc.mts [--llm]`（A/B/C 实验）、`npx vite-node scripts/soak-author.mts 10`（浸泡）。
+完整报告见 [docs/motion-guides/implementation-report.md](docs/motion-guides/implementation-report.md)。
 
 ## 验收状态
 
@@ -110,14 +148,15 @@ Spec 关键用例对齐表见 [docs/acceptance-checklist.md](docs/acceptance-che
 | 接触误差 ≤0.02H | ✅ 实测 max=0.0027H（`touch_table.mp4`） |
 | A01/A09 背面相关 | ⚠️ 首个角色仅正面，限制展示朝向 |
 | A10 语音取消 / A07 说话 | 🔶 Mock 层已通，真实 TTS 待接入 |
+| 动作指导书（Spec v1.0 M0–M4） | ✅ 工程全链路 + 真实 LLM 首轮实测（在线门槛未达标，保持关闭） |
 
 ## 路线图
 
 - [ ] 动作图（Motion Graph）：自动切分 + 图遍历，产出无限不重复的专业动作流（[研究笔记](docs/research-realtime-motion.md)）
 - [ ] 程序化生命层：呼吸不规则化、发/裙弹簧物理（先测与烤入动画的冲突）
 - [ ] A05 拾取/放下完整链（slotState + 桌面 sprite）
-- [ ] 接触误差推广到更多锚点
-- [ ] P4：真实 LLM / TTS 接入（接口已就绪）、透明置顶与多显示器验证
+- [ ] Author 在线门槛达标：视觉评分流程、低延迟模型选型（压缩输出 schema / 双 provider 竞速 / 预生成）
+- [ ] P4：真实 TTS 接入、透明置顶与多显示器验证
 - [ ] 目标机（GPU / Electron / 1080p）正式性能验收
 
 ## 许可证
