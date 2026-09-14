@@ -10,6 +10,7 @@
  */
 import type { CompiledMotion } from "../compiler/compile.js";
 import { diag, type AuthorFinding } from "./diagnostics.js";
+import type { PreparedMotion } from "../runtime/prepared.js";
 import type { AuthorResponse, GuideRequest, RuntimeStateSnapshot } from "./protocol.js";
 
 export interface BeginResult {
@@ -61,6 +62,8 @@ export class AuthorBroker {
   /** 幂等备忘录（FIFO 有界）：近期请求去重窗口，超容量淘汰最旧记录（长时间运行不无界增长） */
   private seen: Set<string>;
   private playing = new Map<string, { instanceId: string; channels: string[] }>();
+  /** 预生成生命周期（MotionLibrary Spec §6.3）：已产出未提交的 PreparedMotion 登记簿 */
+  private ready = new Map<string, PreparedMotion>();
   private seq = 0;
 
   constructor(
@@ -223,25 +226,137 @@ export class AuthorBroker {
     return base;
   }
 
-  /** 局部取消：只取消该请求的播放实例，不清其他通道（Spec 8.6 / 9.2）。 */
-  cancelPlayback(requestId: string): boolean {
-    const rec = this.playing.get(requestId);
-    if (!rec) return false;
-    this.hooks.cancel(rec.instanceId);
-    this.playing.delete(requestId);
+  // -------------------------------------------------------------------------
+  // 预生成生命周期（MotionLibrary Spec v1.0 §6.3）：生成完成 ≠ 播放开始。
+  // beginGeneration → acceptGenerated（产出 PreparedMotion，不申请通道）
+  // → enqueuePrepared（进入计划 ready 集合）→ commitPrepared（播放时复核+原子取权）
+  // → releasePlayback。生成截止限制"何时产出"，播放截止限制"何时开始仍有效"。
+  // -------------------------------------------------------------------------
+
+  /** beginGeneration：与 begin 同义（语义命名，供新链路使用）。 */
+  beginGeneration(profileId: string, requestId: string, contextId: string, stateVersion: number, deadlineMs: number): BeginResult {
+    return this.begin(profileId, requestId, contextId, stateVersion, deadlineMs);
+  }
+
+  /**
+   * acceptGenerated：校验/编译完成后关闭生成生命周期。
+   * 检查身份/取消/离散状态版本，但不检查生成截止——准备好的合法动作
+   * 不得因超过生成请求截止被误删（播放时效由 playbackDeadlineMonoMs 单独管，Spec §6.3）。
+   * 不申请播放通道、不自动播。
+   */
+  acceptGenerated(profileId: string, prepared: PreparedMotion): { accepted: boolean; findings: AuthorFinding[] } {
+    const findings: AuthorFinding[] = [];
+    const requestId = prepared.generationRequestId;
+    const rec = requestId != null ? this.active.get(profileId) : undefined;
+    if (requestId == null || !rec || rec.requestId !== requestId) {
+      findings.push(diag({ code: "STALE_CONTEXT", stage: "schedule", requestId: requestId ?? "?", recoverable: false, message: "无此活跃生成请求（已被替换或已结束），候选仅隔离登记" }));
+      if (requestId != null) this.memoize(requestId);
+      return { accepted: false, findings };
+    }
+    if (rec.cancelled) {
+      findings.push(diag({ code: "STALE_CONTEXT", stage: "schedule", requestId: rec.requestId, recoverable: false, message: "请求已取消，候选不进入准备" }));
+      this.finishActive(profileId, rec.requestId);
+      this.memoize(rec.requestId);
+      return { accepted: false, findings };
+    }
+    // 离散状态版本变化在产出时刻即失效；连续状态不判过时（Spec §9.3）
+    if (prepared.actorEpoch !== rec.stateVersion) {
+      findings.push(diag({ code: "STALE_CONTEXT", stage: "schedule", requestId: rec.requestId, expected: `epoch=${rec.stateVersion}`, actual: `epoch=${prepared.actorEpoch}`, recoverable: false, message: "产出时角色语境已变化，候选不进入准备" }));
+      this.finishActive(profileId, rec.requestId);
+      this.memoize(rec.requestId);
+      return { accepted: false, findings };
+    }
+    this.ready.set(prepared.preparedId, prepared);
+    this.memoize(rec.requestId);
+    this.finishActive(profileId, rec.requestId);
+    return { accepted: true, findings };
+  }
+
+  /** enqueuePrepared：放入当前计划的 ready 集合（连续前缀/播放时机由 PlanCoordinator 决定）。 */
+  enqueuePrepared(prepared: PreparedMotion): void {
+    this.ready.set(prepared.preparedId, prepared);
+  }
+
+  getPrepared(preparedId: string): PreparedMotion | undefined {
+    return this.ready.get(preparedId);
+  }
+
+  /**
+   * commitPrepared：到播放时再次核对播放时效与权属，然后原子取权并播放。
+   * 与 commit 的区别：不检查生成截止（检查的是 prepared 自己的 playbackDeadline）。
+   * 编译产物取自 prepared.compiledHandle（冻结时已验证）。
+   */
+  commitPrepared(profileId: string, preparedId: string, current: RuntimeStateSnapshot, occupiedChannels: ReadonlySet<string>): CommitOutcome {
+    void current;
+    const base: CommitOutcome = { accepted: false, findings: [], fallback: "keep-current" };
+    const prepared = this.ready.get(preparedId);
+    if (!prepared) {
+      base.findings.push(diag({ code: "STALE_CONTEXT", stage: "schedule", recoverable: false, message: "PreparedMotion 不存在、已提交或已被处置" }));
+      return base;
+    }
+    const rec = this.active.get(profileId);
+    if (rec && prepared.generationRequestId != null && rec.requestId === prepared.generationRequestId && rec.cancelled) {
+      base.findings.push(diag({ code: "STALE_CONTEXT", stage: "schedule", requestId: prepared.generationRequestId, recoverable: false, message: "生成请求已取消，不再提交" }));
+      this.disposePrepared(preparedId, prepared.disposalToken);
+      return base;
+    }
+    if (this.clock() > prepared.playbackDeadlineMonoMs) {
+      base.findings.push(diag({ code: "DEADLINE_EXCEEDED", stage: "schedule", requestId: prepared.generationRequestId ?? "?", expected: `≤ ${prepared.playbackDeadlineMonoMs}ms`, actual: `${this.clock()}ms`, recoverable: false, message: "超过播放时效，本次交互不再开始" }));
+      this.disposePrepared(preparedId, prepared.disposalToken);
+      return base;
+    }
+    const conflicts = [...prepared.channels, ...prepared.resources].filter((c) => occupiedChannels.has(c));
+    if (conflicts.length > 0) {
+      base.findings.push(diag({ code: "PROPERTY_CONFLICT", stage: "schedule", requestId: prepared.generationRequestId ?? "?", expected: "通道/资源空闲", actual: `被占用：${conflicts.join("、")}`, recoverable: true, message: "目标通道/资源被其他实例占用，prepared 保持待命" }));
+      return base; // 保持 prepared 不销毁——排队/退出策略决定重试
+    }
+    const playback = {
+      compiled: prepared.compiledHandle as CompiledMotion,
+      channels: [...prepared.channels],
+      durationSec: prepared.resolvedSchedule.contentMs / 1000,
+      mixInSec: prepared.resolvedSchedule.mixInMs / 1000,
+      mixOutSec: prepared.resolvedSchedule.mixOutMs / 1000,
+    };
+    const instanceId = this.hooks.play(playback, prepared.preparedId);
+    this.playing.set(preparedId, { instanceId, channels: [...prepared.channels] });
+    if (this.playing.size > this.maxMemo) {
+      const oldest = this.playing.keys().next().value;
+      if (oldest != null && this.ready.get(oldest) == null) this.playing.delete(oldest);
+    }
+    this.ready.delete(preparedId);
+    base.accepted = true;
+    base.playback = playback;
+    return base;
+  }
+
+  /** 处置 prepared：token 不匹配时拒绝（旧回调不得销毁新实例，V09）。 */
+  disposePrepared(preparedId: string, token: string): boolean {
+    const prepared = this.ready.get(preparedId);
+    if (!prepared || prepared.disposalToken !== token) return false;
+    this.ready.delete(preparedId);
     return true;
   }
 
-  /** 播放自然结束（混出完成）时由播放端调用，释放记录（长时运行防泄漏，Spec 12.1）。 */
-  releasePlayback(requestId: string): void {
-    this.playing.delete(requestId);
+  /** 播放自然结束/异常结束都走此释放（preparedId 与 requestId 双口径）。 */
+  releasePlayback(key: string): void {
+    this.playing.delete(key);
   }
 
-  snapshot(): { activeRequests: ActiveRequest[]; playing: string[]; memoSize: number } {
+  /** 局部取消播放（兼容旧 requestId 口径与新 preparedId 口径）。 */
+  cancelPlayback(key: string): boolean {
+    const rec = this.playing.get(key);
+    if (!rec) return false;
+    this.hooks.cancel(rec.instanceId);
+    this.playing.delete(key);
+    return true;
+  }
+
+  snapshot(): { activeRequests: ActiveRequest[]; playing: string[]; memoSize: number; ready: string[] } {
     return {
       activeRequests: [...this.active.values()],
       playing: [...this.playing.keys()],
       memoSize: this.seen.size,
+      ready: [...this.ready.keys()],
     };
   }
 }

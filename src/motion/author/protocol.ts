@@ -66,6 +66,8 @@ export interface GenerationBudget {
   maxOutputTokens: number;
   maxOutputBytes: number;
   deadlineMs: number;
+  /** 软目标（可合理等待的反馈界）；超软不超硬允许展示准备状态（MotionLibrary Spec §7.2）。缺省=无软目标 */
+  softDeadlineMs?: number;
 }
 
 export interface GuideRequest {
@@ -102,6 +104,80 @@ export const DEFAULT_BUDGET: GenerationBudget = {
   maxOutputBytes: 32 * 1024,
   deadlineMs: 2500,
 };
+
+// ---------------------------------------------------------------------------
+// 命名预算档案（MotionLibrary Spec v1.0 §6.2）：请求、客户端、校验器与 Broker
+// 必须使用同一份预算来源——禁止 runner/客户端各自配数字。
+// ---------------------------------------------------------------------------
+
+export type BudgetProfileName = "legacy" | "interaction" | "continuation";
+
+export interface BudgetProfile {
+  name: BudgetProfileName;
+  budget: GenerationBudget;
+  /** 用途说明（进配置与评测记录） */
+  purpose: string;
+}
+
+export const BUDGET_PROFILES: Record<BudgetProfileName, BudgetProfile> = {
+  /** 保持旧实验可复现：沿用 0.4–2.0 秒与旧截止 */
+  legacy: { name: "legacy", budget: { ...DEFAULT_BUDGET }, purpose: "旧 2 秒候选实验复现（指导书 Spec 口径）" },
+  /** 一次准备完成的短动作：首轮总准备 soft 2000ms / hard 8000ms（可配置产品预算，非性能结论） */
+  interaction: {
+    name: "interaction",
+    budget: {
+      minDurationSec: 0.4,
+      maxDurationSec: 5.0,
+      maxControls: 6,
+      maxKeysPerCurve: 6,
+      maxTotalKeys: 24,
+      maxOutputTokens: 1536,
+      maxOutputBytes: 32 * 1024,
+      deadlineMs: 8000,
+      softDeadlineMs: 2000,
+    },
+    purpose: "单次短动作生成（buffered）",
+  },
+  /** 滚动生成的完整单元：目标 4 秒、允许 3–5 秒；超预算缩小任务，不无限加键 */
+  continuation: {
+    name: "continuation",
+    budget: {
+      minDurationSec: 3.0,
+      maxDurationSec: 5.0,
+      maxControls: 6,
+      maxKeysPerCurve: 6,
+      maxTotalKeys: 24,
+      maxOutputTokens: 1536,
+      maxOutputBytes: 32 * 1024,
+      deadlineMs: 8000,
+      softDeadlineMs: 2000,
+    },
+    purpose: "长动作滚动单元（bufferedSequence / rolling）",
+  },
+};
+
+export function budgetFor(name: BudgetProfileName): GenerationBudget {
+  return { ...BUDGET_PROFILES[name].budget };
+}
+
+/**
+ * 有限多单元序列的总准备预算（Spec §6.2）：hard 30000ms；
+ * 单次 Author 调用 ≤8000ms 且不得超过计划剩余预算。
+ * 与单个短动作的 8 秒预算分别配置，避免长动作被同一 8 秒限制截死。
+ */
+export const BUFFERED_SEQUENCE_BUDGET = {
+  hardDeadlineMs: 30000,
+  perCallMaxMs: 8000,
+  /** buffer 内准备时长上限：15 秒 / 6 单元（超过则不启用 rolling，Spec §7.3） */
+  maxPrepareSpanMs: 15000,
+  maxUnits: 6,
+} as const;
+
+/** 生成型计划总时长与切片上限（Spec §7.1 初值） */
+export const PLAN_LIMITS = {
+  maxTotalDurationMs: 30000,
+  maxSlices: 16,
+} as const;
 
 // ---------------------------------------------------------------------------
 // 响应（严格判别联合；未知字段拒绝）
