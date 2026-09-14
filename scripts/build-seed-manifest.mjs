@@ -75,15 +75,16 @@ function deriveWrites(data, animName, bones, slots) {
 // ---------------------------------------------------------------------------
 
 const SEEDS = [
-  { motionId: "lafei.wave.small_screen_right", actionId: "gesture.wave", variantId: "small.screen_right", anim: "stand", startMs: 4900, endMs: 7300, channel: "rightArm", posture: "standing", base: "stand", label: "挥手（右手举臂摇晃）" },
-  { motionId: "lafei.raise_hand.screen_left", actionId: "gesture.raise_hand", variantId: "screen_left", anim: "stand", startMs: 13000, endMs: 13900, channel: "leftArm", posture: "standing", base: "stand", label: "短促举手（旧 wave/leftArm 标签语义纠正）" },
-  { motionId: "lafei.reaction.dizzy.small", actionId: "reaction.dizzy", variantId: "small", anim: "yun", startMs: 400, endMs: 2000, channel: "head", posture: "standing", base: "stand", label: "晕乎乎（带头部完整反应）" },
-  { motionId: "lafei.reaction.happy.small", actionId: "reaction.happy", variantId: "small", anim: "touch", startMs: 0, endMs: 670, channel: "head", posture: "standing", base: "stand", label: "被摸头开心（实际写集待附件核实）" },
-  { motionId: "lafei.reaction.shy.small", actionId: "reaction.shy", variantId: "small", anim: "sit", startMs: 0, endMs: 1330, channel: "head", posture: "seated", base: "sit", label: "低头害羞（源为坐姿；使用前提如实声明）" },
-  { motionId: "lafei.pump.screen_right", actionId: "gesture.pump", variantId: "screen_right", anim: "victory", startMs: 3300, endMs: 4100, channel: "rightArm", posture: "standing", base: "stand", label: "庆祝挥拳" },
-  { motionId: "lafei.idle_fidget.default", actionId: "life.idle_fidget", variantId: "default", anim: "normal", startMs: 500, endMs: 2500, channel: "head", posture: "standing", base: "stand", label: "待机小动作（候选语义，需视觉核实）" },
-  { motionId: "lafei.point.screen_right", actionId: "gesture.point", variantId: "screen_right", anim: "attack", startMs: 150, endMs: 700, channel: "rightArm", posture: "standing", base: "stand", label: "右臂前伸指向（指向一致性待核）" },
-  { motionId: "lafei.touch_table.screen_right", actionId: "contact.touch_table", variantId: "screen_right", anim: "victory", startMs: 700, endMs: 1200, channel: "rightArm", posture: "standing", base: "stand", label: "触碰矮桌（绑定已测桌高 0.27H，不推广任意桌）", resources: ["scene:table.calibrated_0.27H"] },
+  // 窗口与混合参数经 2026-09-14 夜间视觉精调定稿（证据：experiments/motion-library/tuning/，台账 TUNING-LOG.md）
+  { motionId: "lafei.wave.small_screen_right", actionId: "gesture.wave", variantId: "small.screen_right", anim: "stand", startMs: 5850, endMs: 6900, channel: "rightArm", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "挥手（右手举臂摇晃；5.85 起抬、6.9 回落，避开 6.8 后基础层弯倾段）" },
+  { motionId: "lafei.raise_hand.screen_left", actionId: "gesture.raise_hand", variantId: "screen_left", anim: "stand", startMs: 12900, endMs: 14500, channel: "leftArm", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "短促举手（旧 wave/leftArm 标签语义纠正；含完整抬-保持-落弧线）" },
+  { motionId: "lafei.reaction.dizzy.small", actionId: "reaction.dizzy", variantId: "small", anim: "yun", startMs: 400, endMs: 1750, channel: "head", posture: "standing", base: "stand", mixInMs: 120, mixOutMs: 200, label: "晕乎乎（带头部摇摆与螺旋眼；1.55 头近中位时混出回神）" },
+  { motionId: "lafei.reaction.happy.small", actionId: "reaction.happy", variantId: "small", anim: "touch", startMs: 0, endMs: 670, channel: "head", posture: "standing", base: "stand", mixInMs: 120, mixOutMs: 150, label: "被摸头开心（眯眼+眉毛；附件经混出恢复键归位）" },
+  { motionId: "lafei.reaction.shy.small", actionId: "reaction.shy", variantId: "small", anim: "sit", startMs: 0, endMs: 1330, channel: "head", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "低头害羞（眼睑下垂+腮红；源为 sit，head 通道动作站姿合成已验证，坐姿复验见制作计划）" },
+  { motionId: "lafei.pump.screen_right", actionId: "gesture.pump", variantId: "screen_right", anim: "victory", startMs: 3000, endMs: 4400, channel: "rightArm", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "庆祝挥拳（含抬拳 3.0-3.3、挥击 3.6-4.0、收落至 4.4）" },
+  { motionId: "lafei.idle_fidget.default", actionId: "life.idle_fidget", variantId: "default", anim: "normal", startMs: 500, endMs: 2500, channel: "head", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "待机小动作（头部轻微摇摆；原窗口即合理）" },
+  { motionId: "lafei.point.screen_right", actionId: "gesture.point", variantId: "screen_right", anim: "attack", startMs: 100, endMs: 800, channel: "rightArm", posture: "standing", base: "stand", mixInMs: 120, mixOutMs: 150, label: "右臂前伸指向（含抬臂 0.1-0.25、前伸保持 0.25-0.7）" },
+  { motionId: "lafei.touch_table.screen_right", actionId: "contact.touch_table", variantId: "screen_right", anim: "victory", startMs: 700, endMs: 1200, channel: "rightArm", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 250, label: "触碰矮桌（窗口即已标定稳定接触段 0.27H，不推广任意桌；混合参数与已验收触碰场景一致）", resources: ["scene:table.calibrated_0.27H"] },
 ];
 
 // 规范化 JSON（与 src/rig/controlProfile.ts canonicalJson 同语义：键排序、数组保序、-0 归零）
@@ -186,7 +187,7 @@ const entries = SEEDS.map((seed) => {
     parameterSchema: { type: "object", properties: {}, additionalProperties: false },
     retime: { minRate: 1, maxRate: 1 },
     loop: { allowed: false, segmentId: null, maxRepeats: 1 },
-    transition: { mixInMs: 150, mixOutMs: 200, maxBlendMs: 250, continuousEligible: false },
+    transition: { mixInMs: seed.mixInMs ?? 150, mixOutMs: seed.mixOutMs ?? 200, maxBlendMs: Math.max(seed.mixInMs ?? 150, seed.mixOutMs ?? 200) + 50, continuousEligible: false },
     events: [],
     provenance: {
       origin: "legacy_slice",
@@ -194,7 +195,14 @@ const entries = SEEDS.map((seed) => {
       generatorModel: null,
       promptDigest: null,
     },
-    validation: { structural: "passed", trajectory: "pending", visual: "pending", evidenceRefs: [`build-seed-manifest@${now}`], reviewedAt: null },
+    validation: {
+      structural: "passed",
+      trajectory: "pending",
+      visual: "pending",
+      // 视觉相位截图见 experiments/motion-library/tuning/（本地保留），台账 TUNING-LOG.md
+      evidenceRefs: [`build-seed-manifest@${now}`, `tuning-log#视觉精调`],
+      reviewedAt: null,
+    },
   };
   // 摘要排除自身字段（Spec §4.4）：与运行时复算口径一致（sha256Json 去掉 contentDigest 后哈希）
   const { contentDigest: _omit, ...withoutDigest } = entry;

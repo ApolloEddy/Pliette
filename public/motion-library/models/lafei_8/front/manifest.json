@@ -23,10 +23,10 @@
       "source": {
         "kind": "native_slice",
         "animationName": "stand",
-        "sourceStartMs": 4900,
-        "sourceEndMs": 7300
+        "sourceStartMs": 5850,
+        "sourceEndMs": 6900
       },
-      "durationMs": 2400,
+      "durationMs": 1050,
       "channels": [
         "rightArm"
       ],
@@ -67,7 +67,7 @@
       "segments": {
         "full": {
           "startMs": 0,
-          "endMs": 2400,
+          "endMs": 1050,
           "entryBoundaryId": "enter",
           "exitBoundaryId": "exit",
           "interruptibleAtEnd": true
@@ -76,13 +76,13 @@
       "boundaries": {
         "enter": {
           "poseClass": "standing",
-          "snapshotRef": "stand@4900",
+          "snapshotRef": "stand@5850",
           "contacts": [],
           "resources": []
         },
         "exit": {
           "poseClass": "standing",
-          "snapshotRef": "stand@7300",
+          "snapshotRef": "stand@6900",
           "contacts": [],
           "resources": []
         }
@@ -110,7 +110,7 @@
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#stand[4900-7300] 挥手（右手举臂摇晃）",
+        "sourceRef": "src/motion/library/gestures.ts#stand[5850-6900] 挥手（右手举臂摇晃；5.85 起抬、6.9 回落，避开 6.8 后基础层弯倾段）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -119,11 +119,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-d6c0cb7202d0054b006f324f77ecf97ad165ce2c8d0500447069f7a564e02f79"
+      "contentDigest": "sha256-dd5ec3f84d72354dc5bde5adbb817e1c15f3d1d50ed6b69e27c119fd53cfa203"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -146,10 +147,10 @@
       "source": {
         "kind": "native_slice",
         "animationName": "stand",
-        "sourceStartMs": 13000,
-        "sourceEndMs": 13900
+        "sourceStartMs": 12900,
+        "sourceEndMs": 14500
       },
-      "durationMs": 900,
+      "durationMs": 1600,
       "channels": [
         "leftArm"
       ],
@@ -187,7 +188,7 @@
       "segments": {
         "full": {
           "startMs": 0,
-          "endMs": 900,
+          "endMs": 1600,
           "entryBoundaryId": "enter",
           "exitBoundaryId": "exit",
           "interruptibleAtEnd": true
@@ -196,13 +197,13 @@
       "boundaries": {
         "enter": {
           "poseClass": "standing",
-          "snapshotRef": "stand@13000",
+          "snapshotRef": "stand@12900",
           "contacts": [],
           "resources": []
         },
         "exit": {
           "poseClass": "standing",
-          "snapshotRef": "stand@13900",
+          "snapshotRef": "stand@14500",
           "contacts": [],
           "resources": []
         }
@@ -230,7 +231,7 @@
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#stand[13000-13900] 短促举手（旧 wave/leftArm 标签语义纠正）",
+        "sourceRef": "src/motion/library/gestures.ts#stand[12900-14500] 短促举手（旧 wave/leftArm 标签语义纠正；含完整抬-保持-落弧线）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -239,11 +240,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-5a341827651370ecf8a1dfec37fce4fdf34096983415c1756d05967a19f9103b"
+      "contentDigest": "sha256-dbeee7d002557f1068ce6b0152f4e3dceb9c29136248966a00cf12e3ea3e45b5"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -267,9 +269,9 @@
         "kind": "native_slice",
         "animationName": "yun",
         "sourceStartMs": 400,
-        "sourceEndMs": 2000
+        "sourceEndMs": 1750
       },
-      "durationMs": 1600,
+      "durationMs": 1350,
       "channels": [
         "head"
       ],
@@ -440,7 +442,7 @@
       "segments": {
         "full": {
           "startMs": 0,
-          "endMs": 1600,
+          "endMs": 1350,
           "entryBoundaryId": "enter",
           "exitBoundaryId": "exit",
           "interruptibleAtEnd": true
@@ -455,7 +457,7 @@
         },
         "exit": {
           "poseClass": "standing",
-          "snapshotRef": "yun@2000",
+          "snapshotRef": "yun@1750",
           "contacts": [],
           "resources": []
         }
@@ -475,7 +477,7 @@
         "maxRepeats": 1
       },
       "transition": {
-        "mixInMs": 150,
+        "mixInMs": 120,
         "mixOutMs": 200,
         "maxBlendMs": 250,
         "continuousEligible": false
@@ -483,7 +485,7 @@
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#yun[400-2000] 晕乎乎（带头部完整反应）",
+        "sourceRef": "src/motion/library/gestures.ts#yun[400-1750] 晕乎乎（带头部摇摆与螺旋眼；1.55 头近中位时混出回神）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -492,11 +494,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-991348441cfecbdaf378b2d7a89bdcaa14aa5544d264f0dcbba19d39c8a978ba"
+      "contentDigest": "sha256-4e3d5831ecfe1b09e26c164b03bf5ed29f16fbed8c2decac0953ed78590854b4"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -728,15 +731,15 @@
         "maxRepeats": 1
       },
       "transition": {
-        "mixInMs": 150,
-        "mixOutMs": 200,
-        "maxBlendMs": 250,
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
         "continuousEligible": false
       },
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#touch[0-670] 被摸头开心（实际写集待附件核实）",
+        "sourceRef": "src/motion/library/gestures.ts#touch[0-670] 被摸头开心（眯眼+眉毛；附件经混出恢复键归位）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -745,11 +748,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-cb7a1a1c90e2004c786c14b025ea3288a1008d0f8531bd601f23140816f3291d"
+      "contentDigest": "sha256-93016afa68178bf3e54929840124204e2cd5de588c8d7c5415399c4d87191e14"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -935,10 +939,10 @@
       "requiredCapabilities": [],
       "preconditions": {
         "postures": [
-          "seated"
+          "standing"
         ],
         "baseAnimations": [
-          "sit"
+          "stand"
         ],
         "requiredResources": [],
         "requiredContacts": []
@@ -954,13 +958,13 @@
       },
       "boundaries": {
         "enter": {
-          "poseClass": "seated",
+          "poseClass": "standing",
           "snapshotRef": "sit@0",
           "contacts": [],
           "resources": []
         },
         "exit": {
-          "poseClass": "seated",
+          "poseClass": "standing",
           "snapshotRef": "sit@1330",
           "contacts": [],
           "resources": []
@@ -989,7 +993,7 @@
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#sit[0-1330] 低头害羞（源为坐姿；使用前提如实声明）",
+        "sourceRef": "src/motion/library/gestures.ts#sit[0-1330] 低头害羞（眼睑下垂+腮红；源为 sit，head 通道动作站姿合成已验证，坐姿复验见制作计划）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -998,11 +1002,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-69ce8a535b9aa33b850055194f6b7009b7d12f417e102810ccc4784d057ca54a"
+      "contentDigest": "sha256-5486fba9c68eba7627d257e95ec6bed46215042c09352f19f58eb60b73baa508"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1025,10 +1030,10 @@
       "source": {
         "kind": "native_slice",
         "animationName": "victory",
-        "sourceStartMs": 3300,
-        "sourceEndMs": 4100
+        "sourceStartMs": 3000,
+        "sourceEndMs": 4400
       },
-      "durationMs": 800,
+      "durationMs": 1400,
       "channels": [
         "rightArm"
       ],
@@ -1069,7 +1074,7 @@
       "segments": {
         "full": {
           "startMs": 0,
-          "endMs": 800,
+          "endMs": 1400,
           "entryBoundaryId": "enter",
           "exitBoundaryId": "exit",
           "interruptibleAtEnd": true
@@ -1078,13 +1083,13 @@
       "boundaries": {
         "enter": {
           "poseClass": "standing",
-          "snapshotRef": "victory@3300",
+          "snapshotRef": "victory@3000",
           "contacts": [],
           "resources": []
         },
         "exit": {
           "poseClass": "standing",
-          "snapshotRef": "victory@4100",
+          "snapshotRef": "victory@4400",
           "contacts": [],
           "resources": []
         }
@@ -1112,7 +1117,7 @@
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#victory[3300-4100] 庆祝挥拳",
+        "sourceRef": "src/motion/library/gestures.ts#victory[3000-4400] 庆祝挥拳（含抬拳 3.0-3.3、挥击 3.6-4.0、收落至 4.4）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -1121,11 +1126,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-5493d84d0e8012708077488456ba338532ec1ef8a2fe2df78196aecb1c7a21a8"
+      "contentDigest": "sha256-c76bbab6f18b3a06349499cca88cf7d7c8c3ce8053c38e18d5d30f20bbe5fcaa"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1364,7 +1370,7 @@
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#normal[500-2500] 待机小动作（候选语义，需视觉核实）",
+        "sourceRef": "src/motion/library/gestures.ts#normal[500-2500] 待机小动作（头部轻微摇摆；原窗口即合理）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -1373,11 +1379,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-603db95a821d982c180ee845db82705cf70c07200143d0073dcfed47d2b4be28"
+      "contentDigest": "sha256-41af193b247ea86598139c5cc38a675ab22280dead930e6e3c694a4b0c78b539"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1400,10 +1407,10 @@
       "source": {
         "kind": "native_slice",
         "animationName": "attack",
-        "sourceStartMs": 150,
-        "sourceEndMs": 700
+        "sourceStartMs": 100,
+        "sourceEndMs": 800
       },
-      "durationMs": 550,
+      "durationMs": 700,
       "channels": [
         "rightArm"
       ],
@@ -1444,7 +1451,7 @@
       "segments": {
         "full": {
           "startMs": 0,
-          "endMs": 550,
+          "endMs": 700,
           "entryBoundaryId": "enter",
           "exitBoundaryId": "exit",
           "interruptibleAtEnd": true
@@ -1453,13 +1460,13 @@
       "boundaries": {
         "enter": {
           "poseClass": "standing",
-          "snapshotRef": "attack@150",
+          "snapshotRef": "attack@100",
           "contacts": [],
           "resources": []
         },
         "exit": {
           "poseClass": "standing",
-          "snapshotRef": "attack@700",
+          "snapshotRef": "attack@800",
           "contacts": [],
           "resources": []
         }
@@ -1479,15 +1486,15 @@
         "maxRepeats": 1
       },
       "transition": {
-        "mixInMs": 150,
-        "mixOutMs": 200,
-        "maxBlendMs": 250,
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
         "continuousEligible": false
       },
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#attack[150-700] 右臂前伸指向（指向一致性待核）",
+        "sourceRef": "src/motion/library/gestures.ts#attack[100-800] 右臂前伸指向（含抬臂 0.1-0.25、前伸保持 0.25-0.7）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -1496,11 +1503,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-b87a4e12e03686eb4ccf12a32bf8c30d0dc96d5bd86aa154cbc6d495fb2c9aae"
+      "contentDigest": "sha256-db168ddbe5e702224a4f59d3f56aef2ef555c91d640a9e27db59ee1e830e813b"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1605,14 +1613,14 @@
       },
       "transition": {
         "mixInMs": 150,
-        "mixOutMs": 200,
-        "maxBlendMs": 250,
+        "mixOutMs": 250,
+        "maxBlendMs": 300,
         "continuousEligible": false
       },
       "events": [],
       "provenance": {
         "origin": "legacy_slice",
-        "sourceRef": "src/motion/library/gestures.ts#victory[700-1200] 触碰矮桌（绑定已测桌高 0.27H，不推广任意桌）",
+        "sourceRef": "src/motion/library/gestures.ts#victory[700-1200] 触碰矮桌（窗口即已标定稳定接触段 0.27H，不推广任意桌；混合参数与已验收触碰场景一致）",
         "generatorModel": null,
         "promptDigest": null
       },
@@ -1621,11 +1629,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+          "build-seed-manifest@2026-09-14T17:12:31.069Z",
+          "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-0f9b96fae39f55976ba3425cf3c335565a91c8670324ebd0aa5b1eb2140da0e9"
+      "contentDigest": "sha256-b824b82ce11746afc8d5144daa58761969098b383e3808ef2b4ce4ff5999621c"
     }
   ]
 }

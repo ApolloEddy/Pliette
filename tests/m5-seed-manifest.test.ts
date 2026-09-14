@@ -33,15 +33,17 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
     expect(raise!.variantId).toBe("screen_left");
     expect(raise!.source.kind).toBe("native_slice");
     if (raise!.source.kind === "native_slice") {
+      // 视觉精调后的窗口：含完整抬-保持-落弧线（12.9 起抬 → 14.5 落定）
       expect(raise!.source.animationName).toBe("stand");
-      expect(raise!.source.sourceStartMs).toBe(13000);
+      expect(raise!.source.sourceStartMs).toBe(12900);
+      expect(raise!.source.sourceEndMs).toBe(14500);
     }
   });
 
-  it("shy 迁移如实声明坐姿前提；touch_table 绑定已标定桌高资源", () => {
+  it("shy 使用前提如实声明（站姿合成已验证）；touch_table 绑定已标定桌高资源", () => {
     const shy = manifest.entries.find((e) => e.actionId === "reaction.shy")!;
-    expect(shy.preconditions.postures).toEqual(["seated"]);
-    expect(shy.preconditions.baseAnimations).toEqual(["sit"]);
+    expect(shy.preconditions.postures).toEqual(["standing"]);
+    expect(shy.preconditions.baseAnimations).toEqual(["stand"]);
     const touch = manifest.entries.find((e) => e.actionId === "contact.touch_table")!;
     expect(touch.preconditions.requiredResources).toContain("scene:table.calibrated_0.27H");
   });
