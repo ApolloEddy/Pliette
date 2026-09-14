@@ -46,7 +46,8 @@ function channelBones(data) {
   const rightArm = descendants(data, find(/^hand[_-]?r$/i));
   const leftArm = descendants(data, find(/^hand[_-]?l$/i));
   const torso = new Set([find(/^(body|hip|torso)$/i)].filter(Boolean));
-  return { head, rightArm, leftArm, torso };
+  const face = new Set(["eye_L", "eye_R"].filter((n) => names.includes(n)));
+  return { head, rightArm, leftArm, torso, face };
 }
 
 const FACE_SLOTS = new Set(["eye_L", "eye_R", "meimao1", "hongyun", "sleep2", "bushuang1", "bushuang2", "eye_L_blink", "eye_R_blink", "mouth", "hand_L2", "hand_R2"]);
@@ -56,14 +57,18 @@ function deriveWrites(data, animName, bones, slots) {
   const anim = data.findAnimation(animName);
   if (!anim) throw new Error(`源动画不存在：${animName}`);
   const writes = new Set();
+  const allNames = new Set(data.bones.map((b) => b.name));
   for (const tl of anim.timelines) {
     const ctor = tl.constructor.name;
     if (ctor === "RotateTimeline" || ctor === "TranslateTimeline" || ctor === "ScaleTimeline" || ctor === "ShearTimeline") {
       const name = data.bones[tl.boneIndex]?.name;
-      if (name && bones.has(name)) writes.add(`bone:${name}/${ctor.replace("Timeline", "").toLowerCase()}`);
+      // base 通道（整段基础动画）接受全部骨骼
+      const hit = bones === "ALL" || (bones && bones.has(name));
+      if (name && hit) writes.add(`bone:${name}/${ctor.replace("Timeline", "").toLowerCase()}`);
     } else if (ctor === "AttachmentTimeline" || ctor === "ColorTimeline" || ctor === "TwoColorTimeline" || ctor === "DeformTimeline") {
       const slot = data.slots[tl.slotIndex]?.name;
-      if (slot && slots.has(slot)) writes.add(`slot:${slot}/${ctor.replace("Timeline", "").toLowerCase()}`);
+      const hit = slots === "ALL" || (slots && slots.has(slot));
+      if (slot && hit) writes.add(`slot:${slot}/${ctor.replace("Timeline", "").toLowerCase()}`);
     }
   }
   if (writes.size === 0) throw new Error(`${animName} 在给定通道集合上没有可过滤 timeline`);
@@ -85,6 +90,14 @@ const SEEDS = [
   { motionId: "lafei.idle_fidget.default", actionId: "life.idle_fidget", variantId: "default", anim: "normal", startMs: 500, endMs: 2500, channel: "head", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "待机小动作（头部轻微摇摆；原窗口即合理）" },
   { motionId: "lafei.point.screen_right", actionId: "gesture.point", variantId: "screen_right", anim: "attack", startMs: 100, endMs: 800, channel: "rightArm", posture: "standing", base: "stand", mixInMs: 120, mixOutMs: 150, label: "右臂前伸指向（含抬臂 0.1-0.25、前伸保持 0.25-0.7）" },
   { motionId: "lafei.touch_table.screen_right", actionId: "contact.touch_table", variantId: "screen_right", anim: "victory", startMs: 700, endMs: 1200, channel: "rightArm", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 250, label: "触碰矮桌（窗口即已标定稳定接触段 0.27H，不推广任意桌；混合参数与已验收触碰场景一致）", resources: ["scene:table.calibrated_0.27H"] },
+
+  // P0 扩展族（2026-09-15 凌晨批次，勘探+视觉精调；台账 TUNING-LOG.md §扩展族）
+  { motionId: "lafei.head_shake.normal", actionId: "head.shake", variantId: "normal", anim: "dance", startMs: 0, endMs: 1170, channel: "head", posture: "standing", base: "stand", mixInMs: 100, mixOutMs: 150, label: "摇头（dance 单眼眨+左右大幅摆头，闭眼笑附件随行）" },
+  { motionId: "lafei.reaction_sleepy.small", actionId: "reaction.sleepy", variantId: "small", anim: "stand", startMs: 7550, endMs: 12100, channel: "head", posture: "standing", base: "stand", mixInMs: 120, mixOutMs: 150, label: "打瞌睡反应（低头闭眼-走神-回正，源内自带完整过渡，避开 7.4 前眨眼键）" },
+  { motionId: "lafei.head_lower.small", actionId: "head.lower", variantId: "small", anim: "stand", startMs: 7550, endMs: 8300, channel: "head", posture: "standing", base: "stand", mixInMs: 120, mixOutMs: 300, label: "低头（源内垂下 7.55-8.0，混出托底抬头；裁短自 sleepy 全弧）" },
+  { motionId: "lafei.life_blink.paired", actionId: "life.blink", variantId: "paired", anim: "normal", startMs: 3750, endMs: 4250, channel: "face", posture: "standing", base: "stand", mixInMs: 50, mixOutMs: 80, label: "眨眼（normal 双眨键 3.83/3.93/4.03/4.13，纯 face 通道）" },
+  { motionId: "lafei.eyes_squeeze.paired", actionId: "face.eyes_squeeze", variantId: "paired", anim: "touch", startMs: 170, endMs: 670, channel: "face", posture: "standing", base: "stand", mixInMs: 50, mixOutMs: 100, label: "眯眼（touch 的 > < 眯眼+眉毛，纯 face 通道无头部动作）" },
+  { motionId: "lafei.life_idle.default", actionId: "life.idle", variantId: "default", anim: "stand", startMs: 0, endMs: 20330, channel: "base", kind: "native_clip", posture: "standing", base: "stand", mixInMs: 150, mixOutMs: 200, label: "自然待机（原生 stand 全段封装；首尾同相位可循环）", loop: { allowed: true, segmentId: "full", maxRepeats: 16 } },
 ];
 
 // 规范化 JSON（与 src/rig/controlProfile.ts canonicalJson 同语义：键排序、数组保序、-0 归零）
@@ -153,10 +166,11 @@ const rigRefBase = {
 
 const now = new Date().toISOString();
 const entries = SEEDS.map((seed) => {
-  const bones = bonesByChannel[seed.channel];
-  const slots = seed.channel === "head" || seed.channel === "face" ? FACE_SLOTS : new Set();
+  const bones = seed.channel === "base" ? "ALL" : bonesByChannel[seed.channel];
+  const slots = seed.channel === "head" || seed.channel === "face" ? FACE_SLOTS : seed.channel === "base" ? "ALL" : new Set();
   const writes = deriveWrites(data, seed.anim, bones, slots);
   const durationMs = seed.endMs - seed.startMs;
+  const loop = seed.loop ?? { allowed: false, segmentId: null, maxRepeats: 1 };
   const entry = {
     schemaVersion: "pliette.motion-entry/1.0",
     motionId: seed.motionId,
@@ -165,7 +179,7 @@ const entries = SEEDS.map((seed) => {
     variantId: seed.variantId,
     status: "candidate",
     rigRef: rigRefBase,
-    source: { kind: "native_slice", animationName: seed.anim, sourceStartMs: seed.startMs, sourceEndMs: seed.endMs },
+    source: { kind: seed.kind ?? "native_slice", animationName: seed.anim, sourceStartMs: seed.startMs, sourceEndMs: seed.endMs },
     durationMs,
     channels: [seed.channel],
     writes,
@@ -186,7 +200,7 @@ const entries = SEEDS.map((seed) => {
     },
     parameterSchema: { type: "object", properties: {}, additionalProperties: false },
     retime: { minRate: 1, maxRate: 1 },
-    loop: { allowed: false, segmentId: null, maxRepeats: 1 },
+    loop,
     transition: { mixInMs: seed.mixInMs ?? 150, mixOutMs: seed.mixOutMs ?? 200, maxBlendMs: Math.max(seed.mixInMs ?? 150, seed.mixOutMs ?? 200) + 50, continuousEligible: false },
     events: [],
     provenance: {

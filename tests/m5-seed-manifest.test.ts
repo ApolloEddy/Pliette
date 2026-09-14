@@ -21,10 +21,27 @@ const catalogView = new CatalogView(loadCatalog(JSON.parse(readFileSync(resolve(
 describe("种子 manifest（§9.1 迁移备案）", () => {
   const manifest = loadManifest(JSON.parse(readFileSync(resolve(manifestPath), "utf-8")), catalogView.revision);
 
-  it("9 条种子条目全部通过目录引用/时间窗/参数交集语义校验", () => {
-    expect(manifest.entries.length).toBe(9);
+  it("15 条种子条目全部通过目录引用/时间窗/参数交集语义校验（9 迁移 + 6 P0 扩展族）", () => {
+    expect(manifest.entries.length).toBe(15);
     const issues = validateManifest(manifest, catalogView.catalog);
     expect(issues).toEqual([]);
+  });
+
+  it("P0 扩展族：shake/lower/sleepy/blink/squeeze/idle 均已登记且变体与目录一致", () => {
+    const ids = new Set(manifest.entries.map((e) => `${e.actionId}/${e.variantId}`));
+    for (const key of [
+      "head.shake/normal",
+      "head.lower/small",
+      "reaction.sleepy/small",
+      "life.blink/paired",
+      "face.eyes_squeeze/paired",
+      "life.idle/default",
+    ]) {
+      expect(ids.has(key)).toBe(true);
+    }
+    const idle = manifest.entries.find((e) => e.actionId === "life.idle")!;
+    expect(idle.source.kind).toBe("native_clip");
+    expect(idle.loop.allowed).toBe(true);
   });
 
   it("旧 leftArm wave 已迁移为 gesture.raise_hand（不再充当挥手精确命中）", () => {

@@ -45,3 +45,25 @@ dizzy 的螺旋眼、happy 的眯眼等 overlay 附件在混出后永久残留�
 ### 6. gesture.pump / screen_right
 - 扫描 [2.8,4.8]：3.0–3.3 抬拳、3.3 已到位、3.6–4.0 挥击、4.5 落定。
 - **v2 [3000,4400] 定稿**：完整抬-挥-落弧线，首尾混入混出均平滑。
+
+## P0 扩展族批次（+6 条，全部 candidate）
+
+勘探方法：face 骨 arotation 增量曲线（0.2s 采样）+ 各动画附件键位表 → 候选窗口 → 相位截图视觉验收。
+关键发现：stand 本体 7.6–11.6 为低头弯倾段（此前是 overlay 禁区，现在本身成为 sleepy/lower 的素材源）；
+stand2 是带更多表情键的 stand 变体；dance/sleep/wash 是未被发掘的表情动作源。
+
+| # | 逻辑键 | 定稿窗口 | 混入/混出 | 相位证据 | 结论 |
+|---|---|---|---|---|---|
+| 10 | head.shake / normal | dance[0,1170] | 100/150ms | head_shake_scan/（8 相位） | ✅ 单眼眨+左右大幅摆头，俏皮自然；闭眼笑附件随行 |
+| 11 | reaction.sleepy / small | stand[7550,12100] | 120/150ms | head_lower_scan/（9 相位） | ✅ 源内自带完整低头-走神-回正过渡（0→-26°→0），闭眼随行；不依赖混合 |
+| 12 | head.lower / small | stand[7550,8300] | 120/300ms | head_lower_small_v1/（6 相位） | ✅ 源内垂下+混出托底抬头（0.3s 慢混出自然回正） |
+| 13 | life.blink / paired | normal[3750,4250] | 50/80ms | eyes_blink_scan/（8 相位） | ✅ 双眨键精确覆盖（3.83 闭/3.93 开/4.03 闭/4.13 开），纯 face 通道 |
+| 14 | face.eyes_squeeze / paired | touch[170,670] | 50/100ms | eyes_squeeze_scan/（8 相位） | ✅ > < 眯眼+眉毛，无头部动作（face 通道纯净性验证） |
+| 15 | life.idle / default | stand[0,20330] native_clip | — | Lab 默认视图即本动作 | ✅ 原生待机全段封装，首尾同相位（arotation 0→0）可循环 |
+
+### 机制发现（infra TODO）
+
+**overlay 首个 entry 的 mixIn 无效**：轨道为空时 setAnimationWith 无 mixingFrom，
+entry 立即满权重生效（node 复现确认）——sleep 全程垂姿保持因此不适合直接切片，
+入场平滑必须依赖源动画自身的准备段（窗口选取原则）或未来的 alpha 渐升驱动
+（GestureLayer.sync 内按 entry.alpha 0→1 逐帧爬升，列为 infra TODO）。
