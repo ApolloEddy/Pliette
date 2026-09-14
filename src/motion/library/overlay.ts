@@ -117,9 +117,48 @@ export function filterAnimation(
 }
 
 /**
+ * 附件恢复克隆（视觉调参缺陷修复）：AttachmentTimeline 在 alpha<1 时不生效（3.6 语义），
+ * 混出开始后槽位停留在 overlay 最后设置的附件上；若基础层在该槽位没有更晚的键
+ * （如 stand 的眨眼键在 3.83s 才出现），错误附件会一直残留。
+ * 本函数克隆全部附件时间线：丢弃 restoreAt 之后的原始键，并在 restoreAt 追加
+ * "setup 附件"恢复键——即混出开始瞬间恢复角色静息外观。
+ * 其余（连续）时间线原样共享，不产生复制开销。
+ */
+export function withAttachmentRestore(filtered: spine.Animation, data: spine.SkeletonData, restoreAtSec: number): spine.Animation {
+  const timelines: spine.Timeline[] = [];
+  let changed = false;
+  for (const tl of filtered.timelines) {
+    if (tl.constructor.name !== "AttachmentTimeline") {
+      timelines.push(tl);
+      continue;
+    }
+    const at = tl as unknown as { frames: number[]; attachmentNames: (string | null)[]; slotIndex: number };
+    const setup = data.slots[at.slotIndex]?.attachmentName ?? null;
+    const frames: number[] = [];
+    const names: (string | null)[] = [];
+    for (let i = 0; i < at.frames.length; i++) {
+      if (at.frames[i] < restoreAtSec - 1e-6) {
+        frames.push(at.frames[i]);
+        names.push(at.attachmentNames[i]);
+      }
+    }
+    frames.push(restoreAtSec);
+    names.push(setup);
+    const clone = new spine.AttachmentTimeline(frames.length);
+    clone.slotIndex = at.slotIndex;
+    for (let i = 0; i < frames.length; i++) clone.setFrame(i, frames[i], names[i]!);
+    timelines.push(clone);
+    changed = true;
+  }
+  if (!changed) return filtered;
+  return new spine.Animation(`${filtered.name}#restore`, timelines, Math.max(filtered.duration, restoreAtSec));
+}
+
+/**
  * 在轨道上播放切片：使用原生 animationStart/animationEnd 定义时间窗，
  * 窗口结束前 mixOutSec 开始混出空动画，交还基础层。
  * mixInSec/mixOutSec 可调（Spec 9.3：微表情 0.05-0.12，普通 0.12-0.25）。
+ * 混出开始时刻自动恢复被触碰附件槽位的 setup 附件（见 withAttachmentRestore）。
  */
 export function playSlice(
   state: spine.AnimationState,
@@ -129,9 +168,14 @@ export function playSlice(
   mixOutSec = 0.2,
 ): void {
   const { track, startTime, windowSec } = handle;
-  const entry = state.setAnimationWith(track, filtered, false);
+  // 混出起点前一个帧间隔放置恢复键：attachmentThreshold=0 使附件时间线在混合期被整体跳过，
+  // 恢复必须在最后一个满权重帧命中（真实播放为逐帧推进，一帧 1/60s）。
+  const delaySec = Math.max(0.05, windowSec - mixOutSec);
+  const restoreAt = Math.max(startTime, startTime + delaySec - 1 / 60);
+  const data = (state.data as unknown as { skeletonData?: spine.SkeletonData }).skeletonData;
+  const animation = data ? withAttachmentRestore(filtered, data, Math.min(restoreAt, filtered.duration)) : filtered;
+  const entry = state.setAnimationWith(track, animation, false);
   entry.animationStart = startTime;
-  entry.animationEnd = Math.min(startTime + windowSec, filtered.duration);
-  const delay = Math.max(0.05, windowSec - mixOutSec);
-  state.addEmptyAnimation(track, mixOutSec, delay);
+  entry.animationEnd = Math.min(startTime + windowSec, animation.duration);
+  state.addEmptyAnimation(track, mixOutSec, delaySec);
 }

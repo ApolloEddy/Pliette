@@ -667,13 +667,14 @@ function buildOverlayPanel(): void {
   ($("btn-overlay-clear") as HTMLButtonElement).disabled = false;
 }
 
-function playOverlayFromPanel(): void {
+function playOverlayFromPanel(mixOutOverride?: number): void {
   if (!channels || !flatView.state || !actor.view.state || !currentEntry) return;
   const sourceName = ($("overlay-source") as HTMLSelectElement).value;
   const channelName = ($("overlay-channel") as HTMLSelectElement).value;
   const t0 = Number(($("overlay-start") as HTMLInputElement).value) || 0;
   const t1 = Number(($("overlay-end") as HTMLInputElement).value) || 0.67;
   const mixIn = Number(($("overlay-mixin") as HTMLInputElement).value) || 0.15;
+  const mixOut = mixOutOverride ?? 0.25;
   const source = flatView.skeletonData!.findAnimation(sourceName);
   if (!source) {
     log(`源动画不存在：${sourceName}`, "bad");
@@ -689,11 +690,11 @@ function playOverlayFromPanel(): void {
   const handle: OverlayHandle = { source: sourceName, channel: channelName, startTime: t0, windowSec, track: channel.track };
   for (const [view, layer] of [[flatView, gestureFlat], [actor.view, gesture3d]] as const) {
     if (!view.state) continue;
-    playSlice(view.state, filtered, handle, mixIn, 0.25);
+    playSlice(view.state, filtered, handle, mixIn, mixOut);
   }
   activeOverlays.set(channelName, { handle, flatTrack: channel.track, threeTrack: channel.track });
   log(
-    `叠加：${sourceName} [${t0.toFixed(2)}~${(t0 + windowSec).toFixed(2)}s] → 通道 ${channelName}（轨道 ${channel.track}，混合 ${mixIn}s/0.25s），` +
+    `叠加：${sourceName} [${t0.toFixed(2)}~${(t0 + windowSec).toFixed(2)}s] → 通道 ${channelName}（轨道 ${channel.track}，混合 ${mixIn}s/${mixOut}s），` +
       `基础层继续播放，结束后交还`,
     "good",
   );
@@ -709,8 +710,94 @@ function clearOverlays(): void {
 }
 
 function wireOverlayPanel(): void {
-  $("btn-overlay-play").addEventListener("click", playOverlayFromPanel);
+  $("btn-overlay-play").addEventListener("click", () => playOverlayFromPanel());
   $("btn-overlay-clear").addEventListener("click", clearOverlays);
+}
+
+/**
+ * 相位序列采集（MotionLibrary 精调循环）：对当前 overlay 设置按确定性回放，
+ * 在每个相位点渲染 flat 画布并 POST 到 dev server 落盘（仅 dev 环境可用）。
+ * URL: overlay=源:通道:t0:t1[:mixIn[:mixOut]]&phases=0.2,0.5,...&shotDir=<目录名>
+ */
+async function captureOverlaySeries(mixOutOverride?: number): Promise<void> {
+  if (!channels || !flatView.skeletonData || !flatView.state) return;
+  const sourceName = ($("overlay-source") as HTMLSelectElement).value;
+  const channelName = ($("overlay-channel") as HTMLSelectElement).value;
+  const t0 = Number(($("overlay-start") as HTMLInputElement).value) || 0;
+  const t1 = Number(($("overlay-end") as HTMLInputElement).value) || 0.67;
+  const mixIn = Number(($("overlay-mixin") as HTMLInputElement).value) || 0.15;
+  const mixOut = mixOutOverride ?? 0.25;
+  const dir = bootParams.get("shotDir") ?? `series-${Date.now().toString(36)}`;
+  const pts = (bootParams.get("phases") ?? "")
+    .split(",")
+    .map((x) => Number(x.trim()))
+    .filter((x) => Number.isFinite(x) && x >= 0);
+  if (pts.length === 0) {
+    log("phases 参数为空，跳过序列采集", "warn");
+    return;
+  }
+  const source = flatView.skeletonData.findAnimation(sourceName);
+  const channel = channels[channelName];
+  if (!source || !channel) {
+    log(`序列采集失败：源动画或通道不存在（${sourceName}/${channelName}）`, "bad");
+    return;
+  }
+  const filtered = filterAnimation(flatView.skeletonData, source, channel, `${sourceName}#${channelName}`);
+  if (!filtered) {
+    log(`序列采集失败：${sourceName} 在通道 ${channelName} 无可过滤 timeline`, "bad");
+    return;
+  }
+  const windowSec = Math.max(0.2, Math.min(t1, source.duration) - Math.min(t0, source.duration));
+  const baseName = ($("anim-select") as HTMLSelectElement).value || null;
+  const setupPhase = (t: number): void => {
+    // 确定性回放：清轨 → 重设基础层 → 叠加切片 → 推进到 t（调用方随后渲染+捕获）
+    for (const view of [flatView, actor.view]) {
+      view.state?.clearTracks();
+      view.state?.update(0);
+      view.setAnimation(baseName, true);
+    }
+    const handle: OverlayHandle = { source: sourceName, channel: channelName, startTime: t0, windowSec, track: channel.track };
+    for (const [view, layer] of [[flatView, gestureFlat], [actor.view, gesture3d]] as const) {
+      if (!view.state) continue;
+      playSlice(view.state, filtered, handle, mixIn, mixOut);
+    }
+    // 逐帧步进（与真实播放语义一致；单步大跳会跳过混出边界的满权重帧）
+    for (const view of [flatView, actor.view]) {
+      let done = 0;
+      while (done < t - 1e-9) {
+        const step = Math.min(1 / 60, t - done);
+        view.state?.update(step);
+        done += step;
+      }
+    }
+  };
+  // 预热渲染一次（页面加载后首次绘制存在视口/纹理初始化伪影，不采集）
+  setupPhase(pts[0]);
+  flatView.render(0);
+  actor.view.render(0);
+  let saved = 0;
+  for (const t of pts) {
+    setupPhase(t);
+    flatView.render(0);
+    actor.view.render(0);
+    const dataUrl = flatCanvas.toDataURL("image/png");
+    try {
+      const res = await fetch("/__save-shot", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ dir, name: `t${String(Math.round(t * 1000)).padStart(5, "0")}`, dataUrl }),
+      });
+      const data = (await res.json()) as { ok: boolean };
+      if (data.ok) saved += 1;
+    } catch {
+      log("序列落盘失败（dev server 未运行 /__save-shot？）", "bad");
+      return;
+    }
+  }
+  // 停在最后一个相位供人工核对
+  for (const view of [flatView, actor.view]) view.paused = true;
+  $("btn-play").textContent = "播放";
+  log(`相位序列已采集 ${saved}/${pts.length} 帧 → tuning/${dir}/`, "good");
 }
 
 /* ---------------- Author 在线通路 V1.1（指导书 Spec 10.1 最小调试入口） ---------------- */
@@ -1419,6 +1506,11 @@ function applyBootParams(): Promise<void> {
       $("btn-view-flat").classList.add("primary");
       $("btn-view-3d").classList.remove("primary");
     }
+    if (bootParams.get("freecam") === "1") {
+      // 3D 自由相机（OrbitControls）：供脚本化多角度截图（视觉验收用）
+      stage.setFreeCamera(true);
+      ($("freecam-check") as HTMLInputElement).checked = true;
+    }
     const anim = bootParams.get("anim");
     if (anim) {
       const select = $("anim-select") as HTMLSelectElement;
@@ -1485,15 +1577,22 @@ function applyBootParams(): Promise<void> {
     }
     const overlay = bootParams.get("overlay");
     if (overlay) {
-      // 格式 source:channel:t0:t1，如 overlay=touch:head:0:0.67
-      const [srcName, chName, s0, s1] = overlay.split(":");
+      // 格式 source:channel:t0:t1[:mixIn[:mixOut]]，如 overlay=touch:head:0:0.67:0.15:0.2
+      const parts = overlay.split(":");
+      const [srcName, chName, s0, s1, mixInParam, mixOutParam] = parts;
       const sourceSelect = $("overlay-source") as HTMLSelectElement;
       const channelSelect = $("overlay-channel") as HTMLSelectElement;
       if ([...sourceSelect.options].some((o) => o.value === srcName)) sourceSelect.value = srcName;
       if ([...channelSelect.options].some((o) => o.value === chName)) channelSelect.value = chName;
       ($("overlay-start") as HTMLInputElement).value = s0 ?? "0";
       ($("overlay-end") as HTMLInputElement).value = s1 ?? "0.67";
-      playOverlayFromPanel();
+      if (mixInParam != null && mixInParam !== "") ($("overlay-mixin") as HTMLInputElement).value = mixInParam;
+      playOverlayFromPanel(mixOutParam != null && mixOutParam !== "" ? Number(mixOutParam) : undefined);
+      // 相位序列模式：一次导航采集整段相位证据（停在最后采集的相位）
+      if (bootParams.get("phases")) {
+        void captureOverlaySeries(mixOutParam != null && mixOutParam !== "" ? Number(mixOutParam) : undefined);
+        return Promise.resolve();
+      }
       // freezeAt：确定性帧——把所有轨道（基础+叠加）一致推进 t 秒后冻结
       const freezeAt = Number(bootParams.get("freezeAt"));
       if (Number.isFinite(freezeAt) && freezeAt > 0) {

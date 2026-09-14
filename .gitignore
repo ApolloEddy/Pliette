@@ -17,3 +17,8 @@ tools/spine-converter/
 npm-debug.log*
 .DS_Store
 config/*.local.json
+
+# 调参相位截图批次（证据保留本地；台账 md 入库）
+experiments/motion-library/tuning/**
+!experiments/motion-library/tuning/**/
+!experiments/motion-library/tuning/**/*.md

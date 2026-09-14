@@ -50,6 +50,46 @@ function saveMotionPlugin(): Plugin {
   };
 }
 
+/**
+ * dev-only：Lab 调参相位序列截图落盘（视觉验收证据，MotionLibrary 精调循环）。
+ * 仅在 vite dev server 生效，不进入产物；白名单目录/文件名，只写 experiments/motion-library/tuning/ 下 PNG。
+ */
+function saveShotPlugin(): Plugin {
+  const shotsDir = r("./experiments/motion-library/tuning");
+  return {
+    name: "pliette-save-shot",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use("/__save-shot", (req, res) => {
+        if (req.method !== "POST") {
+          res.statusCode = 405;
+          res.end("POST only");
+          return;
+        }
+        let body = "";
+        req.on("data", (c) => (body += c));
+        req.on("end", () => {
+          try {
+            const { dir, name, dataUrl } = JSON.parse(body);
+            if (!/^[a-z0-9_.-]+$/i.test(String(dir)) || !/^[a-z0-9_.-]+$/i.test(String(name))) throw new Error("非法目录/文件名");
+            const m = /^data:image\/png;base64,(.+)$/.exec(String(dataUrl));
+            if (!m) throw new Error("需要 PNG dataUrl");
+            const target = resolve(shotsDir, String(dir));
+            if (!target.startsWith(shotsDir)) throw new Error("路径越界");
+            mkdirSync(target, { recursive: true });
+            writeFileSync(resolve(target, `${name}.png`), Buffer.from(m[1], "base64"));
+            res.setHeader("content-type", "application/json");
+            res.end(JSON.stringify({ ok: true, saved: `${dir}/${name}.png` }));
+          } catch (e) {
+            res.statusCode = 400;
+            res.end(JSON.stringify({ ok: false, error: String((e as Error).message ?? e) }));
+          }
+        });
+      });
+    },
+  };
+}
+
 export default defineConfig({
   base: "./",
   resolve: {
@@ -60,7 +100,7 @@ export default defineConfig({
     ],
   },
   server: { port: 5174, strictPort: false },
-  plugins: [saveMotionPlugin()],
+  plugins: [saveMotionPlugin(), saveShotPlugin()],
   test: {
     include: ["tests/**/*.test.ts"],
     environment: "node",
