@@ -8,26 +8,34 @@
 | 项 | 状态 |
 |---|---|
 | 目录备案 | 110 动作族/154 变体全部 `planned`；目录有记录 ≠ 当前角色能做 |
-| 种子迁移 | 9 条 native_slice 条目已入 `lafei_8/front` manifest，**全部 candidate**（结构校验通过；轨迹/视觉验收待本机执行） |
-| llm_nod / llm_lean_blink | 内部 V1 草稿（role 曲线格式），**不是** pliette.motion-draft/1.1；待转换+重验证后另行入册，未登记 |
+| manifest 条目 | **17 条 candidate**（9 §9.1 种子迁移 + 6 P0 扩展族 + 1 head.nod V1→V1.1 转换 + 1 routine.greet 配方）——覆盖 native_slice/native_clip/draft/recipe 四种载体 |
+| 视觉精调 | 上述 16 条动作已逐相位截图验收并定稿窗口/混合参数（[台账](../experiments/motion-library/tuning/TUNING-LOG.md)，截图本地保留）；配方视觉合成待播放接线 |
+| llm_nod / llm_lean_blink | llm_nod **已完成 V1→V1.1 转换并通过七步管线重验证**（drafts/lafei.nod.v11.json，bezier 转 smooth 后按限速 retime 1.25×）；llm_lean_blink 待同法转换 |
 | 托腮 routine.chin_rest | 能力缺口（无双手-脸接触标定）；authorable=disabled，重点备案不承诺生成 |
-| 可播放投影 | 0 条 approved——candidate 提升路径见 §3 |
+| 可播放投影 | 0 条 approved——candidate 提升路径见 §3；枕位注意：全部条目仍为 candidate，approved 需 §3 三项齐备 |
 
 ## 1. 逐模型制作方式
 
 ### lafei_8 / front（主角色，assetDigest sha256-a02373…，runtime 3.6.53）
 
+2026-09-14/15 夜间批次已完成视觉精调（逐相位+3D 视角）的 16 条动作见台账；
+此处仅列后续仍需制作的族：
+
 | 优先级 | 动作 | 制作方式 | 证据要求 |
 |---|---|---|---|
-| P0 | gesture.wave / small.screen_right | 提升现有种子 lafei.wave.small_screen_right | 轨迹采样 + 混入/退出录屏；exit 边界回 stand |
-| P0 | head.tilt / gentle.screen_left·right | 离线 Author（head 控制已验证 ±域）或 stand 原生切片勘探 | 世界坐标验证方向（画面基准）；左右分别录屏 |
-| P0 | head.nod / small·normal | 转换 llm_nod（V1→V1.1）或 stand 勘探 | 速率 ≤191°/s（档案标定）；首尾回正 |
-| P0 | reaction.happy / small | 提升种子；核实附件写集是否含眼部 slot | 附件切换前后对照帧 |
-| P0 | gesture.raise_hand / screen_left | 提升种子（旧 wave/leftArm 语义纠正） | 区别于 wave 的完整收回 |
-| P0 | routine.greet / default | 组合已验收 wave + nod 成完整配方（recipe，深度 1） | 全序列录屏；子动作共用冻结修订 |
-| P1 | contact.touch_table / screen_right | 提升种子；限定已标定 0.27H 桌高 | 接触误差 ≤0.02H 采样报告 |
-| P1 | gesture.pump、reaction.dizzy、reaction.shy、life.idle_fidget | 提升对应种子 | 各自边界录屏；shy 需坐姿前提 |
-| P1 | routine.return_idle / default | 通用退出配方（按所有权退出，不 clearTracks） | 中断任一通道后回待机录屏 |
+| P0 | head.tilt / gentle.screen_left·right | dance/stand 倾头段裁剪或离线 Author（head.nod 控制域内） | 世界坐标验证方向（画面基准）；左右分别录屏 |
+| P1 | gesture.beckon、gesture.present（双手原子）、reaction.celebrate（pump+happy 配方） | recipe 组合或 Author | 全序列录屏 |
+| P1 | routine.farewell（挥手后收回） | wave 组件 + hands_reset（待 hands_reset 素材勘探） | 序列不能截断在举手中 |
+| P2 | 生命感层（breathe/shift_weight/listen_idle） | stand2 变体勘探 + Author | 循环首尾同相位验证 |
+
+### 本 rig 的窗口勘探禁区与发现（后续内容 Agent 必读）
+
+- **stand[7.55, 12.1] 是低头弯倾段**：头部 arotation 0→-26°→-31→-41→回正——已是
+  sleepy/lower 的素材源，其他头部动作窗口必须避开。
+- **dance[0,1.17]**：左右大幅摆头+单眼眨（head.shake 素材）；**sleep[0,4]**：-40°~-49°
+  闭眼垂头（sleep_idle 素材，需 alpha 渐升驱动才能做保持型切片）。
+- **overlay 首个 entry mixIn 无效**（3.6 无 mixingFrom 时不混合）——保持型动作
+  切片必须自带进入/退出过渡，或实现 alpha 渐升驱动（infra TODO）。
 
 ### spineboy / front（第二骨架，机制验证用）
 
