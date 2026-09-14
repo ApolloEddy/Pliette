@@ -21,7 +21,7 @@ import { MockTts } from "../speech/adapter.js";
 import { parseControlProfile, type ControlProfile } from "../rig/controlProfile.js";
 import { assembleRequest } from "../motion/author/context.js";
 import { validateCandidate } from "../motion/author/validateV11.js";
-import { MockAuthorClient, importCandidateFile } from "../motion/author/client.js";
+import { MockAuthorClient, importCandidateFile, reidentityForOfflineImport } from "../motion/author/client.js";
 import { AuthorBroker, type PlaybackHooks } from "../motion/author/authorBroker.js";
 import { formatDiagnostic, type AuthorDiagnostic } from "../motion/author/diagnostics.js";
 import lafeiProfileJson from "../../characters/lafei_8.rig-profile.json";
@@ -315,6 +315,8 @@ async function loadAsset(entry: AssetEntry): Promise<void> {
   const data = flatView.skeletonData!;
   lastReport = inspectSkeletonData(flatView.currentBundle!);
   const names = data.bones.map((b) => b.name);
+  // F4：离散状态版本随模型加载递增——旧 Author 结果对 新模型/资产 失效（Spec 9.3）
+  authorStateVersion += 1;
 
   fillSelect($("anim-select") as HTMLSelectElement, data.animations.map((a) => a.name), data.animations[0]?.name ?? null);
   ($("anim-select") as HTMLSelectElement).disabled = false;
@@ -528,9 +530,11 @@ function frame(now: number): void {
   }
 
   // 单一逻辑时钟：调度器每帧只推进一次（Spec 8.8 / 9.1）
-  scheduler.tick(dt);
+  const completedInstances = scheduler.tick(dt);
   gestureFlat?.sync();
   gesture3d?.sync();
+  // 自然结束释放 Author 播放句柄（F4：不能只靠 FIFO 丢弃记录替代生命周期回收）
+  for (const inst of completedInstances) authorBroker?.releasePlayback(inst.requestId);
   autoTick(logicalTime);
   blinkTick(logicalTime);
   if (a08Runtime.active) {
@@ -713,20 +717,49 @@ function wireOverlayPanel(): void {
 
 let controlProfile: ControlProfile | null = null;
 let authorBroker: AuthorBroker | null = null;
+/** 离散状态版本：模型/皮肤/视图/姿态类变化时递增（F4：此前初始化后永不更新） */
 let authorStateVersion = 1;
 
+/** F4：Author 候选复用正式 scheduler/GestureLayer——多写集原子取权 + 通道轨道局部叠加播放，
+ *  不再走 track 0 整体预览；取消按实例定位；自然结束释放句柄。 */
 function authorPlayHooks(): PlaybackHooks {
   return {
     play: (pb, requestId) => {
-      if (!pb) return "invalid";
-      playCompiledOnView(flatView, null, pb.compiled);
-      playCompiledOnView(actor.view, null, pb.compiled);
+      if (!pb || !gestureFlat || !gesture3d) return "invalid";
+      const submit = scheduler.submitComposite({
+        schemaVersion: 1,
+        requestId,
+        action: "author",
+        channels: pb.channels as ChannelId[],
+        durationSec: pb.durationSec,
+        writes: pb.compiled.writes,
+        source: "dialogue",
+      });
+      if (submit.status !== "accepted") {
+        log(`Author 提交被调度器拒绝：${submit.reason}${submit.detail ? `（${submit.detail}）` : ""}`, "bad");
+        return "rejected";
+      }
+      const inst = scheduler.get(submit.instanceId!)!;
+      for (const [view, layer] of [[flatView, gestureFlat], [actor.view, gesture3d]] as const) {
+        if (!view.state) continue;
+        layer.play(inst, pb.compiled.animation, pb.mixInSec, pb.mixOutSec);
+      }
       log(`Author 播放 ${pb.compiled.id}（${requestId}，通道 ${pb.channels.join("+")}，${pb.durationSec}s，混入 ${pb.mixInSec}s/混出 ${pb.mixOutSec}s）`, "good");
-      return `${requestId}`;
+      return submit.instanceId!;
     },
     cancel: (instanceId) => {
-      for (const view of [flatView, actor.view]) view.state?.setEmptyAnimation(0, 0.15);
-      log(`Author 局部取消 ${instanceId}（0.15s 混出交还基础层）`);
+      const inst = scheduler.get(instanceId);
+      scheduler.cancel(instanceId, "author-cancel");
+      if (inst) {
+        for (const ch of inst.channels) {
+          const track = CHANNEL_TRACK[ch];
+          if (track != null) {
+            flatView.state?.setEmptyAnimation(track, 0.15);
+            actor.view.state?.setEmptyAnimation(track, 0.15);
+          }
+        }
+      }
+      log(`Author 局部取消 ${instanceId}（仅该实例通道，0.15s 混出交还基础层）`);
     },
   };
 }
@@ -843,11 +876,12 @@ function wireAuthorPanel(): void {
       renderAuthorDiag([`导入失败：${formatDiagnostic(imported.error)}`], "bad");
       return;
     }
+    // F6：显式离线导入流程——新执行身份 + 内容全量重验证（来源身份保留在原始文本中）
     const requestId = `import-${Date.now().toString(36)}`;
     const request = assembleRequest(controlProfile, {
       requestId,
       contextId: `ctx-${Date.now().toString(36)}`,
-      goal: "候选导入（Lab）",
+      goal: "候选导入（Lab · 离线重授权）",
       runtimeState: {
         monoClockMs: Math.round(performance.now()),
         viewId: controlProfile.identity.viewId,
@@ -857,8 +891,14 @@ function wireAuthorPanel(): void {
         contacts: [],
       },
     });
-    const result = validateCandidate(imported.raw, request, controlProfile, { skeletonData: flatView.skeletonData });
+    const reident = reidentityForOfflineImport(imported.raw, request);
+    if (reident.error) {
+      renderAuthorDiag([`导入失败：${formatDiagnostic(reident.error)}`], "bad");
+      return;
+    }
+    const result = validateCandidate(reident.value, request, controlProfile, { skeletonData: flatView.skeletonData });
     const lines = [
+      `离线导入重授权：requestId=${requestId}（原候选身份不参与校验豁免）`,
       `校验：${result.ok ? "通过" : "失败"}`,
       ...result.findings.map((f) => formatDiagnostic(f as AuthorDiagnostic)),
     ];
@@ -879,10 +919,10 @@ function wireAuthorPanel(): void {
         },
         occupiedChannels: new Set(snap.occupiedChannels),
       });
-      lines.push(`提交：${commit.accepted ? "已接纳并播放" : `拒绝（fallback=${commit.fallback}）`}`);
+      lines.push(`提交：${commit.accepted ? "已接纳并按通道播放" : `拒绝（fallback=${commit.fallback}）`}`);
       if (begin.superseded) lines.push(`单飞：旧请求 ${begin.superseded} 已被替换`);
     }
-    renderAuthorDiag(lines, lines.length > 2 ? "bad" : "good");
+    renderAuthorDiag(lines, lines.length > 3 ? "bad" : "good");
   });
 }
 

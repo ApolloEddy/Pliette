@@ -24,11 +24,14 @@ export class GestureLayer {
     private scheduler: MotionScheduler,
   ) {}
 
-  /** 在实例对应轨道上播放编译动画；结束前混出（交还基础层） */
+  /** 在实例对应轨道上播放编译动画；结束前混出（交还基础层）。
+   *  F4：mixIn 通过 TrackEntry.mixDuration 真实落实（3.6.53：setAnimationWith 后 mixTime=0，
+   *  按 mixDuration 从当前姿态混合进入），不再只依赖 defaultMix。 */
   play(instance: MotionInstance, animation: spine.Animation, mixInSec = 0.15, mixOutSec = 0.15): boolean {
     const track = CHANNEL_TRACK[instance.channel];
     if (track == null) return false;
     const entry = this.state.setAnimationWith(track, animation, false);
+    entry.mixDuration = Math.max(0, mixInSec);
     // 结束后混出到空动画：局部所有权交还基础层（Spec 9.3）
     this.state.addEmptyAnimation(track, mixOutSec, Math.max(0, animation.duration - mixOutSec));
     this.active.set(instance.instanceId, { track, mixOutSec });
@@ -43,10 +46,21 @@ export class GestureLayer {
     return true;
   }
 
-  /** 局部取消：只清对应轨道，其他通道继续（Spec 8.6） */
+  /** 局部取消：只清对应轨道，其他通道继续（Spec 8.6）。
+   *  V09：取消前核对该实例仍拥有轨道——后来的动作已接管时，旧回调不得清掉新动作。 */
   cancel(instanceId: string): boolean {
     const info = this.active.get(instanceId);
     if (!info) return false;
+    const inst = this.scheduler.get(instanceId);
+    const channel = inst?.channel;
+    if (channel != null) {
+      const holder = this.scheduler.holderOf(channel);
+      if (holder && holder.instanceId !== instanceId) {
+        // 轨道已被新实例接管：只清账本，不动动画轨道
+        this.active.delete(instanceId);
+        return true;
+      }
+    }
     this.state.setEmptyAnimation(info.track, info.mixOutSec);
     this.active.delete(instanceId);
     return true;

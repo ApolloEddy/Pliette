@@ -237,3 +237,21 @@ export function importCandidateFile(text: string): { raw?: unknown; error?: Auth
     return { error: diag({ code: "OUTPUT_TRUNCATED", stage: "response", recoverable: true, message: `JSON 解析失败：${(e as Error).message}` }) };
   }
 }
+
+/**
+ * 离线候选导入的显式重授权（2026-09-10 审查 F6 / MotionLibrary Spec §9.1）：
+ * 仅离线导入路径使用——为当次执行建立新身份（requestId/contextId/profileDigest 回显改为当前请求值），
+ * 内容校验随后全量重跑；来源身份由调用方另行留存。
+ * 在线响应的回显校验保持严格，不经此函数（不得为实现导入全局放松）。
+ */
+export function reidentityForOfflineImport(raw: unknown, request: GuideRequest): { value?: unknown; error?: AuthorFinding } {
+  const parsed = parseAuthorResponse(raw);
+  if (parsed.error || !parsed.response) {
+    return { error: diag({ code: "INVALID_TIMELINE", stage: "response", recoverable: true, message: parsed.error ?? "结构不合法" }) };
+  }
+  const value = JSON.parse(JSON.stringify(parsed.response)) as Record<string, unknown>;
+  value.requestId = request.requestId;
+  value.contextId = request.contextId;
+  value.profileDigest = request.profileRef.profileDigest;
+  return { value };
+}

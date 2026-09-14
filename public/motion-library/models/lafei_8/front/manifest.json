@@ -1,5 +1,1631 @@
 {
   "schemaVersion": "pliette.motion-manifest/1.0",
   "catalogRevision": "planning-2026-09-14.1",
-  "entries": []
+  "entries": [
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.wave.small_screen_right",
+      "motionRevision": 1,
+      "actionId": "gesture.wave",
+      "variantId": "small.screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "stand",
+        "sourceStartMs": 4900,
+        "sourceEndMs": 7300
+      },
+      "durationMs": 2400,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R/scale",
+        "bone:hand_R/translate",
+        "bone:hand_R3/rotate",
+        "bone:hand_R3/scale",
+        "bone:hand_R3/translate",
+        "bone:kele/rotate",
+        "bone:kele/scale",
+        "bone:kele/translate",
+        "bone:waitao_R2/rotate",
+        "bone:waitao_R2/scale",
+        "bone:waitao_R2/translate",
+        "bone:waitao_R3/rotate",
+        "bone:waitao_R3/scale",
+        "bone:waitao_R3/translate",
+        "bone:waitao_R4/rotate",
+        "bone:waitao_R4/scale",
+        "bone:waitao_R4/translate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 2400,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "stand@4900",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "stand@7300",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#stand[4900-7300] 挥手（右手举臂摇晃）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-d6c0cb7202d0054b006f324f77ecf97ad165ce2c8d0500447069f7a564e02f79"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.raise_hand.screen_left",
+      "motionRevision": 1,
+      "actionId": "gesture.raise_hand",
+      "variantId": "screen_left",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "stand",
+        "sourceStartMs": 13000,
+        "sourceEndMs": 13900
+      },
+      "durationMs": 900,
+      "channels": [
+        "leftArm"
+      ],
+      "writes": [
+        "bone:hand_L/rotate",
+        "bone:hand_L/scale",
+        "bone:hand_L/translate",
+        "bone:hand_L3/rotate",
+        "bone:hand_L3/scale",
+        "bone:hand_L3/translate",
+        "bone:waitao_L2/rotate",
+        "bone:waitao_L2/scale",
+        "bone:waitao_L2/translate",
+        "bone:waitao_L3/rotate",
+        "bone:waitao_L3/scale",
+        "bone:waitao_L3/translate",
+        "bone:waitao_L4/rotate",
+        "bone:waitao_L4/scale",
+        "bone:waitao_L4/translate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 900,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "stand@13000",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "stand@13900",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#stand[13000-13900] 短促举手（旧 wave/leftArm 标签语义纠正）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-5a341827651370ecf8a1dfec37fce4fdf34096983415c1756d05967a19f9103b"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.reaction.dizzy.small",
+      "motionRevision": 1,
+      "actionId": "reaction.dizzy",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "yun",
+        "sourceStartMs": 400,
+        "sourceEndMs": 2000
+      },
+      "durationMs": 1600,
+      "channels": [
+        "head"
+      ],
+      "writes": [
+        "bone:bushuang1/rotate",
+        "bone:bushuang1/scale",
+        "bone:bushuang1/translate",
+        "bone:bushuang2/rotate",
+        "bone:bushuang2/scale",
+        "bone:bushuang2/translate",
+        "bone:erduo_L/rotate",
+        "bone:erduo_L/scale",
+        "bone:erduo_L/translate",
+        "bone:erduo_L2/rotate",
+        "bone:erduo_L2/scale",
+        "bone:erduo_L2/translate",
+        "bone:erduo_L3/rotate",
+        "bone:erduo_L3/scale",
+        "bone:erduo_L3/translate",
+        "bone:erduo_R/rotate",
+        "bone:erduo_R/scale",
+        "bone:erduo_R/translate",
+        "bone:erduo_R2/rotate",
+        "bone:erduo_R2/scale",
+        "bone:erduo_R2/translate",
+        "bone:erduo_R3/rotate",
+        "bone:erduo_R3/scale",
+        "bone:erduo_R3/translate",
+        "bone:eye_L/rotate",
+        "bone:eye_L/scale",
+        "bone:eye_L/translate",
+        "bone:eye_R/rotate",
+        "bone:eye_R/scale",
+        "bone:eye_R/translate",
+        "bone:face/rotate",
+        "bone:face/scale",
+        "bone:face/translate",
+        "bone:hair_F/rotate",
+        "bone:hair_F/scale",
+        "bone:hair_F/translate",
+        "bone:hair_F2/rotate",
+        "bone:hair_F2/scale",
+        "bone:hair_F2/translate",
+        "bone:hair_F3/rotate",
+        "bone:hair_F3/scale",
+        "bone:hair_F3/translate",
+        "bone:hair_F4/rotate",
+        "bone:hair_F4/scale",
+        "bone:hair_F4/translate",
+        "bone:hair_F5/rotate",
+        "bone:hair_F5/scale",
+        "bone:hair_F5/translate",
+        "bone:hair_L/rotate",
+        "bone:hair_L/scale",
+        "bone:hair_L/translate",
+        "bone:hair_L10/rotate",
+        "bone:hair_L10/scale",
+        "bone:hair_L10/translate",
+        "bone:hair_L2/rotate",
+        "bone:hair_L2/scale",
+        "bone:hair_L2/translate",
+        "bone:hair_L3/rotate",
+        "bone:hair_L3/scale",
+        "bone:hair_L3/translate",
+        "bone:hair_L4/rotate",
+        "bone:hair_L4/scale",
+        "bone:hair_L4/translate",
+        "bone:hair_L5/rotate",
+        "bone:hair_L5/scale",
+        "bone:hair_L5/translate",
+        "bone:hair_L6/rotate",
+        "bone:hair_L6/scale",
+        "bone:hair_L6/translate",
+        "bone:hair_L7/rotate",
+        "bone:hair_L7/scale",
+        "bone:hair_L7/translate",
+        "bone:hair_L8/rotate",
+        "bone:hair_L8/scale",
+        "bone:hair_L8/translate",
+        "bone:hair_L9/rotate",
+        "bone:hair_L9/scale",
+        "bone:hair_L9/translate",
+        "bone:hair_R/rotate",
+        "bone:hair_R/scale",
+        "bone:hair_R/translate",
+        "bone:hair_R10/rotate",
+        "bone:hair_R10/scale",
+        "bone:hair_R10/translate",
+        "bone:hair_R2/rotate",
+        "bone:hair_R2/scale",
+        "bone:hair_R2/translate",
+        "bone:hair_R3/rotate",
+        "bone:hair_R3/scale",
+        "bone:hair_R3/translate",
+        "bone:hair_R4/rotate",
+        "bone:hair_R4/scale",
+        "bone:hair_R4/translate",
+        "bone:hair_R5/rotate",
+        "bone:hair_R5/scale",
+        "bone:hair_R5/translate",
+        "bone:hair_R6/rotate",
+        "bone:hair_R6/scale",
+        "bone:hair_R6/translate",
+        "bone:hair_R7/rotate",
+        "bone:hair_R7/scale",
+        "bone:hair_R7/translate",
+        "bone:hair_R8/rotate",
+        "bone:hair_R8/scale",
+        "bone:hair_R8/translate",
+        "bone:hair_R9/rotate",
+        "bone:hair_R9/scale",
+        "bone:hair_R9/translate",
+        "bone:mawei_L/rotate",
+        "bone:mawei_L/scale",
+        "bone:mawei_L/translate",
+        "bone:mawei_L2/rotate",
+        "bone:mawei_L2/scale",
+        "bone:mawei_L2/translate",
+        "bone:mawei_L3/rotate",
+        "bone:mawei_L3/scale",
+        "bone:mawei_L3/translate",
+        "bone:mawei_L4/rotate",
+        "bone:mawei_L4/scale",
+        "bone:mawei_L4/translate",
+        "bone:mawei_L5/rotate",
+        "bone:mawei_L5/scale",
+        "bone:mawei_L5/translate",
+        "bone:mawei_L7/rotate",
+        "bone:mawei_L7/scale",
+        "bone:mawei_L7/translate",
+        "bone:mawei_R/rotate",
+        "bone:mawei_R/scale",
+        "bone:mawei_R/translate",
+        "bone:mawei_R2/rotate",
+        "bone:mawei_R2/scale",
+        "bone:mawei_R2/translate",
+        "bone:mawei_R3/rotate",
+        "bone:mawei_R3/scale",
+        "bone:mawei_R3/translate",
+        "bone:mawei_R4/rotate",
+        "bone:mawei_R4/scale",
+        "bone:mawei_R4/translate",
+        "bone:mawei_R5/rotate",
+        "bone:mawei_R5/scale",
+        "bone:mawei_R5/translate",
+        "bone:mawei_R7/rotate",
+        "bone:mawei_R7/scale",
+        "bone:mawei_R7/translate",
+        "bone:meimao1/rotate",
+        "bone:meimao1/scale",
+        "bone:meimao1/translate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment",
+        "slot:meimao1/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1600,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "yun@400",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "yun@2000",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#yun[400-2000] 晕乎乎（带头部完整反应）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-991348441cfecbdaf378b2d7a89bdcaa14aa5544d264f0dcbba19d39c8a978ba"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.reaction.happy.small",
+      "motionRevision": 1,
+      "actionId": "reaction.happy",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "touch",
+        "sourceStartMs": 0,
+        "sourceEndMs": 670
+      },
+      "durationMs": 670,
+      "channels": [
+        "head"
+      ],
+      "writes": [
+        "bone:bushuang1/rotate",
+        "bone:bushuang1/scale",
+        "bone:bushuang1/translate",
+        "bone:bushuang2/rotate",
+        "bone:bushuang2/scale",
+        "bone:bushuang2/translate",
+        "bone:erduo_L/rotate",
+        "bone:erduo_L/scale",
+        "bone:erduo_L/translate",
+        "bone:erduo_L2/rotate",
+        "bone:erduo_L2/scale",
+        "bone:erduo_L2/translate",
+        "bone:erduo_L3/rotate",
+        "bone:erduo_L3/scale",
+        "bone:erduo_L3/translate",
+        "bone:erduo_R/rotate",
+        "bone:erduo_R/scale",
+        "bone:erduo_R/translate",
+        "bone:erduo_R2/rotate",
+        "bone:erduo_R2/scale",
+        "bone:erduo_R2/translate",
+        "bone:erduo_R3/rotate",
+        "bone:erduo_R3/scale",
+        "bone:erduo_R3/translate",
+        "bone:eye_L/rotate",
+        "bone:eye_L/scale",
+        "bone:eye_L/translate",
+        "bone:eye_R/rotate",
+        "bone:eye_R/scale",
+        "bone:eye_R/translate",
+        "bone:face/rotate",
+        "bone:face/scale",
+        "bone:face/translate",
+        "bone:hair_F/rotate",
+        "bone:hair_F/scale",
+        "bone:hair_F/translate",
+        "bone:hair_F2/rotate",
+        "bone:hair_F2/scale",
+        "bone:hair_F2/translate",
+        "bone:hair_F3/rotate",
+        "bone:hair_F3/scale",
+        "bone:hair_F3/translate",
+        "bone:hair_F4/rotate",
+        "bone:hair_F4/scale",
+        "bone:hair_F4/translate",
+        "bone:hair_F5/rotate",
+        "bone:hair_F5/scale",
+        "bone:hair_F5/translate",
+        "bone:hair_L/rotate",
+        "bone:hair_L/scale",
+        "bone:hair_L/translate",
+        "bone:hair_L10/rotate",
+        "bone:hair_L10/scale",
+        "bone:hair_L10/translate",
+        "bone:hair_L2/rotate",
+        "bone:hair_L2/scale",
+        "bone:hair_L2/translate",
+        "bone:hair_L3/rotate",
+        "bone:hair_L3/scale",
+        "bone:hair_L3/translate",
+        "bone:hair_L4/rotate",
+        "bone:hair_L4/scale",
+        "bone:hair_L4/translate",
+        "bone:hair_L5/rotate",
+        "bone:hair_L5/scale",
+        "bone:hair_L5/translate",
+        "bone:hair_L6/rotate",
+        "bone:hair_L6/scale",
+        "bone:hair_L6/translate",
+        "bone:hair_L7/rotate",
+        "bone:hair_L7/scale",
+        "bone:hair_L7/translate",
+        "bone:hair_L8/rotate",
+        "bone:hair_L8/scale",
+        "bone:hair_L8/translate",
+        "bone:hair_L9/rotate",
+        "bone:hair_L9/scale",
+        "bone:hair_L9/translate",
+        "bone:hair_R/rotate",
+        "bone:hair_R/scale",
+        "bone:hair_R/translate",
+        "bone:hair_R10/rotate",
+        "bone:hair_R10/scale",
+        "bone:hair_R10/translate",
+        "bone:hair_R2/rotate",
+        "bone:hair_R2/scale",
+        "bone:hair_R2/translate",
+        "bone:hair_R3/rotate",
+        "bone:hair_R3/scale",
+        "bone:hair_R3/translate",
+        "bone:hair_R4/rotate",
+        "bone:hair_R4/scale",
+        "bone:hair_R4/translate",
+        "bone:hair_R5/rotate",
+        "bone:hair_R5/scale",
+        "bone:hair_R5/translate",
+        "bone:hair_R6/rotate",
+        "bone:hair_R6/scale",
+        "bone:hair_R6/translate",
+        "bone:hair_R7/rotate",
+        "bone:hair_R7/scale",
+        "bone:hair_R7/translate",
+        "bone:hair_R8/rotate",
+        "bone:hair_R8/scale",
+        "bone:hair_R8/translate",
+        "bone:hair_R9/rotate",
+        "bone:hair_R9/scale",
+        "bone:hair_R9/translate",
+        "bone:mawei_L/rotate",
+        "bone:mawei_L/scale",
+        "bone:mawei_L/translate",
+        "bone:mawei_L2/rotate",
+        "bone:mawei_L2/scale",
+        "bone:mawei_L2/translate",
+        "bone:mawei_L3/rotate",
+        "bone:mawei_L3/scale",
+        "bone:mawei_L3/translate",
+        "bone:mawei_L4/rotate",
+        "bone:mawei_L4/scale",
+        "bone:mawei_L4/translate",
+        "bone:mawei_L5/rotate",
+        "bone:mawei_L5/scale",
+        "bone:mawei_L5/translate",
+        "bone:mawei_L7/rotate",
+        "bone:mawei_L7/scale",
+        "bone:mawei_L7/translate",
+        "bone:mawei_R/rotate",
+        "bone:mawei_R/scale",
+        "bone:mawei_R/translate",
+        "bone:mawei_R2/rotate",
+        "bone:mawei_R2/scale",
+        "bone:mawei_R2/translate",
+        "bone:mawei_R3/rotate",
+        "bone:mawei_R3/scale",
+        "bone:mawei_R3/translate",
+        "bone:mawei_R4/rotate",
+        "bone:mawei_R4/scale",
+        "bone:mawei_R4/translate",
+        "bone:mawei_R5/rotate",
+        "bone:mawei_R5/scale",
+        "bone:mawei_R5/translate",
+        "bone:mawei_R7/rotate",
+        "bone:mawei_R7/scale",
+        "bone:mawei_R7/translate",
+        "bone:meimao1/rotate",
+        "bone:meimao1/scale",
+        "bone:meimao1/translate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment",
+        "slot:meimao1/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 670,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "touch@0",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "touch@670",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#touch[0-670] 被摸头开心（实际写集待附件核实）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-cb7a1a1c90e2004c786c14b025ea3288a1008d0f8531bd601f23140816f3291d"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.reaction.shy.small",
+      "motionRevision": 1,
+      "actionId": "reaction.shy",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "sit",
+        "sourceStartMs": 0,
+        "sourceEndMs": 1330
+      },
+      "durationMs": 1330,
+      "channels": [
+        "head"
+      ],
+      "writes": [
+        "bone:bushuang1/rotate",
+        "bone:bushuang1/scale",
+        "bone:bushuang1/translate",
+        "bone:bushuang2/rotate",
+        "bone:bushuang2/scale",
+        "bone:bushuang2/translate",
+        "bone:erduo_L/rotate",
+        "bone:erduo_L/scale",
+        "bone:erduo_L/translate",
+        "bone:erduo_L2/rotate",
+        "bone:erduo_L2/scale",
+        "bone:erduo_L2/translate",
+        "bone:erduo_L3/rotate",
+        "bone:erduo_L3/scale",
+        "bone:erduo_L3/translate",
+        "bone:erduo_R/rotate",
+        "bone:erduo_R/scale",
+        "bone:erduo_R/translate",
+        "bone:erduo_R2/rotate",
+        "bone:erduo_R2/scale",
+        "bone:erduo_R2/translate",
+        "bone:erduo_R3/rotate",
+        "bone:erduo_R3/scale",
+        "bone:erduo_R3/translate",
+        "bone:eye_L/rotate",
+        "bone:eye_L/scale",
+        "bone:eye_L/translate",
+        "bone:eye_R/rotate",
+        "bone:eye_R/scale",
+        "bone:eye_R/translate",
+        "bone:face/rotate",
+        "bone:face/scale",
+        "bone:face/translate",
+        "bone:hair_F/rotate",
+        "bone:hair_F/scale",
+        "bone:hair_F/translate",
+        "bone:hair_F2/rotate",
+        "bone:hair_F2/scale",
+        "bone:hair_F2/translate",
+        "bone:hair_F3/rotate",
+        "bone:hair_F3/scale",
+        "bone:hair_F3/translate",
+        "bone:hair_F4/rotate",
+        "bone:hair_F4/scale",
+        "bone:hair_F4/translate",
+        "bone:hair_F5/rotate",
+        "bone:hair_F5/scale",
+        "bone:hair_F5/translate",
+        "bone:hair_L/rotate",
+        "bone:hair_L/scale",
+        "bone:hair_L/translate",
+        "bone:hair_L10/rotate",
+        "bone:hair_L10/scale",
+        "bone:hair_L10/translate",
+        "bone:hair_L2/rotate",
+        "bone:hair_L2/scale",
+        "bone:hair_L2/translate",
+        "bone:hair_L3/rotate",
+        "bone:hair_L3/scale",
+        "bone:hair_L3/translate",
+        "bone:hair_L4/rotate",
+        "bone:hair_L4/scale",
+        "bone:hair_L4/translate",
+        "bone:hair_L5/rotate",
+        "bone:hair_L5/scale",
+        "bone:hair_L5/translate",
+        "bone:hair_L6/rotate",
+        "bone:hair_L6/scale",
+        "bone:hair_L6/translate",
+        "bone:hair_L7/rotate",
+        "bone:hair_L7/scale",
+        "bone:hair_L7/translate",
+        "bone:hair_L8/rotate",
+        "bone:hair_L8/scale",
+        "bone:hair_L8/translate",
+        "bone:hair_L9/rotate",
+        "bone:hair_L9/scale",
+        "bone:hair_L9/translate",
+        "bone:hair_R/rotate",
+        "bone:hair_R/scale",
+        "bone:hair_R/translate",
+        "bone:hair_R10/rotate",
+        "bone:hair_R10/scale",
+        "bone:hair_R10/translate",
+        "bone:hair_R2/rotate",
+        "bone:hair_R2/scale",
+        "bone:hair_R2/translate",
+        "bone:hair_R3/rotate",
+        "bone:hair_R3/scale",
+        "bone:hair_R3/translate",
+        "bone:hair_R4/rotate",
+        "bone:hair_R4/scale",
+        "bone:hair_R4/translate",
+        "bone:hair_R5/rotate",
+        "bone:hair_R5/scale",
+        "bone:hair_R5/translate",
+        "bone:hair_R6/rotate",
+        "bone:hair_R6/scale",
+        "bone:hair_R6/translate",
+        "bone:hair_R7/rotate",
+        "bone:hair_R7/scale",
+        "bone:hair_R7/translate",
+        "bone:hair_R8/rotate",
+        "bone:hair_R8/scale",
+        "bone:hair_R8/translate",
+        "bone:hair_R9/rotate",
+        "bone:hair_R9/scale",
+        "bone:hair_R9/translate",
+        "bone:mawei_L/rotate",
+        "bone:mawei_L/scale",
+        "bone:mawei_L/translate",
+        "bone:mawei_L2/rotate",
+        "bone:mawei_L2/scale",
+        "bone:mawei_L2/translate",
+        "bone:mawei_L3/rotate",
+        "bone:mawei_L3/scale",
+        "bone:mawei_L3/translate",
+        "bone:mawei_L4/rotate",
+        "bone:mawei_L4/scale",
+        "bone:mawei_L4/translate",
+        "bone:mawei_L5/rotate",
+        "bone:mawei_L5/scale",
+        "bone:mawei_L5/translate",
+        "bone:mawei_L7/rotate",
+        "bone:mawei_L7/scale",
+        "bone:mawei_L7/translate",
+        "bone:mawei_R/rotate",
+        "bone:mawei_R/scale",
+        "bone:mawei_R/translate",
+        "bone:mawei_R2/rotate",
+        "bone:mawei_R2/scale",
+        "bone:mawei_R2/translate",
+        "bone:mawei_R3/rotate",
+        "bone:mawei_R3/scale",
+        "bone:mawei_R3/translate",
+        "bone:mawei_R4/rotate",
+        "bone:mawei_R4/scale",
+        "bone:mawei_R4/translate",
+        "bone:mawei_R5/rotate",
+        "bone:mawei_R5/scale",
+        "bone:mawei_R5/translate",
+        "bone:mawei_R7/rotate",
+        "bone:mawei_R7/scale",
+        "bone:mawei_R7/translate",
+        "bone:meimao1/rotate",
+        "bone:meimao1/scale",
+        "bone:meimao1/translate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment",
+        "slot:meimao1/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "seated"
+        ],
+        "baseAnimations": [
+          "sit"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1330,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "seated",
+          "snapshotRef": "sit@0",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "seated",
+          "snapshotRef": "sit@1330",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#sit[0-1330] 低头害羞（源为坐姿；使用前提如实声明）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-69ce8a535b9aa33b850055194f6b7009b7d12f417e102810ccc4784d057ca54a"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.pump.screen_right",
+      "motionRevision": 1,
+      "actionId": "gesture.pump",
+      "variantId": "screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "victory",
+        "sourceStartMs": 3300,
+        "sourceEndMs": 4100
+      },
+      "durationMs": 800,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R/scale",
+        "bone:hand_R/translate",
+        "bone:hand_R3/rotate",
+        "bone:hand_R3/scale",
+        "bone:hand_R3/translate",
+        "bone:kele/rotate",
+        "bone:kele/scale",
+        "bone:kele/translate",
+        "bone:waitao_R2/rotate",
+        "bone:waitao_R2/scale",
+        "bone:waitao_R2/translate",
+        "bone:waitao_R3/rotate",
+        "bone:waitao_R3/scale",
+        "bone:waitao_R3/translate",
+        "bone:waitao_R4/rotate",
+        "bone:waitao_R4/scale",
+        "bone:waitao_R4/translate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "victory@3300",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "victory@4100",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#victory[3300-4100] 庆祝挥拳",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-5493d84d0e8012708077488456ba338532ec1ef8a2fe2df78196aecb1c7a21a8"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.idle_fidget.default",
+      "motionRevision": 1,
+      "actionId": "life.idle_fidget",
+      "variantId": "default",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "normal",
+        "sourceStartMs": 500,
+        "sourceEndMs": 2500
+      },
+      "durationMs": 2000,
+      "channels": [
+        "head"
+      ],
+      "writes": [
+        "bone:bushuang1/rotate",
+        "bone:bushuang1/scale",
+        "bone:bushuang1/translate",
+        "bone:bushuang2/rotate",
+        "bone:bushuang2/scale",
+        "bone:bushuang2/translate",
+        "bone:erduo_L/rotate",
+        "bone:erduo_L/scale",
+        "bone:erduo_L/translate",
+        "bone:erduo_L2/rotate",
+        "bone:erduo_L2/scale",
+        "bone:erduo_L2/translate",
+        "bone:erduo_L3/rotate",
+        "bone:erduo_L3/scale",
+        "bone:erduo_L3/translate",
+        "bone:erduo_R/rotate",
+        "bone:erduo_R/scale",
+        "bone:erduo_R/translate",
+        "bone:erduo_R2/rotate",
+        "bone:erduo_R2/scale",
+        "bone:erduo_R2/translate",
+        "bone:erduo_R3/rotate",
+        "bone:erduo_R3/scale",
+        "bone:erduo_R3/translate",
+        "bone:eye_L/rotate",
+        "bone:eye_L/scale",
+        "bone:eye_L/translate",
+        "bone:eye_R/rotate",
+        "bone:eye_R/scale",
+        "bone:eye_R/translate",
+        "bone:face/rotate",
+        "bone:face/scale",
+        "bone:face/translate",
+        "bone:hair_F/rotate",
+        "bone:hair_F/scale",
+        "bone:hair_F/translate",
+        "bone:hair_F2/rotate",
+        "bone:hair_F2/scale",
+        "bone:hair_F2/translate",
+        "bone:hair_F3/rotate",
+        "bone:hair_F3/scale",
+        "bone:hair_F3/translate",
+        "bone:hair_F4/rotate",
+        "bone:hair_F4/scale",
+        "bone:hair_F4/translate",
+        "bone:hair_F5/rotate",
+        "bone:hair_F5/scale",
+        "bone:hair_F5/translate",
+        "bone:hair_L/rotate",
+        "bone:hair_L/scale",
+        "bone:hair_L/translate",
+        "bone:hair_L10/rotate",
+        "bone:hair_L10/scale",
+        "bone:hair_L10/translate",
+        "bone:hair_L2/rotate",
+        "bone:hair_L2/scale",
+        "bone:hair_L2/translate",
+        "bone:hair_L3/rotate",
+        "bone:hair_L3/scale",
+        "bone:hair_L3/translate",
+        "bone:hair_L4/rotate",
+        "bone:hair_L4/scale",
+        "bone:hair_L4/translate",
+        "bone:hair_L5/rotate",
+        "bone:hair_L5/scale",
+        "bone:hair_L5/translate",
+        "bone:hair_L6/rotate",
+        "bone:hair_L6/scale",
+        "bone:hair_L6/translate",
+        "bone:hair_L7/rotate",
+        "bone:hair_L7/scale",
+        "bone:hair_L7/translate",
+        "bone:hair_L8/rotate",
+        "bone:hair_L8/scale",
+        "bone:hair_L8/translate",
+        "bone:hair_L9/rotate",
+        "bone:hair_L9/scale",
+        "bone:hair_L9/translate",
+        "bone:hair_R/rotate",
+        "bone:hair_R/scale",
+        "bone:hair_R/translate",
+        "bone:hair_R10/rotate",
+        "bone:hair_R10/scale",
+        "bone:hair_R10/translate",
+        "bone:hair_R2/rotate",
+        "bone:hair_R2/scale",
+        "bone:hair_R2/translate",
+        "bone:hair_R3/rotate",
+        "bone:hair_R3/scale",
+        "bone:hair_R3/translate",
+        "bone:hair_R4/rotate",
+        "bone:hair_R4/scale",
+        "bone:hair_R4/translate",
+        "bone:hair_R5/rotate",
+        "bone:hair_R5/scale",
+        "bone:hair_R5/translate",
+        "bone:hair_R6/rotate",
+        "bone:hair_R6/scale",
+        "bone:hair_R6/translate",
+        "bone:hair_R7/rotate",
+        "bone:hair_R7/scale",
+        "bone:hair_R7/translate",
+        "bone:hair_R8/rotate",
+        "bone:hair_R8/scale",
+        "bone:hair_R8/translate",
+        "bone:hair_R9/rotate",
+        "bone:hair_R9/scale",
+        "bone:hair_R9/translate",
+        "bone:mawei_L/rotate",
+        "bone:mawei_L/scale",
+        "bone:mawei_L/translate",
+        "bone:mawei_L2/rotate",
+        "bone:mawei_L2/scale",
+        "bone:mawei_L2/translate",
+        "bone:mawei_L3/rotate",
+        "bone:mawei_L3/scale",
+        "bone:mawei_L3/translate",
+        "bone:mawei_L4/rotate",
+        "bone:mawei_L4/scale",
+        "bone:mawei_L4/translate",
+        "bone:mawei_L5/rotate",
+        "bone:mawei_L5/scale",
+        "bone:mawei_L5/translate",
+        "bone:mawei_L7/rotate",
+        "bone:mawei_L7/scale",
+        "bone:mawei_L7/translate",
+        "bone:mawei_R/rotate",
+        "bone:mawei_R/scale",
+        "bone:mawei_R/translate",
+        "bone:mawei_R2/rotate",
+        "bone:mawei_R2/scale",
+        "bone:mawei_R2/translate",
+        "bone:mawei_R3/rotate",
+        "bone:mawei_R3/scale",
+        "bone:mawei_R3/translate",
+        "bone:mawei_R4/rotate",
+        "bone:mawei_R4/scale",
+        "bone:mawei_R4/translate",
+        "bone:mawei_R5/rotate",
+        "bone:mawei_R5/scale",
+        "bone:mawei_R5/translate",
+        "bone:mawei_R7/rotate",
+        "bone:mawei_R7/scale",
+        "bone:mawei_R7/translate",
+        "bone:meimao1/rotate",
+        "bone:meimao1/scale",
+        "bone:meimao1/translate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 2000,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "normal@500",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "normal@2500",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#normal[500-2500] 待机小动作（候选语义，需视觉核实）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-603db95a821d982c180ee845db82705cf70c07200143d0073dcfed47d2b4be28"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.point.screen_right",
+      "motionRevision": 1,
+      "actionId": "gesture.point",
+      "variantId": "screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "attack",
+        "sourceStartMs": 150,
+        "sourceEndMs": 700
+      },
+      "durationMs": 550,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R/scale",
+        "bone:hand_R/translate",
+        "bone:hand_R3/rotate",
+        "bone:hand_R3/scale",
+        "bone:hand_R3/translate",
+        "bone:kele/rotate",
+        "bone:kele/scale",
+        "bone:kele/translate",
+        "bone:waitao_R2/rotate",
+        "bone:waitao_R2/scale",
+        "bone:waitao_R2/translate",
+        "bone:waitao_R3/rotate",
+        "bone:waitao_R3/scale",
+        "bone:waitao_R3/translate",
+        "bone:waitao_R4/rotate",
+        "bone:waitao_R4/scale",
+        "bone:waitao_R4/translate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 550,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "attack@150",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "attack@700",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#attack[150-700] 右臂前伸指向（指向一致性待核）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-b87a4e12e03686eb4ccf12a32bf8c30d0dc96d5bd86aa154cbc6d495fb2c9aae"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.touch_table.screen_right",
+      "motionRevision": 1,
+      "actionId": "contact.touch_table",
+      "variantId": "screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_slice",
+        "animationName": "victory",
+        "sourceStartMs": 700,
+        "sourceEndMs": 1200
+      },
+      "durationMs": 500,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R/scale",
+        "bone:hand_R/translate",
+        "bone:hand_R3/rotate",
+        "bone:hand_R3/scale",
+        "bone:hand_R3/translate",
+        "bone:kele/rotate",
+        "bone:kele/scale",
+        "bone:kele/translate",
+        "bone:waitao_R2/rotate",
+        "bone:waitao_R2/scale",
+        "bone:waitao_R2/translate",
+        "bone:waitao_R3/rotate",
+        "bone:waitao_R3/scale",
+        "bone:waitao_R3/translate",
+        "bone:waitao_R4/rotate",
+        "bone:waitao_R4/scale",
+        "bone:waitao_R4/translate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [
+          "scene:table.calibrated_0.27H"
+        ],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 500,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "victory@700",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "victory@1200",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "legacy_slice",
+        "sourceRef": "src/motion/library/gestures.ts#victory[700-1200] 触碰矮桌（绑定已测桌高 0.27H，不推广任意桌）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "build-seed-manifest@2026-09-14T08:10:38.391Z"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-0f9b96fae39f55976ba3425cf3c335565a91c8670324ebd0aa5b1eb2140da0e9"
+    }
+  ]
 }
