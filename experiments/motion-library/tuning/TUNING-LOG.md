@@ -67,3 +67,21 @@ stand2 是带更多表情键的 stand 变体；dance/sleep/wash 是未被发掘�
 entry 立即满权重生效（node 复现确认）——sleep 全程垂姿保持因此不适合直接切片，
 入场平滑必须依赖源动画自身的准备段（窗口选取原则）或未来的 alpha 渐升驱动
 （GestureLayer.sync 内按 entry.alpha 0→1 逐帧爬升，列为 infra TODO）。
+
+## 草稿转换批次（+1 条，candidate）
+
+| # | 逻辑键 | 来源 | 产物 | 重验证 | 结论 |
+|---|---|---|---|---|---|
+| 16 | head.nod / small | public/motions/llm_nod.json（MiMo V1.1 协议产物的 V1 内部格式存档） | drafts/lafei.nod.v11.json | ✅ 七步管线（编译+隔离采样）零失败，tests/m5-seed-manifest.test.ts | ✅ 转换+重验证通过 |
+
+### 转换要点（数据驱动，无硬编码）
+
+- role+property → controlId 经档案 mapsTo；composite 子控制（face.eyeL.state/face.eyeR.state）
+  不单独出曲线，由 face.eyes.pair 组合枚举统一表达（双眼附件值对经 compositeEntries 反查枚举键）
+- **Retime 显式策略**：V1 bezier 缓动在 V1.1（linear/smooth）下峰值速率 209.6°/s 超 head.nod
+  限速 200°/s → 统一放慢 1.25 倍（0.8s→1.0s，采样复核 168°/s）——转换器规则而非校验放宽
+- 语义澄清：本 rig 的 head.nod 控制实际为头部左右快倾（±40° 已验证域）——
+  "点头"在本资产的表达形式即快倾摆动，与原动画师节奏一致（stand 采样 191°/s）
+
+### 至此 manifest：16 条 candidate（9 迁移 + 6 P0 扩展 + 1 草稿转换），覆盖
+native_slice（14）/ native_clip（1）/ draft（1）三种载体；配方族待 nod 组件 approved 后组合。

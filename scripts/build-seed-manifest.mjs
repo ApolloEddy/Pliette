@@ -230,6 +230,151 @@ const manifest = {
   entries,
 };
 
+// ---------------------------------------------------------------------------
+// 内部 V1 草稿 → pliette.motion-draft/1.1 转换（llm_nod：点头=头部快倾，rig 语义）
+// 映射全部数据驱动：role+property → controlId 经 mapsTo；双眼附件对 → face.eyes.pair
+// 枚举键经 compositeEntries 反查。转换产物由 tests/m5-seed-manifest.test.ts 做
+// 七步管线重验证（编译+隔离采样），通过才视为有效登记。
+// ---------------------------------------------------------------------------
+
+function convertLlmNodToV11() {
+  const v1 = JSON.parse(readFileSync("public/motions/llm_nod.json", "utf8"));
+  if (v1.rigProfile !== "lafei_8.front.v1") throw new Error("rigProfile 不是 lafei_8.front.v1，映射表不适用");
+
+  // mapsTo：(role, property) → controlId
+  const byMapsTo = new Map();
+  for (const c of PROFILE.controls) {
+    if (c.mapsTo) byMapsTo.set(`${c.mapsTo.role}|${c.mapsTo.property}`, c);
+  }
+  // composite 子控制集合：它们经组合控制表达，不单独出曲线
+  const subControls = new Set();
+  for (const c of PROFILE.controls) {
+    if (c.kind === "composite") for (const sub of c.binding.compositeOf ?? []) subControls.add(sub);
+  }
+  const pairControl = PROFILE.controls.find((c) => c.controlId === "face.eyes.pair");
+  const subLeft = pairControl.binding.compositeOf[0]; // face.eyeL.state
+  const subRight = pairControl.binding.compositeOf[1]; // face.eyeR.state
+  const pairLookup = new Map();
+  for (const entry of pairControl.binding.compositeEntries) {
+    const l = entry.targets.find((t) => t.controlId === subLeft)?.value;
+    const r = entry.targets.find((t) => t.controlId === subRight)?.value;
+    if (l != null && r != null) pairLookup.set(`${l}|${r}`, entry.key);
+  }
+
+  const curves = [];
+  for (const curve of v1.curves) {
+    const control = byMapsTo.get(`${curve.role}|${curve.property}`);
+    if (!control) throw new Error(`V1 曲线 ${curve.role}|${curve.property} 没有可映射的 controlId`);
+    // composite 子控制：由组合枚举曲线统一表达（下方双眼对处理）
+    if (subControls.has(control.controlId)) continue;
+    if (control.kind === "composite") {
+      if (curve.property !== "attachment") throw new Error("composite 映射只支持附件曲线");
+      continue; // 双眼对在下方统一处理
+    }
+    curves.push({
+      controlId: control.controlId,
+      keys: curve.keys.map((k, i) => {
+        const key = { timeSec: k.t, value: k.value };
+        if (i < curve.keys.length - 1) key.ease = k.ease === "stepped" ? "stepped" : "smooth";
+        return key;
+      }),
+    });
+  }
+  // 双眼对 → face.eyes.pair
+  const leftCurve = v1.curves.find((c) => c.role === "face.eyes");
+  const rightCurve = v1.curves.find((c) => c.role === "face.eyeR");
+  if (leftCurve && rightCurve && pairControl) {
+    const times = [...new Set([...leftCurve.keys.map((k) => k.t), ...rightCurve.keys.map((k) => k.t)])].sort((a, b) => a - b);
+    const valueAt = (curve, t) => {
+      let v = curve.keys[0].value;
+      for (const k of curve.keys) if (k.t <= t + 1e-9) v = k.value;
+      return v;
+    };
+    const keys = times.map((t, i) => {
+      const pair = `${valueAt(leftCurve, t)}|${valueAt(rightCurve, t)}`;
+      const enumKey = pairLookup.get(pair);
+      if (enumKey == null) throw new Error(`双眼附件对 ${pair} 在 compositeEntries 中无对应枚举键`);
+      const key = { timeSec: t, value: enumKey };
+      if (i < times.length - 1) key.ease = "stepped";
+      return key;
+    });
+    curves.push({ controlId: "face.eyes.pair", keys });
+  }
+  // 协议形态：首键 t=0、末键=durationSec、附件/枚举段 stepped（validateV11 会全量重验）
+  // Retime 策略（转换器显式规则，非校验放宽）：V1 的 bezier 缓动在 V1.1（linear/smooth）下
+  // 峰值速率实测 209.6°/s > head.nod 限速 200°/s —— 统一放慢 1.25 倍（0.8s→1.0s，168°/s），
+  // 由测试采样复核。
+  const RATE_SCALE = 1.25;
+  const durationSec = Math.round(v1.durationSec * RATE_SCALE * 100) / 100;
+  for (const curve of curves) {
+    for (const key of curve.keys) key.timeSec = Math.round(key.timeSec * RATE_SCALE * 100) / 100;
+  }
+  return {
+    schemaVersion: "pliette.motion-draft/1.1",
+    id: "lafei.nod.v11",
+    durationSec,
+    curves,
+  };
+}
+
+const draftDirs = resolve("public/motion-library/models/lafei_8/front/drafts");
+mkdirSync(draftDirs, { recursive: true });
+const nodDraft = convertLlmNodToV11();
+writeFileSync(resolve(draftDirs, "lafei.nod.v11.json"), JSON.stringify(nodDraft, null, 2) + "\n");
+console.log(`已写入 drafts/lafei.nod.v11.json（V1→V1.1 转换，待管线重验证）`);
+
+// 草稿来源条目：登记转换后的 nod（candidate；管线重验证见测试）
+{
+  const draftPath = "drafts/lafei.nod.v11.json";
+  const entry = {
+    schemaVersion: "pliette.motion-entry/1.0",
+    motionId: "lafei.head_nod.small",
+    motionRevision: 1,
+    actionId: "head.nod",
+    variantId: "small",
+    status: "candidate",
+    rigRef: rigRefBase,
+    source: { kind: "draft", path: draftPath, contentDigest: "", draftSchemaVersion: "pliette.motion-draft/1.1" },
+    durationMs: Math.round(nodDraft.durationSec * 1000),
+    channels: ["head", "face"],
+    writes: ["bone:face/rotate", "slot:eye_L/attachment", "slot:eye_R/attachment"],
+    dependsOn: [],
+    requiredCapabilities: [],
+    preconditions: { postures: ["standing"], baseAnimations: ["stand"], requiredResources: [], requiredContacts: [] },
+    segments: {
+      full: { startMs: 0, endMs: Math.round(nodDraft.durationSec * 1000), entryBoundaryId: "enter", exitBoundaryId: "exit", interruptibleAtEnd: true },
+    },
+    boundaries: {
+      enter: { poseClass: "standing", snapshotRef: "stand@0", contacts: [], resources: [] },
+      exit: { poseClass: "standing", snapshotRef: "stand@0", contacts: [], resources: [] },
+    },
+    parameterSchema: { type: "object", properties: {}, additionalProperties: false },
+    retime: { minRate: 1, maxRate: 1 },
+    loop: { allowed: false, segmentId: null, maxRepeats: 1 },
+    transition: { mixInMs: 120, mixOutMs: 150, maxBlendMs: 200, continuousEligible: false },
+    events: [],
+    provenance: {
+      origin: "agent_offline",
+      sourceRef: "public/motions/llm_nod.json（MiMo V1.1 协议产物；V1 内部格式转换，七步管线重验证见测试）",
+      generatorModel: "mimo-v2.5",
+      promptDigest: "experiments/motion-guide/run-llm-mimo-8s",
+    },
+    validation: {
+      structural: "passed",
+      trajectory: "pending",
+      visual: "pending",
+      evidenceRefs: [`convert-llm-nod@${now}`, "tests/m5-seed-manifest.test.ts#head.nod 管线重验证"],
+      reviewedAt: null,
+    },
+  };
+  // 草稿文件摘要（canonical JSON 语义与运行时 sha256Json 一致）
+  entry.source.contentDigest = sha256(nodDraft);
+  // 条目级摘要（排除自身 contentDigest 字段，与其它种子同口径）
+  const { contentDigest: _omitEntryDigest, ...entryWithoutDigest } = entry;
+  entry.contentDigest = sha256(entryWithoutDigest);
+  entries.push(entry);
+}
+
 const outPath = "public/motion-library/models/lafei_8/front/manifest.json";
 mkdirSync(resolve(outPath, ".."), { recursive: true });
 writeFileSync(outPath, JSON.stringify(manifest, null, 2) + "\n");

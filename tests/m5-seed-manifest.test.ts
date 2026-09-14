@@ -16,13 +16,17 @@ import type { MotionEntry } from "../src/motion/library/contracts.js";
 const lafeiAssetsAvailable = existsSync(resolve("public/assets-local/lafei_8/lafei_8.json"));
 const manifestPath = "public/motion-library/models/lafei_8/front/manifest.json";
 
+function dummyTexture() {
+  return { setFilters() {}, setWraps() {}, getImage: () => ({ width: 4, height: 4 }), getWidth: () => 4, getHeight: () => 4, dispose() {} };
+}
+
 const catalogView = new CatalogView(loadCatalog(JSON.parse(readFileSync(resolve("public/motion-library/catalog.json"), "utf-8"))));
 
 describe("种子 manifest（§9.1 迁移备案）", () => {
   const manifest = loadManifest(JSON.parse(readFileSync(resolve(manifestPath), "utf-8")), catalogView.revision);
 
-  it("15 条种子条目全部通过目录引用/时间窗/参数交集语义校验（9 迁移 + 6 P0 扩展族）", () => {
-    expect(manifest.entries.length).toBe(15);
+  it("16 条种子条目全部通过目录引用/时间窗/参数交集语义校验（9 迁移 + 6 P0 扩展族 + 1 草稿转换）", () => {
+    expect(manifest.entries.length).toBe(16);
     const issues = validateManifest(manifest, catalogView.catalog);
     expect(issues).toEqual([]);
   });
@@ -90,5 +94,52 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
     const wave = manifest.entries.find((e) => e.motionId === "lafei.wave.small_screen_right")!;
     expect(wave.writes.some((w) => w.startsWith("bone:hand_R"))).toBe(true);
     expect(wave.writes.every((w) => w.startsWith("bone:") || w.startsWith("slot:"))).toBe(true);
+  });
+
+  it("head.nod 草稿（V1→V1.1 转换）通过七步管线重验证：编译+隔离采样零失败", async () => {
+    if (!lafeiAssetsAvailable) return; // 编译采样需要拉菲骨架
+    const { parseControlProfile } = await import("../src/rig/controlProfile.js");
+    const { loadSkeleton } = await import("../src/assets/loader.js");
+    const { assembleRequest } = await import("../src/motion/author/context.js");
+    const { validateCandidate } = await import("../src/motion/author/validateV11.js");
+    const { sha256Json: rehash } = await import("../src/motion/library/digest.js");
+
+    const profile = parseControlProfile(JSON.parse(readFileSync(resolve("characters/lafei_8.rig-profile.json"), "utf-8")));
+    const draftFile = JSON.parse(
+      readFileSync(resolve("public/motion-library/models/lafei_8/front/drafts/lafei.nod.v11.json"), "utf-8"),
+    );
+    const nodEntry = manifest.entries.find((e) => e.motionId === "lafei.head_nod.small")!;
+    expect(nodEntry.source.kind).toBe("draft");
+    if (nodEntry.source.kind !== "draft") return;
+    // V17：摘要必须与草稿文件实算一致（不信任自报值）
+    expect(await rehash(draftFile)).toBe(nodEntry.source.contentDigest);
+
+    const controlSubset = ["head.nod", "face.eyes.pair"];
+    const request = assembleRequest(profile, {
+      requestId: "verify-nod-import",
+      contextId: "verify-nod-ctx",
+      goal: "点头（V1→V1.1 转换重验证）",
+      runtimeState: { monoClockMs: 0, viewId: "front", skinId: "default", stateVersion: 1, occupiedChannels: [], contacts: [] },
+      controlSubset,
+    });
+    const raw = {
+      status: "motion",
+      requestId: request.requestId,
+      contextId: request.contextId,
+      profileDigest: request.profileRef.profileDigest,
+      draft: draftFile,
+    };
+    const bundle = loadSkeleton({
+      name: "lafei_8",
+      skeletonJson: JSON.parse(readFileSync(resolve("public/assets-local/lafei_8/lafei_8.json"), "utf-8")),
+      atlasText: readFileSync(resolve("public/assets-local/lafei_8/lafei_8.atlas.txt"), "utf-8"),
+      createTexture: dummyTexture,
+    });
+    const result = validateCandidate(raw, request, profile, { skeletonData: bundle.skeletonData });
+    const failures = result.findings.filter((f) => !f.note);
+    expect(failures.map((f) => `${f.code}:${f.message}`)).toEqual([]);
+    expect(result.ok).toBe(true);
+    expect(result.compiled).toBeDefined();
+    expect(result.response?.status).toBe("motion");
   });
 });

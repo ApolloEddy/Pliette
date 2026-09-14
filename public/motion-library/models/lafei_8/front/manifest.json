@@ -119,12 +119,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-388dc0e14f1ce53a7372ce0a933ec2385a638e3381dc808ceeb5e01f07326b79"
+      "contentDigest": "sha256-306fb7306c6d4e6e6d75d5bbd664d3716ad1f4b77cf87410001261109d974192"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -240,12 +240,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-e6cfbdf480be7da10b368782b80aabd485d74a10ae8112d0213bae27cea5952c"
+      "contentDigest": "sha256-e1926e641ef542cc7c3d36cbfdef58a5cea625e1428020af57e78c8bf13323e4"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -494,12 +494,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-7f8e237c32160540b31ec15c8d84116524de9474be55c5c23b2213bdfaaa41f9"
+      "contentDigest": "sha256-2d534f09d06cf7cb6dcfdaea6e1406277340c426295a84ee0835ccb63c146b6a"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -748,12 +748,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-77b90492a3b0deb4294e8c9e029e874cceef771422e03b6758630b2bcf41b863"
+      "contentDigest": "sha256-4245a49cd94206a6bf1382cd00632bec9b8566ac93bc723a67fe72298927fb6b"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1002,12 +1002,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-93ef3372563681ad4624c3cce1635b470c8ea9d57bec432bea7f99f23859116f"
+      "contentDigest": "sha256-c358f7a3f5ef77a54d72e99444591d60d0fc21d356cea9e0786fea533ee74355"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1126,12 +1126,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-71dd51b0cd667e0e01e0074e3259a15347482a55b244a59723e13f5ca13a376e"
+      "contentDigest": "sha256-371da4272e9f3c38b1a4dedbb598c45efe63bb3b0301ebc68e4060f3868e7ccc"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1379,12 +1379,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-740d87677ac3a3f29f043662edf13c990865c9a4dcddc62db8feb4224e9ed150"
+      "contentDigest": "sha256-28653941330edc69868a629ddaab59f49b501c73ddc0d1448d56f7bccf4321d6"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1503,12 +1503,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-dcfbfd0b8ffc67853cc15605f44b4eeb4586c922cd3be24f41c10d618d5a7782"
+      "contentDigest": "sha256-87567e952b3c65ce39afc1084692d53f379064556b56cb25f4728dd8e1d650c7"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1629,12 +1629,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-37694c71d88415620b06cb2332aee71dcf2667b32d2fe6ae33364c1f31633f7f"
+      "contentDigest": "sha256-63d2c2aa6f4692662aa50346ce81a801fb86d61687a65b9f313b77aba7a4877e"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1885,12 +1885,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-36714ca578bf0260f6db7400bdd101104761df036b13c7bd817f89325f13ec29"
+      "contentDigest": "sha256-27a5b85dc8572c3e10c3ae4385ebbd783a1fc858849b22f64ef0063e969dc7f9"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2139,12 +2139,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-88c9b2eac10439b68e86b28dd2bcc2e03223658e48f4ea10c8ad632a025127b4"
+      "contentDigest": "sha256-a3a41f0b7c364ec60eaa0c04ba108ce1d4a13d29b0ae6d291b2078b7fac379f9"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2393,12 +2393,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-bc5ce68659cc870e61181389bb95ef664aa9368a9b3ab202a1f7bd8502496580"
+      "contentDigest": "sha256-b199cdf67999b3a6d6577bc88d0c90ce2662d17fcc347382b9e648e37e41ab3b"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2505,12 +2505,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-3ed6281acb2e9146a4acd758cf69743d15a85ca683546d9438b49cdfb724072d"
+      "contentDigest": "sha256-d58db4f98b0829cea8f2407cab1cfb245d095831c6104d34beda49831935a876"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2618,12 +2618,12 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-97ec1cc5e7edfdea43c527ab9018e44b22a2d0b778ef4b419bfed173167415a7"
+      "contentDigest": "sha256-dd20f706e344243b45558d6acd368a3bb0e1de8fa7fd70495c080a5a2e718cff"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2964,12 +2964,120 @@
         "trajectory": "pending",
         "visual": "pending",
         "evidenceRefs": [
-          "build-seed-manifest@2026-09-14T18:13:40.404Z",
+          "build-seed-manifest@2026-09-14T18:33:59.645Z",
           "tuning-log#视觉精调"
         ],
         "reviewedAt": null
       },
-      "contentDigest": "sha256-b66dffa142f138dab4e938bbed198fb00b43b7e61ed562cbf6e17c71db94c17c"
+      "contentDigest": "sha256-ad72da1ac3f25dbf6048928c26d6d047cfec2f5b2ab05466dd916bf9b22131be"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.head_nod.small",
+      "motionRevision": 1,
+      "actionId": "head.nod",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.nod.v11.json",
+        "contentDigest": "sha256-3e1e16656fe3a46d56f077632e91a3b3978951954930a6718d39b35a55a22480",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1000,
+      "channels": [
+        "head",
+        "face"
+      ],
+      "writes": [
+        "bone:face/rotate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1000,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "stand@0",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "stand@0",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/llm_nod.json（MiMo V1.1 协议产物；V1 内部格式转换，七步管线重验证见测试）",
+        "generatorModel": "mimo-v2.5",
+        "promptDigest": "experiments/motion-guide/run-llm-mimo-8s"
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-llm-nod@2026-09-14T18:33:59.645Z",
+          "tests/m5-seed-manifest.test.ts#head.nod 管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-a06e2d7671e3cb86425d5a0f6f37cab6ebf7dbb17aa3fa041b15873a32cf6d86"
     }
   ]
 }
