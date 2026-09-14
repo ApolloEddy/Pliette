@@ -375,6 +375,77 @@ console.log(`已写入 drafts/lafei.nod.v11.json（V1→V1.1 转换，待管线�
   entries.push(entry);
 }
 
+// ---------------------------------------------------------------------------
+// 配方族：routine.greet（挥手并点头）——引用冻结修订的已验收组件（Spec §9.2-2）。
+// 组件通道不相交（rightArm vs head+face）；配方自身首期 mixIn/mixOut 均为 0（§8.1）。
+// 视觉合成验收待 PlanCoordinator 驱动的 Lab 播放接线（infra TODO），先做机制验证。
+// ---------------------------------------------------------------------------
+
+{
+  const wave = entries.find((e) => e.motionId === "lafei.wave.small_screen_right");
+  const nod = entries.find((e) => e.motionId === "lafei.head_nod.small");
+  const nodDurationMs = Math.round(nodDraft.durationSec * 1000);
+  const NOD_OFFSET_MS = 600; // 点头在挥手收势前插入，总长覆盖两者
+  const recipeDurationMs = Math.max(wave.durationMs, NOD_OFFSET_MS + nodDurationMs);
+  const channels = [...new Set([...wave.channels, ...nod.channels])];
+  const writes = [...new Set([...wave.writes, ...nod.writes])];
+  const entry = {
+    schemaVersion: "pliette.motion-entry/1.0",
+    motionId: "lafei.routine_greet.default",
+    motionRevision: 1,
+    actionId: "routine.greet",
+    variantId: "default",
+    status: "candidate",
+    rigRef: rigRefBase,
+    source: {
+      kind: "recipe",
+      steps: [
+        { stepId: "wave", motionId: wave.motionId, motionRevision: wave.motionRevision, contentDigest: wave.contentDigest, segmentId: "full", offsetMs: 0, parameters: {} },
+        { stepId: "nod", motionId: nod.motionId, motionRevision: nod.motionRevision, contentDigest: nod.contentDigest, segmentId: "full", offsetMs: NOD_OFFSET_MS, parameters: {} },
+      ],
+    },
+    durationMs: recipeDurationMs,
+    channels,
+    writes,
+    dependsOn: ["ancestor:body"],
+    requiredCapabilities: [],
+    preconditions: {
+      postures: ["standing"],
+      baseAnimations: ["stand"],
+      requiredResources: [],
+      requiredContacts: [],
+    },
+    segments: {
+      full: { startMs: 0, endMs: recipeDurationMs, entryBoundaryId: "enter", exitBoundaryId: "exit", interruptibleAtEnd: true },
+    },
+    boundaries: {
+      enter: { poseClass: "standing", snapshotRef: "stand@0", contacts: [], resources: [] },
+      exit: { poseClass: "standing", snapshotRef: "stand@0", contacts: [], resources: [] },
+    },
+    parameterSchema: { type: "object", properties: {}, additionalProperties: false },
+    retime: { minRate: 1, maxRate: 1 },
+    loop: { allowed: false, segmentId: null, maxRepeats: 1 },
+    transition: { mixInMs: 0, mixOutMs: 0, maxBlendMs: 0, continuousEligible: false },
+    events: [],
+    provenance: {
+      origin: "recipe",
+      sourceRef: `routine.greet = ${wave.motionId}@r1 + ${nod.motionId}@r1（子动作冻结修订）`,
+      generatorModel: null,
+      promptDigest: null,
+    },
+    validation: {
+      structural: "passed",
+      trajectory: "pending",
+      visual: "pending",
+      evidenceRefs: ["tuning-log#视觉合成待接线", "tests/m5-seed-manifest.test.ts#配方引用与时长一致性"],
+      reviewedAt: null,
+    },
+  };
+  const { contentDigest: _omitRecipeDigest, ...recipeWithoutDigest } = entry;
+  entry.contentDigest = sha256(recipeWithoutDigest);
+  entries.push(entry);
+}
+
 const outPath = "public/motion-library/models/lafei_8/front/manifest.json";
 mkdirSync(resolve(outPath, ".."), { recursive: true });
 writeFileSync(outPath, JSON.stringify(manifest, null, 2) + "\n");

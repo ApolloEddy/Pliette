@@ -25,10 +25,32 @@ const catalogView = new CatalogView(loadCatalog(JSON.parse(readFileSync(resolve(
 describe("种子 manifest（§9.1 迁移备案）", () => {
   const manifest = loadManifest(JSON.parse(readFileSync(resolve(manifestPath), "utf-8")), catalogView.revision);
 
-  it("16 条种子条目全部通过目录引用/时间窗/参数交集语义校验（9 迁移 + 6 P0 扩展族 + 1 草稿转换）", () => {
-    expect(manifest.entries.length).toBe(16);
+  it("17 条种子条目全部通过目录引用/时间窗/参数交集语义校验（含配方与草稿载体）", () => {
+    expect(manifest.entries.length).toBe(17);
     const issues = validateManifest(manifest, catalogView.catalog);
     expect(issues).toEqual([]);
+  });
+
+  it("配方 routine.greet：子动作引用可解析、修订/摘要冻结一致、通道不相交、时长覆盖", () => {
+    const recipe = manifest.entries.find((e) => e.motionId === "lafei.routine_greet.default")!;
+    expect(recipe.source.kind).toBe("recipe");
+    if (recipe.source.kind !== "recipe") return;
+    let lastEnd = 0;
+    const occupiedChannels = new Set<string>();
+    for (const step of recipe.source.steps) {
+      const sub = manifest.entries.find((e) => e.motionId === step.motionId);
+      expect(sub).toBeDefined();
+      expect(sub!.motionRevision).toBe(step.motionRevision);
+      expect(sub!.contentDigest).toBe(step.contentDigest); // 冻结修订（V18：配方不改写正在播放的引用）
+      expect(sub!.preconditions.postures).toEqual(recipe.preconditions.postures);
+      // 通道不相交（组合无排他冲突）
+      for (const ch of sub!.channels) expect(occupiedChannels.has(ch)).toBe(false);
+      for (const ch of sub!.channels) occupiedChannels.add(ch);
+      lastEnd = Math.max(lastEnd, step.offsetMs + sub!.durationMs);
+    }
+    expect(recipe.channels.sort()).toEqual([...occupiedChannels].sort());
+    expect(recipe.durationMs).toBeGreaterThanOrEqual(lastEnd);
+    expect(recipe.transition.mixInMs).toBe(0); // 配方自身不套第二层混合（§8.1）
   });
 
   it("P0 扩展族：shake/lower/sleepy/blink/squeeze/idle 均已登记且变体与目录一致", () => {
