@@ -3,6 +3,35 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased] - 2026-09-14
+
+MotionLibrary 重构：统一动作选择与生成入口（Spec：`docs/Pliette_MotionLibrary_Spec_v1.0/`，M0–M5）。
+
+### 修复（M0，对应 2026-09-10 审查报告 F1–F3/F4/F6）
+
+- **F1 角色知识污染**：指导片段全部由当前档案+当前控制子集派生（坐标约定/规则闭包/组合控制说明），删除硬编码拉菲结论；spineboy 请求不再出现拉菲专属说明
+- **F2 请求身份**：Broker 替换旧请求后完整登记新请求；迟到旧响应按请求身份清理，不再删除新请求记录；重复/在途 requestId 拒绝且不影响在途请求
+- **F3 采样漏检**：轨迹速率逐轴比较（修复纯 Y 轴恒漏检）；位移按档案标定身高换算 H 单位，未标定拒绝（HEIGHT_UNCALIBRATED）；composite 按 compositeOf 精确展开；可选混出窗口纳入速率检查
+- **F4 Lab 播放**：Author 候选改走 scheduler 多写集原子取权 + GestureLayer 通道轨道局部叠加（不再 track 0 整体预览）；mixIn 经 TrackEntry.mixDuration 落实；取消按实例定位且核对轨道归属；自然结束释放句柄；离散状态版本随资产加载递增
+- **F6 离线导入**：显式重授权流程（新执行身份 + 内容全量重验证），在线回显校验保持严格
+
+### 新增
+
+- **契约与索引**：`schemas/motion-contracts.schema.json` + `src/motion/library/`（contracts/catalog/index/selector/validate/legacyAdapter/digest）——MotionPlan/MotionCatalog/MotionManifest/MotionEntry 四契约、确定性语义校验（时间窗/参数交集/配方结构/别名唯一）、逻辑键 `action|variant|segment` 精确索引与 rigRef 兼容过滤、preferred→修订降序→稳定 ID 的确定性选取、热更新整表原子替换
+- **Selector 路由**：HIT_READY / MISS_ASSET / MISS_SEGMENT / MISS_CUSTOM / UNSUPPORTED_CAPABILITY / RIG_MISMATCH / INVALID_REFERENCE / SEMANTIC_CONFLICT / STALE_CATALOG；命中库增量 Author 调用数为 0
+- **异步语义规划**（`src/dialogue/planAdapter.ts`）：RulePlanAdapter（离线确定性）+ LlmPlanAdapter（能力卡系统提示、程序填充协议信封、一次有界纠错轮、AbortSignal 取消、明确失败不静默回退）
+- **多写集原子调度**：`submitComposite` 通道+资源要么全拿要么不拿；实例携带 channels/writes/resources；资源占用账本；tick 按实例去重计时
+- **命名预算档案**：legacy / interaction（soft 2000 / hard 8000）/ continuation（3–5s）单一来源；BUFFERED_SEQUENCE_BUDGET（30s 总准备）；生成截止与播放时效分离
+- **PreparedMotion + PlanCoordinator**：§8.2 字段集、时间轴归一（有效占用=mixIn+content/rate+mixOut）；buffered/bufferedSequence/rolling 三模式、连续 ready 前缀（V10）、按序提交、取消隔离迟到结果、actorEpoch 失效（V11）
+- **rolling 准入**：RtfTracker——单元 RTF p95≤0.7 且 RTF_total<1、失败入分母、L95+J 启播阈值；无实测证据默认 buffered
+- **种子迁移**：`scripts/build-seed-manifest.mjs` + `public/motion-library/models/lafei_8/front/manifest.json`——旧 9 条手势迁移为 candidate 条目（写集从真实源动画 timeline 派生、档案摘要复算、contentDigest SHA-256 实算）；llm_nod/llm_lean_blink 为内部 V1 草稿待转换，未入册
+- **目录备案**：`public/motion-library/catalog.json`（110 动作族/154 变体，全部 planned）+ [docs/motion-library/production-plan.md](docs/motion-library/production-plan.md)
+
+### 测试与记录
+
+- 全量 **167/167 通过**（新增 m0-fixes 10、motion-library 26、m2-select-scheduler 12、m3-coordinator 19、m5-seed-manifest 6）
+- 基线报告与未验收清单：`experiments/motion-library/baseline-report-2026-09-14.md`（真实首帧延迟、rolling 实测、种子视觉验收待本机执行）
+
 ## [Unreleased] - 2026-09-10
 
 动作指导书与受限在线参数生成（Spec：`docs/Pliette_Spine_Motion_Guide_Development_Spec_v1.0.md`）。

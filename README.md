@@ -8,7 +8,7 @@
 **Pliette（纸栖）** — 让喜欢的 Spine 纸片角色住在桌面 3D 房间里：
 能看见你、听你说话，根据情境实时地说话和做动作。
 
-![License](https://img.shields.io/badge/License-Apache--2.0-blue) ![Tests](https://img.shields.io/badge/tests-94%20passing-brightgreen) ![Spine](https://img.shields.io/badge/Spine%20Runtime-3.6.53-orange) ![Node](https://img.shields.io/badge/node-%E2%89%A518-green)
+![License](https://img.shields.io/badge/License-Apache--2.0-blue) ![Tests](https://img.shields.io/badge/tests-167%20passing-brightgreen) ![Spine](https://img.shields.io/badge/Spine%20Runtime-3.6.53-orange) ![Node](https://img.shields.io/badge/node-%E2%89%A518-green)
 
 Spine 3.6 官方运行时 · 通道切片动作架构 · 模型专属动作指导书 · Three.js 3D 场景 · Apache-2.0
 
@@ -76,9 +76,9 @@ npm run desktop:dev  # Electron 桌面窗口
 | `src/motion/authoring/` | MotionDraft 契约与固定 Primitive（Tune 模式） |
 | `src/motion/author/` | **受限 Author 通路**：V1.1 协议、规则解释器、隔离采样验证、AuthorBroker（单飞/截止/陈旧性/幂等）、LLM 客户端 |
 | `src/motion/compiler/` | Ajv 校验、Draft→3.6 Timeline 编译、官方运行时采样验证 |
-| `src/motion/library/` | **通道切片叠加（overlay）与手势库**——动作质量的核心来源 |
+| `src/motion/library/` | **MotionLibrary**：语义目录（110 动作族/154 变体）、逻辑键精确索引、Selector 路由（hit/miss/unsupported）、旧手势兼容层；通道切片叠加（overlay）仍是动作质量的核心来源 |
 | `src/motion/parameters/` | 参数注册表、StyleProfile、Preset 与动作目录 |
-| `src/motion/runtime/` | 调度器（七通道、幂等、冲突、auto 换手、局部取消）、切片播放层 |
+| `src/motion/runtime/` | 调度器（七通道、幂等、冲突、auto 换手、局部取消、**多写集原子实例**）、切片播放层、**PreparedMotion 与 PlanCoordinator**（buffered/rolling、连续 ready 前缀、RTF 准入） |
 | `src/render/` · `src/scene/` | Spine 透明画布 → CanvasTexture → 双面纸片；35° 主镜头房间 |
 | `src/dialogue/` · `src/speech/` | 对话 Select 层（规则版 / LLM 版同接口）、语音适配器（音频时钟） |
 | `src/lab/` | Motion Lab 界面、确定性场景回放、录像 |
@@ -134,6 +134,34 @@ LLM（或任何决策器）站在最上层选择与编排；在 Author 通路里
 `npx vite-node scripts/run-abc.mts [--llm]`（A/B/C 实验）、`npx vite-node scripts/soak-author.mts 10`（浸泡）。
 完整报告见 [docs/motion-guides/implementation-report.md](docs/motion-guides/implementation-report.md)。
 
+## MotionLibrary：统一动作选择与生成链路（2026-09-14 重构）
+
+依据 [docs/Pliette_MotionLibrary_Spec_v1.0/](docs/Pliette_MotionLibrary_Spec_v1.0/) 完成 M0–M5 框架重构：
+
+```
+对话文本 ─→ 异步语义规划（RulePlan / LlmPlan：能力卡 + 切片指令 MotionPlan，一次有界纠错）
+                ↓
+        Selector 确定性路由（actionId+variantId+segmentId 精确索引）
+        ├─ HIT_READY ──────→ PreparedMotion ─┐
+        ├─ MISS（具备能力）─→ 指导书 Author →→┤
+        └─ UNSUPPORTED ────→ 明确失败与替代   ↓
+                PlanCoordinator（buffered 备齐启播 / rolling RTF 准入）
+                                ↓
+        Scheduler 多写集原子取权 → 官方 Spine 轨道播放
+```
+
+- **三种载体**：原生完整动画/命名切片、已验收受限 Draft、引用已存在动作的完整配方（recipe）。
+- **目录备案**：110 动作族/154 变体（`public/motion-library/catalog.json`）全部 `planned`；
+  目录有记录 ≠ 当前角色能做——只有 approved 实现进入可播放投影。
+- **种子迁移**：旧 9 条手势已迁移为 candidate 条目（写集从真实源动画 timeline 派生，
+  contentDigest 实算）；轨迹/视觉验收后按 [production-plan](docs/motion-library/production-plan.md) §3 提升。
+- **生命周期分离**：生成完成 ≠ 播放开始——生成截止不影响已准备动作的播放资格，
+  播放时效单独复核；取消/迟到响应按令牌隔离，旧回调不清新实例。
+- **rolling 准入是实测门槛**：单元 RTF p95 ≤ 0.7 且 RTF_total < 1（失败入分母）才有资格滚动启播；
+  当前未取得实测证据，默认 buffered。
+
+基线与未验收清单：[experiments/motion-library/baseline-report-2026-09-14.md](experiments/motion-library/baseline-report-2026-09-14.md)。
+
 ## 验收状态
 
 Spec 关键用例对齐表见 [docs/acceptance-checklist.md](docs/acceptance-checklist.md)：
@@ -149,9 +177,12 @@ Spec 关键用例对齐表见 [docs/acceptance-checklist.md](docs/acceptance-che
 | A01/A09 背面相关 | ⚠️ 首个角色仅正面，限制展示朝向 |
 | A10 语音取消 / A07 说话 | 🔶 Mock 层已通，真实 TTS 待接入 |
 | 动作指导书（Spec v1.0 M0–M4） | ✅ 工程全链路 + 真实 LLM 首轮实测（在线门槛未达标，保持关闭） |
+| MotionLibrary M0–M5（Spec v1.0） | ✅ 框架/契约/调度/协调器 + 种子备案；种子验收与真实延迟/rolling 实测待本机（见基线报告） |
 
 ## 路线图
 
+- [ ] MotionLibrary 内容大库：种子 candidate→approved 提升（轨迹+视觉验收）、llm V1 草稿转 V1.1 入册、离线批量队列 runner
+- [ ] MotionLibrary 实测门槛：真实首帧延迟（planAccepted→firstFrame p95≤100ms）、12s buffered / 15s rolling 序列录像验收、rolling RTF p95≤0.7 实测
 - [ ] 动作图（Motion Graph）：自动切分 + 图遍历，产出无限不重复的专业动作流（[研究笔记](docs/research-realtime-motion.md)）
 - [ ] 程序化生命层：呼吸不规则化、发/裙弹簧物理（先测与烤入动画的冲突）
 - [ ] A05 拾取/放下完整链（slotState + 桌面 sprite）
