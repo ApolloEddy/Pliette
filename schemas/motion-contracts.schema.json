@@ -1,0 +1,992 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:pliette:motion-contracts:1.0",
+  "title": "Pliette MotionLibrary contracts v1.0",
+  "description": "结构契约；跨记录引用、运行时能力、时间区间、所有权和采样规则须按 Spec 做语义校验。",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/MotionPlan"
+    },
+    {
+      "$ref": "#/definitions/MotionCatalog"
+    },
+    {
+      "$ref": "#/definitions/MotionManifest"
+    },
+    {
+      "$ref": "#/definitions/MotionEntry"
+    }
+  ],
+  "definitions": {
+    "Lookup": {
+      "type": "object",
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "variantId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "segmentId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        }
+      },
+      "required": [
+        "actionId",
+        "variantId",
+        "segmentId"
+      ],
+      "additionalProperties": false
+    },
+    "Slice": {
+      "type": "object",
+      "properties": {
+        "sliceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lookup": {
+          "$ref": "#/definitions/Lookup"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "durationHintMs": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 30000
+        }
+      },
+      "required": [
+        "sliceId",
+        "description",
+        "lookup",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "MotionPlan": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "pliette.motion-plan/1.0"
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "catalogRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reply": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "slices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Slice"
+          },
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "catalogRevision",
+        "reply",
+        "description",
+        "slices"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogVariant": {
+      "type": "object",
+      "properties": {
+        "variantId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "screen_left",
+            "screen_right",
+            "both",
+            "none"
+          ]
+        },
+        "segmentIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "requiredCapabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "parameterSchema": {
+          "type": "object"
+        },
+        "authorable": {
+          "type": "string",
+          "enum": [
+            "capability_check",
+            "disabled"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "registered",
+            "deprecated"
+          ]
+        }
+      },
+      "required": [
+        "variantId",
+        "description",
+        "side",
+        "segmentIds",
+        "requiredCapabilities",
+        "parameterSchema",
+        "authorable",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogAction": {
+      "type": "object",
+      "properties": {
+        "actionId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "aliasesZh": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "P0",
+            "P1",
+            "P2"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "registered",
+            "deprecated"
+          ]
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogVariant"
+          },
+          "minItems": 1
+        },
+        "productionNote": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "actionId",
+        "label",
+        "category",
+        "aliasesZh",
+        "priority",
+        "status",
+        "variants",
+        "productionNote"
+      ],
+      "additionalProperties": false
+    },
+    "MotionCatalog": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "pliette.motion-catalog/1.0"
+        },
+        "catalogRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogAction"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "catalogRevision",
+        "description",
+        "categories",
+        "actions"
+      ],
+      "additionalProperties": false
+    },
+    "RigRef": {
+      "type": "object",
+      "properties": {
+        "modelId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profileId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profileDigest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assetDigest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referencePoseDigest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "viewId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "skinId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtimeVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapterVersion": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "modelId",
+        "profileId",
+        "profileDigest",
+        "assetDigest",
+        "referencePoseDigest",
+        "viewId",
+        "skinId",
+        "runtimeVersion",
+        "adapterVersion"
+      ],
+      "additionalProperties": false
+    },
+    "NativeSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "native_clip",
+            "native_slice"
+          ]
+        },
+        "animationName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceStartMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sourceEndMs": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "kind",
+        "animationName",
+        "sourceStartMs",
+        "sourceEndMs"
+      ],
+      "additionalProperties": false
+    },
+    "DraftSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "draft"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contentDigest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "draftSchemaVersion": {
+          "const": "pliette.motion-draft/1.1"
+        }
+      },
+      "required": [
+        "kind",
+        "path",
+        "contentDigest",
+        "draftSchemaVersion"
+      ],
+      "additionalProperties": false
+    },
+    "RecipeStep": {
+      "type": "object",
+      "properties": {
+        "stepId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "motionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "motionRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "contentDigest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segmentId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "offsetMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "stepId",
+        "motionId",
+        "motionRevision",
+        "contentDigest",
+        "segmentId",
+        "offsetMs",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "RecipeSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "recipe"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RecipeStep"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        }
+      },
+      "required": [
+        "kind",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "Segment": {
+      "type": "object",
+      "properties": {
+        "startMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "endMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "entryBoundaryId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "exitBoundaryId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "interruptibleAtEnd": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "startMs",
+        "endMs",
+        "entryBoundaryId",
+        "exitBoundaryId",
+        "interruptibleAtEnd"
+      ],
+      "additionalProperties": false
+    },
+    "Boundary": {
+      "type": "object",
+      "properties": {
+        "poseClass": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshotRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "poseClass",
+        "snapshotRef",
+        "contacts",
+        "resources"
+      ],
+      "additionalProperties": false
+    },
+    "Validation": {
+      "type": "object",
+      "properties": {
+        "structural": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        },
+        "trajectory": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        },
+        "visual": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "reviewedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "structural",
+        "trajectory",
+        "visual",
+        "evidenceRefs",
+        "reviewedAt"
+      ],
+      "additionalProperties": false
+    },
+    "MotionEntry": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "pliette.motion-entry/1.0"
+        },
+        "motionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "motionRevision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "actionId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "variantId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "candidate",
+            "validated",
+            "approved",
+            "disabled"
+          ]
+        },
+        "rigRef": {
+          "$ref": "#/definitions/RigRef"
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/NativeSource"
+            },
+            {
+              "$ref": "#/definitions/DraftSource"
+            },
+            {
+              "$ref": "#/definitions/RecipeSource"
+            }
+          ]
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "base",
+              "leftArm",
+              "rightArm",
+              "torso",
+              "head",
+              "face",
+              "mouth"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "writes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dependsOn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "requiredCapabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "preconditions": {
+          "type": "object",
+          "properties": {
+            "postures": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "baseAnimations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "requiredResources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "requiredContacts": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "postures",
+            "baseAnimations",
+            "requiredResources",
+            "requiredContacts"
+          ],
+          "additionalProperties": false
+        },
+        "segments": {
+          "type": "object",
+          "required": [
+            "full"
+          ],
+          "patternProperties": {
+            "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$": {
+              "$ref": "#/definitions/Segment"
+            }
+          },
+          "additionalProperties": false
+        },
+        "boundaries": {
+          "type": "object",
+          "minProperties": 1,
+          "patternProperties": {
+            "^[a-z][a-z0-9_]*(?:[.][a-z0-9_]+)*$": {
+              "$ref": "#/definitions/Boundary"
+            }
+          },
+          "additionalProperties": false
+        },
+        "parameterSchema": {
+          "type": "object"
+        },
+        "retime": {
+          "type": "object",
+          "properties": {
+            "minRate": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "maxRate": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "minRate",
+            "maxRate"
+          ],
+          "additionalProperties": false
+        },
+        "loop": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "segmentId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "maxRepeats": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "allowed",
+            "segmentId",
+            "maxRepeats"
+          ],
+          "additionalProperties": false
+        },
+        "transition": {
+          "type": "object",
+          "properties": {
+            "mixInMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mixOutMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "maxBlendMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "continuousEligible": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "mixInMs",
+            "mixOutMs",
+            "maxBlendMs",
+            "continuousEligible"
+          ],
+          "additionalProperties": false
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "eventId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "atMs": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "contact_acquire",
+                  "contact_release",
+                  "object_attach",
+                  "object_detach"
+                ]
+              },
+              "resourceId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "eventId",
+              "atMs",
+              "eventType",
+              "resourceId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "origin": {
+              "type": "string",
+              "enum": [
+                "native",
+                "legacy_slice",
+                "agent_offline",
+                "author_online",
+                "recipe"
+              ]
+            },
+            "sourceRef": {
+              "type": "string",
+              "minLength": 1
+            },
+            "generatorModel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "promptDigest": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "origin",
+            "sourceRef",
+            "generatorModel",
+            "promptDigest"
+          ],
+          "additionalProperties": false
+        },
+        "validation": {
+          "$ref": "#/definitions/Validation"
+        },
+        "contentDigest": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "motionId",
+        "motionRevision",
+        "actionId",
+        "variantId",
+        "status",
+        "rigRef",
+        "source",
+        "durationMs",
+        "channels",
+        "writes",
+        "dependsOn",
+        "requiredCapabilities",
+        "preconditions",
+        "segments",
+        "boundaries",
+        "parameterSchema",
+        "retime",
+        "loop",
+        "transition",
+        "events",
+        "provenance",
+        "validation",
+        "contentDigest"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "approved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "validation": {
+                "properties": {
+                  "structural": {
+                    "const": "passed"
+                  },
+                  "trajectory": {
+                    "const": "passed"
+                  },
+                  "visual": {
+                    "const": "passed"
+                  },
+                  "evidenceRefs": {
+                    "minItems": 1
+                  },
+                  "reviewedAt": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "MotionManifest": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "pliette.motion-manifest/1.0"
+        },
+        "catalogRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MotionEntry"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "catalogRevision",
+        "entries"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

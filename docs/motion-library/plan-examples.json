@@ -1,0 +1,70 @@
+{
+  "note": "协议示例；没有动画文件、没有可播放资产。示例计划只证明形状与目录引用可解析。",
+  "exact_hit_or_generate": {
+    "schemaVersion": "pliette.motion-plan/1.0",
+    "requestId": "request-example-001",
+    "catalogRevision": "planning-2026-09-14.1",
+    "reply": "好呀。",
+    "description": "用画面右侧的手小幅挥手，然后轻轻向画面右侧歪头。",
+    "slices": [
+      {
+        "sliceId": "s1",
+        "description": "画面右侧手臂小幅挥手，完整收回。",
+        "lookup": {
+          "actionId": "gesture.wave",
+          "variantId": "small.screen_right",
+          "segmentId": "full"
+        },
+        "parameters": {}
+      },
+      {
+        "sliceId": "s2",
+        "description": "轻轻向画面右侧歪头，短暂停留后回正。",
+        "lookup": {
+          "actionId": "head.tilt",
+          "variantId": "gentle.screen_right",
+          "segmentId": "full"
+        },
+        "parameters": {}
+      }
+    ]
+  },
+  "known_but_unsupported": {
+    "schemaVersion": "pliette.motion-plan/1.0",
+    "requestId": "request-example-002",
+    "catalogRevision": "planning-2026-09-14.1",
+    "reply": "",
+    "description": "双手托腮并停留。",
+    "slices": [
+      {
+        "sliceId": "s1",
+        "description": "两只手托住脸颊，保持轻松姿态，然后收回。",
+        "lookup": {
+          "actionId": "routine.chin_rest",
+          "variantId": "both",
+          "segmentId": "full"
+        },
+        "parameters": {}
+      }
+    ]
+  },
+  "unregistered_custom": {
+    "schemaVersion": "pliette.motion-plan/1.0",
+    "requestId": "request-example-003",
+    "catalogRevision": "planning-2026-09-14.1",
+    "reply": "",
+    "description": "小幅歪头，双臂依次抬起后收回。",
+    "slices": [
+      {
+        "sliceId": "s1",
+        "description": "先向画面右侧歪头，再依次轻抬画面左臂和右臂，最后一起恢复原姿态；不接触脸部。",
+        "lookup": {
+          "actionId": "custom",
+          "variantId": "custom",
+          "segmentId": "full"
+        },
+        "parameters": {}
+      }
+    ]
+  }
+}
