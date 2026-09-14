@@ -14,7 +14,8 @@ export type ErrorCode =
   | "STALE_CONTEXT"
   | "DEADLINE_EXCEEDED"
   | "OUTPUT_TRUNCATED"
-  | "INSUFFICIENT_CONTEXT";
+  | "INSUFFICIENT_CONTEXT"
+  | "HEIGHT_UNCALIBRATED";
 
 export type AuthorStage =
   | "response"
@@ -73,6 +74,7 @@ export const ALL_CODES: Record<ErrorCode, true> = {
   DEADLINE_EXCEEDED: true,
   OUTPUT_TRUNCATED: true,
   INSUFFICIENT_CONTEXT: true,
+  HEIGHT_UNCALIBRATED: true,
 };
 
 /** 供 Lab/日志渲染的一句话定位（Spec 10.2：错误消息指出实际失败点） */

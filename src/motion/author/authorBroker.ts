@@ -80,16 +80,21 @@ export class AuthorBroker {
     }
   }
 
-  /** 开始一次受限在线请求（单飞）。 */
+  /** 开始一次受限在线请求（单飞）。F2：替换旧请求后必须完整登记新请求；重复/在途 ID 检查不影响在途请求。 */
   begin(profileId: string, requestId: string, contextId: string, stateVersion: number, deadlineMs: number): BeginResult {
-    const prev = this.active.get(profileId);
-    if (prev && !prev.cancelled) {
-      prev.cancelled = true;
-      // 相同通道的新请求使旧请求过时（Spec 8.4）；迟到的旧响应由 seen + cancelled 双重拦截
-      return { ok: true, superseded: prev.requestId };
+    const cur = this.active.get(profileId);
+    if (cur && cur.requestId === requestId && !cur.cancelled) {
+      return { ok: false, reason: "requestId 已在途（不得重置其提交时钟）" };
     }
     if (this.seen.has(requestId)) {
       return { ok: false, reason: "duplicate requestId" };
+    }
+    const prev = this.active.get(profileId);
+    let superseded: string | undefined;
+    if (prev && !prev.cancelled) {
+      prev.cancelled = true;
+      // 相同通道的新请求使旧请求过时（Spec 8.4）；迟到的旧响应由 seen + cancelled 双重拦截
+      superseded = prev.requestId;
     }
     this.active.set(profileId, {
       profileId,
@@ -100,7 +105,7 @@ export class AuthorBroker {
       deadlineMs,
       cancelled: false,
     });
-    return { ok: true, superseded: prev?.requestId };
+    return { ok: true, superseded };
   }
 
   /** 客户端取消（请求方主动）。 */
@@ -121,6 +126,12 @@ export class AuthorBroker {
       return { stale: true, reason: `离散状态版本变化 ${rec.stateVersion}→${current.stateVersion}`, code: "STALE_CONTEXT" };
     }
     return { stale: false };
+  }
+
+  /** F2：按请求身份结束生命周期——仅当当前记录仍是该请求时才删除，迟到响应不得波及新请求。 */
+  private finishActive(profileId: string, requestId: string): void {
+    const rec = this.active.get(profileId);
+    if (rec && rec.requestId === requestId) this.active.delete(profileId);
   }
 
   /**
@@ -145,14 +156,15 @@ export class AuthorBroker {
         message: stale.reason ?? "请求已过时，不再执行",
       }));
       this.memoize(requestId);
-      this.active.delete(profileId);
+      // 只结束该请求自己的生命周期；新请求的记录保持不动（F2 复现二）
+      this.finishActive(profileId, requestId);
       return base;
     }
 
     // unsupported / needs_context：不执行曲线；结束该次请求并记录（Spec 8.1）
     if (response.status !== "motion") {
       this.memoize(requestId);
-      this.active.delete(profileId);
+      this.finishActive(profileId, requestId);
       base.accepted = false;
       base.fallback = "keep-current";
       return base;
@@ -173,7 +185,7 @@ export class AuthorBroker {
         message: "目标通道被其他实例占用，当前请求不可取权",
       }));
       this.memoize(requestId);
-      this.active.delete(profileId);
+      this.finishActive(profileId, requestId);
       return base;
     }
 
@@ -190,7 +202,7 @@ export class AuthorBroker {
         message: "缺少编译产物，无法提交播放",
       }));
       this.memoize(requestId);
-      this.active.delete(profileId);
+      this.finishActive(profileId, requestId);
       return base;
     }
 
@@ -205,7 +217,7 @@ export class AuthorBroker {
       if (oldest != null) this.playing.delete(oldest);
     }
     this.memoize(requestId);
-    this.active.delete(profileId);
+    this.finishActive(profileId, requestId);
     base.accepted = true;
     base.playback = { compiled, channels, durationSec: response.draft.durationSec, mixInSec: 0.15, mixOutSec: 0.2 };
     return base;

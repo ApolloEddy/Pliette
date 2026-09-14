@@ -50,20 +50,53 @@ function controlLine(c: ControlDefinition): string {
   return `- ${c.controlId}（${c.semanticPart}；${c.input.type === "vec2" ? "二元向量[H]" : c.input.type === "enum" ? "枚举" : "标量[deg]"}，参考值 ${JSON.stringify(c.input.refValue)}）：${dom}。正=${c.input.positiveLooksLike}；负=${c.input.negativeLooksLike}。${c.behavior}`;
 }
 
-/** 精简片段缓存：profileDigest 变化时失效（Spec 7.1 静态缓存） */
+/**
+ * 精简指导片段（F1 修复）：全部内容来自当前档案——控制行、坐标/左右约定、必带规则解释。
+ * 不硬编码任何角色专属结论；片段只覆盖本次请求的控制子集
+ * （依赖只用于解释，不列为可写权限，Spec 7.1）。
+ * 缓存键 = profileDigest + 排序后的子集 + 规则版本指纹；任一变化即失效。
+ */
 const excerptCache = new Map<string, string[]>();
 
-export function buildGuideExcerpts(profile: ControlProfile): string[] {
-  const cached = excerptCache.get(profile.profileDigest);
+function ruleFingerprint(profile: ControlProfile): string {
+  return profile.rules.map((r) => `${r.ruleId}v${r.version}`).join(",");
+}
+
+export function buildGuideExcerpts(profile: ControlProfile, controlIds: readonly string[]): string[] {
+  const key = `${profile.profileDigest}|${[...controlIds].sort().join(">")}|${ruleFingerprint(profile)}`;
+  const cached = excerptCache.get(key);
   if (cached) return cached;
-  const open = openControls(profile);
-  const excerpts = [
-    "【可用控制器】（只允许引用以下 controlId；省略=不申请写入）：",
-    ...open.map(controlLine),
-    "【注意】头与躯干是兄弟节点：躯干动头部不动；需要组合时显式同时给两条曲线。眼睛只能成对经 face.eyes.pair 切换。",
-    "【反例】torso.bob 超出 ±0.02H 会头身分离（已发生并保留反例）；连续参数禁用 stepped；眼睛之外的表情通道不存在（无嘴部附件）。",
-  ];
-  excerptCache.set(profile.profileDigest, excerpts);
+
+  const byId = new Map(profile.controls.map((c) => [c.controlId, c]));
+  const selected = controlIds.map((id) => byId.get(id)).filter((c): c is ControlDefinition => c != null);
+  const excerpts: string[] = [];
+
+  excerpts.push("【可用控制器】（只允许引用以下 controlId；省略=不申请写入）：");
+  for (const c of selected) excerpts.push(controlLine(c));
+
+  const coord = profile.identity.coordinateConvention;
+  if (coord) {
+    excerpts.push("【坐标与方向约定】");
+    if (coord.angle) excerpts.push(`- 角度：${coord.angle}`);
+    if (coord.translation) excerpts.push(`- 位移：${coord.translation}`);
+    if (coord.leftRight) excerpts.push(`- 左右：${coord.leftRight}`);
+  }
+
+  // 本次子集触发的必带规则——角色专属限制/反例由档案规则解释携带（依赖闭包，Spec 7.1）
+  const rules = mandatoryRulesFor(profile, controlIds);
+  if (rules.length > 0) {
+    excerpts.push("【本次生效的规则】（违反即拒绝）：");
+    for (const r of rules) excerpts.push(`- ${r.ruleId}（${r.target}）：${r.explanation}`);
+  }
+
+  // 只在子集确实包含组合控制时给出组合控制说明（从档案数据派生，不做角色假设）
+  const composites = selected.filter((c) => c.kind === "composite");
+  if (composites.length > 0) {
+    excerpts.push("【组合控制】以下控制的枚举值经登记映射展开，不接受自由拼装子曲线：");
+    for (const c of composites) excerpts.push(`- ${c.controlId}：${(c.binding.compositeOf ?? []).join("、") || "（无子控制登记）"}`);
+  }
+
+  excerptCache.set(key, excerpts);
   return excerpts;
 }
 
@@ -102,7 +135,8 @@ export function assembleRequest(profile: ControlProfile, opts: AssembleOptions):
     availableControls: selected.map(toControlSummary),
     // 依赖闭包必带规则——不允许语义检索漏选（Spec 7.1 mandatoryRules）
     mandatoryRules: mandatoryRulesFor(profile, ids).map(toRuleSummary),
-    guideExcerpts: [...buildGuideExcerpts(profile), ...(opts.extraExcerpts ?? [])],
+    // F1：指导片段与 availableControls 同源同集合——子集之外的控制不出现，角色知识只来自档案
+    guideExcerpts: [...buildGuideExcerpts(profile, ids), ...(opts.extraExcerpts ?? [])],
     generationBudget: budget,
     referencePoseId: profile.identity.referencePose.poseId,
     protocolVersion: "pliette.motion-draft/1.1",

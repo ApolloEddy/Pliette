@@ -295,7 +295,9 @@ function checkMotionDraft(response: AuthorResponse, request: GuideRequest, profi
     }
     // 采样目标：被引用的控制 + composite 的子控制（附件离散值仅记录占用，数值控制查域/速率）
     const referenced = open.filter((c) => seen.has(c.controlId) || (draft.curves.some((cu) => cu.controlId === c.controlId && byId.get(cu.controlId)?.kind === "composite" && (byId.get(cu.controlId)!.binding.compositeOf ?? []).includes(c.controlId))));
-    const sample = sampleTrajectory(opts.skeletonData, motion.animation, referenced, opts.sample);
+    // F3：位移速率按档案标定身高换算 H 单位（调用方可覆盖）；未标定时采样层拒绝 H 速率检查
+    const sampleOpts: SampleOptions = { heightUnits: profile.identity.heightUnits, ...opts.sample };
+    const sample = sampleTrajectory(opts.skeletonData, motion.animation, referenced, sampleOpts);
     findings.push(...sample.findings);
     compiled = motion;
   }

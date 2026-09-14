@@ -14,6 +14,10 @@ export interface SampleOptions {
   dt?: number;
   /** 混入时长（秒）：此前候选未满权重，从 mixIn 之后开始计满权值 */
   mixInSec?: number;
+  /** 混出时长（秒）：>0 时继续采样 [duration, duration+mixOut] 的交权过程（F3：退出纳入速率检查） */
+  mixOutSec?: number;
+  /** 标定身高（原生单位/H）。位移控制速率单位为 H/s 时必须提供；缺失→HEIGHT_UNCALIBRATED 拒绝 */
+  heightUnits?: number | null;
   /** 基础动画（隔离复现当前基础状态；V1 受限模式可省略=稳定 setup 基态） */
   baseAnim?: spine.Animation;
   basePhaseSec?: number;
@@ -43,6 +47,8 @@ interface TrackTarget {
   slotIndex: number | null;
   property: ControlDefinition["binding"]["property"];
   axes: number;
+  /** 控制速率单位与采样值的换算因子：native→control-unit（位移 H 控制为 1/heightUnits，其余为 1） */
+  unitScale: number;
 }
 
 function readValue(
@@ -62,8 +68,8 @@ function readValue(
   }
   const bone = skeleton.bones[target.boneIndex ?? -1];
   if (!bone) return [0];
-  if (target.property === "rotate") return [bone.rotation - (setupRot ?? 0)];
-  if (target.property === "translate") return [bone.x - (setupX ?? 0), bone.y - (setupY ?? 0)];
+  if (target.property === "rotate") return [(bone.rotation - (setupRot ?? 0)) * target.unitScale];
+  if (target.property === "translate") return [(bone.x - (setupX ?? 0)) * target.unitScale, (bone.y - (setupY ?? 0)) * target.unitScale];
   if (target.property === "scale") return [bone.scaleX, bone.scaleY];
   return [0];
 }
@@ -76,7 +82,9 @@ function hashName(name: string): number {
 
 /**
  * 采样编译后的候选动画。controls 用于确定采样目标与单位；不认识的控制跳过（由校验层负责拒绝）。
- * 返回每个控制的真实合成轨迹极值/速率；findings 携带 RATE_VIOLATION（域检查由规则层完成）。
+ * 返回每个控制的真实合成轨迹极值/速率；findings 携带 RATE_VIOLATION（逐轴，域检查由规则层完成）。
+ * F3 修复：速率逐轴比较（此前只比第 0 维，纯 Y 超速漏检）；位移按档案标定身高换算 H 单位；
+ * composite 按 compositeOf 精确展开子控制；可选混出窗口纳入速率检查。
  */
 export function sampleTrajectory(
   skeletonData: spine.SkeletonData,
@@ -86,6 +94,8 @@ export function sampleTrajectory(
 ): SampleReport {
   const dt = opts.dt ?? 1 / 30;
   const mixIn = opts.mixInSec ?? 0.15;
+  const mixOut = opts.mixOutSec ?? 0;
+  const heightUnits = opts.heightUnits ?? null;
   const skeleton = new spine.Skeleton(skeletonData);
   skeleton.setToSetupPose();
 
@@ -96,17 +106,19 @@ export function sampleTrajectory(
     setupPos.set(i, [b.x, b.y]);
   });
 
+  const findings: AuthorFinding[] = [];
   const targets: TrackTarget[] = [];
   for (const c of controls) {
     if (c.kind === "composite") {
-      // composite：采样其子控制器（写集已派生到 ownership.writes）
-      for (const w of c.ownership.writes) {
-        const sub = controls.find((x) => x.controlId !== c.controlId && x.ownership.writes.includes(w));
-        if (sub) pushTarget(targets, sub, skeletonData);
-      }
+      // composite：按 compositeOf 精确取子控制器（写集匹配仅作兜底，F3：不能保证子项进入采样）
+      const subs = (c.binding.compositeOf ?? [])
+        .map((id) => controls.find((x) => x.controlId === id))
+        .filter((x): x is ControlDefinition => x != null);
+      const pool = subs.length > 0 ? subs : controls.filter((x) => x.controlId !== c.controlId && x.ownership.writes.some((w) => c.ownership.writes.includes(w)));
+      for (const sub of pool) pushTarget(targets, sub, skeletonData, heightUnits, findings);
       continue;
     }
-    pushTarget(targets, c, skeletonData);
+    pushTarget(targets, c, skeletonData, heightUnits, findings);
   }
 
   const fullFrom = Math.min(mixIn, animation.duration);
@@ -123,15 +135,18 @@ export function sampleTrajectory(
   let steps = 0;
   let prevTime = -dt;
   const total = animation.duration;
+  const end = total + mixOut;
+  // 混出期：候选权重从 1 线性降到 0（隔离实例以 setup/基础层为混合目标）
+  const alphaAt = (t: number): number => (t <= total ? 1 : Math.max(0, 1 - (t - total) / Math.max(1e-9, mixOut)));
   for (let i = 0; ; i++) {
-    const t = Math.min(i * dt, total); // 按索引计算，保证末步精确落在 duration（浮点累加不回绕）
+    const t = Math.min(i * dt, end); // 按索引计算，保证末步精确落在边界（浮点累加不回绕）
     steps++;
     skeleton.setToSetupPose();
     if (opts.baseAnim) applyAnim(opts.baseAnim, (opts.basePhaseSec ?? 0) + t, 1, spine.MixPose.setup);
-    // 候选轨道满权重（隔离评估忽略混合细节；混入窗口内值不参与速率/域判定）
-    applyAnim(animation, t, 1, spine.MixPose.current);
+    const alpha = alphaAt(t);
+    applyAnim(animation, Math.min(t, total), alpha, spine.MixPose.current);
     skeleton.updateWorldTransform();
-    const fullWeight = t >= fullFrom - 1e-9;
+    const fullWeight = t >= fullFrom - 1e-9 && alpha > 1e-9;
     for (const target of targets) {
       const s = samples.get(target.controlId)!;
       const v = readValue(skeleton, target, target.boneIndex != null ? setupRot.get(target.boneIndex) ?? null : null, target.boneIndex != null ? setupPos.get(target.boneIndex)?.[0] ?? null : null, target.boneIndex != null ? setupPos.get(target.boneIndex)?.[1] ?? null : null);
@@ -144,17 +159,20 @@ export function sampleTrajectory(
         s.max[i] = Math.max(s.max[i], x);
       });
       if (fullWeight && s.prev && v.length > 0) {
-        const rate = Math.abs(v[0] - s.prev[0]) / Math.max(1e-9, t - prevTime);
-        s.peakRate = Math.max(s.peakRate, rate);
+        // F3：逐轴速率（此前只比较第 0 维，纯 Y 轴超速漏检）
+        const dtSec = Math.max(1e-9, t - prevTime);
+        for (let axis = 0; axis < v.length; axis++) {
+          const rate = Math.abs(v[axis] - s.prev[axis]) / dtSec;
+          s.peakRate = Math.max(s.peakRate, rate);
+        }
       }
       s.prev = fullWeight ? v : s.prev;
       s.end = v;
     }
     prevTime = t;
-    if (t >= total) break;
+    if (t >= end) break;
   }
 
-  const findings: AuthorFinding[] = [];
   const out: ControlSample[] = [];
   for (const c of controls) {
     const s = samples.get(c.controlId);
@@ -168,17 +186,36 @@ export function sampleTrajectory(
         expected: `≤ ${c.rate.maxPerSec}/s`,
         actual: `${s.peakRate.toFixed(1)}/s`,
         recoverable: true,
-        message: "满权重段真实轨迹速率超限（隔离实例采样）",
+        message: "满权重段真实轨迹速率超限（隔离实例采样，逐轴）",
       }));
     }
   }
   return { samples: out, findings, steps };
 }
 
-function pushTarget(targets: TrackTarget[], c: ControlDefinition, data: spine.SkeletonData): void {
+function pushTarget(targets: TrackTarget[], c: ControlDefinition, data: spine.SkeletonData, heightUnits: number | null, findings: AuthorFinding[]): void {
   if (c.binding.property === "attachment") {
-    targets.push({ controlId: c.controlId, boneIndex: null, slotIndex: data.findSlotIndex(c.binding.slot ?? ""), property: "attachment", axes: 1 });
+    targets.push({ controlId: c.controlId, boneIndex: null, slotIndex: data.findSlotIndex(c.binding.slot ?? ""), property: "attachment", axes: 1, unitScale: 1 });
     return;
+  }
+  // F3：位移速率单位是 H/s 时必须换算；档案未标定身高则拒绝开放该检查（不得以原生单位蒙混）
+  let unitScale = 1;
+  if (c.binding.property === "translate" && c.input.unit === "H") {
+    if (heightUnits == null || !(heightUnits > 0)) {
+      if (c.rate?.maxPerSec != null) {
+        findings.push(diag({
+          code: "HEIGHT_UNCALIBRATED",
+          stage: "sample",
+          controlId: c.controlId,
+          expected: "档案 heightUnits > 0（H 单位速率检查前提）",
+          actual: String(heightUnits ?? "null"),
+          recoverable: false,
+          message: "位移控制使用 H 单位速率限制，但档案未标定身高——无法核查速率，拒绝该候选",
+        }));
+      }
+    } else {
+      unitScale = 1 / heightUnits;
+    }
   }
   const idx = data.findBoneIndex(c.binding.bone ?? "");
   targets.push({
@@ -187,5 +224,6 @@ function pushTarget(targets: TrackTarget[], c: ControlDefinition, data: spine.Sk
     slotIndex: null,
     property: c.binding.property,
     axes: c.binding.property === "translate" || c.binding.property === "scale" ? 2 : 1,
+    unitScale,
   });
 }
