@@ -155,10 +155,33 @@ export function withAttachmentRestore(filtered: spine.Animation, data: spine.Ske
 }
 
 /**
+ * 混入 alpha 渐升（infra TODO 落地）：3.6 轨道为空时 setAnimationWith 无 mixingFrom，
+ * 首个 entry 立即满权重生效——保持型切片（如 sleep 垂头）的 mixIn 形同虚设。
+ * 启用 alphaRamp 时把 entry.alpha 从 0 按 mixInSec 线性爬升到 1，宿主每帧调用
+ * tickAlphaRamps 推进。默认关闭：已验收切片的窗口自带准备段（视觉定稿不改变），
+ * 仅显式传 opts.alphaRamp 的调用启用。
+ */
+const alphaRamps = new WeakMap<spine.AnimationState, Map<number, { entry: spine.TrackEntry; ratePerSec: number }>>();
+
+export function tickAlphaRamps(state: spine.AnimationState, dtSec: number): void {
+  const perState = alphaRamps.get(state);
+  if (!perState || perState.size === 0) return;
+  for (const [track, ramp] of [...perState]) {
+    if (state.tracks[track] !== ramp.entry) {
+      perState.delete(track);
+      continue;
+    }
+    ramp.entry.alpha = Math.min(1, ramp.entry.alpha + ramp.ratePerSec * dtSec);
+    if (ramp.entry.alpha >= 1) perState.delete(track);
+  }
+}
+
+/**
  * 在轨道上播放切片：使用原生 animationStart/animationEnd 定义时间窗，
  * 窗口结束前 mixOutSec 开始混出空动画，交还基础层。
  * mixInSec/mixOutSec 可调（Spec 9.3：微表情 0.05-0.12，普通 0.12-0.25）。
  * 混出开始时刻自动恢复被触碰附件槽位的 setup 附件（见 withAttachmentRestore）。
+ * opts.alphaRamp：轨道为空时混入改为 alpha 0→1 渐升（保持型切片入场平滑，见上）。
  */
 export function playSlice(
   state: spine.AnimationState,
@@ -166,6 +189,7 @@ export function playSlice(
   handle: Omit<OverlayHandle, "track"> & { track: number },
   mixInSec = 0.15,
   mixOutSec = 0.2,
+  opts: { alphaRamp?: boolean } = {},
 ): void {
   const { track, startTime, windowSec } = handle;
   // 混出起点前一个帧间隔放置恢复键：attachmentThreshold=0 使附件时间线在混合期被整体跳过，
@@ -174,8 +198,18 @@ export function playSlice(
   const restoreAt = Math.max(startTime, startTime + delaySec - 1 / 60);
   const data = (state.data as unknown as { skeletonData?: spine.SkeletonData }).skeletonData;
   const animation = data ? withAttachmentRestore(filtered, data, Math.min(restoreAt, filtered.duration)) : filtered;
+  const emptyTrack = !state.tracks[track];
   const entry = state.setAnimationWith(track, animation, false);
   entry.animationStart = startTime;
   entry.animationEnd = Math.min(startTime + windowSec, animation.duration);
+  if (opts.alphaRamp && mixInSec > 0 && emptyTrack) {
+    entry.alpha = 0;
+    let perState = alphaRamps.get(state);
+    if (!perState) {
+      perState = new Map();
+      alphaRamps.set(state, perState);
+    }
+    perState.set(track, { entry, ratePerSec: 1 / mixInSec });
+  }
   state.addEmptyAnimation(track, mixOutSec, delaySec);
 }

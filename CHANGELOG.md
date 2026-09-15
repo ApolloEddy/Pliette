@@ -3,6 +3,52 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased] - 2026-09-16
+
+**Activation Pass**：34 条 candidate 全量转正（approved + registered），Lab 实际对话切换到
+PlanAdapter → Selector → MotionLibrary → PlanCoordinator 新链路——动作库从"模块级可用"进入"产品级可用"。
+
+### Promotion（34/34 approved，31 族/34 变体 registered）
+
+- 证据门控提升工具 `scripts/promote-manifest.mjs`（幂等、字节级稳定、决策 JSON 备案
+  `scripts/promotion/stage1-33.json` + `stage2-greet.json`）：trajectory/visual/reviewedAt/
+  evidenceRefs 齐备才允许 approve；contact 类强制 `requiredContacts`；recipe 强制子动作先 approved；
+  组件提升后自动重同步配方冻结引用；contentDigest 全量重算
+- catalog 同步推进至 `activation-2026-09-16.1`；Selector 命中条件（registered+approved）首次真实成立
+
+### 接触契约（contact 类转正前置门）
+
+- `contacts.json` + `tests/contact-verification.test.ts`：手部佩戴锚点（hand_R2/hand_L2 附件基准点）
+  相对面骨定义，误差阈值 0.02H 与 touch_table 同标准；锚点解剖学约束按 kind（side/under）校验
+- 实测：chin_rest 双手 max 0.0006H、cheek_touch 0.0003H、scratch_head 0.0078H
+- 左臂几何实测：已验证域（raise −40~+45°）内左颊不可达——chin_rest 左手如实登记为
+  下巴前下方收拢位（`contact:face.chin_under_left`），v4 视觉定稿保持不变
+
+### 对话新链路（Lab 实际入口切换）
+
+- `handleChatSend` 改走 PlanAdapter（`createPlanAdapter`，LLM 配置存在即用真实 LLM，否则规则版兜底）
+  → Selector（HIT_READY/MISS/UNSUPPORTED 三路收口）→ `MotionLibraryRuntime`（新模块 `src/lab/planRuntime.ts`）
+  → PlanCoordinator（buffered）→ Scheduler/GestureLayer/overlay 播放
+- 统一 materialization：native_slice/native_clip/draft/recipe 四载体 → PreparedMotion
+  （`src/motion/runtime/materialize.ts`：`preparedFromEntry` + `expandRecipe` 冻结引用/通道不相交/时长覆盖校验）
+- MISS 且 generatable → 受限 Author 回退（AuthorBroker 单飞+陈旧性，回填 PreparedMotion 按序提交）；
+  UNSUPPORTED 如实报失败，不悄悄播替代动作；`?event=` 旧事件名经 `LEGACY_EVENT_KEYS` 走同一 Selector 链路
+- 端到端验收：`chat=你好` → routine.greet 整条配方 HIT → **0 次 Author 调用** → wave+nod 合成播放
+  （浏览器相位证据 `experiments/motion-library/tuning/act-e2e-greet/`）
+
+### 播放层
+
+- **alpha 渐升混入（infra TODO 闭环）**：`playSlice` opt-in `alphaRamp`——轨道为空时
+  entry.alpha 0→1 按 mixInSec 爬升（`tickAlphaRamps` 每帧驱动）；sleep 保持型切片入场平滑实测通过；
+  已验收切片默认不启用，视觉定稿不变
+- 配方播放：一次组合实例原子持有全部通道，步骤按 offsetMs 时间轴驱动（wave@0 + nod@600ms 合成验证）
+
+### 测试（171 → 185）
+
+- 新增 `tests/contact-verification.test.ts`（接触契约三项）、`tests/activation.test.ts`
+  （新链路机制 A 组 + activation 断言 B 组）、overlay alpha 渐升锁定
+- m5/motion-library 状态断言更新为转正后现实（34 approved、registered 投影一致性）
+
 ## [Unreleased] - 2026-09-15
 
 MotionLibrary 动作精调夜班：候选动作逐条视觉验收 + 不存在的动作由受限 Author 通路创作。

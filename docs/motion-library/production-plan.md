@@ -1,18 +1,20 @@
-# MotionLibrary 制作计划（2026-09-14）
+# MotionLibrary 制作计划（2026-09-14 首发；2026-09-16 Activation Pass 更新）
 
-对应备案目录：`docs/motion-library/catalog-plan.json`（12 类、110 动作族、154 变体，全部 planned）。
+对应备案目录：`docs/motion-library/catalog-plan.json`（12 类、110 动作族、154 变体）。
 本计划面向后续内容 Agent 与人工制作，逐模型给出真实控制/原动画映射、制作方法、证据要求与优先级。
 
-## 0. 当前真实状态（不得当作已完成能力）
+## 0. 当前真实状态（2026-09-16 Activation Pass 完成后）
 
 | 项 | 状态 |
 |---|---|
-| 目录备案 | 110 动作族/154 变体全部 `planned`；目录有记录 ≠ 当前角色能做 |
-| manifest 条目 | **17 条 candidate**（9 §9.1 种子迁移 + 6 P0 扩展族 + 1 head.nod V1→V1.1 转换 + 1 routine.greet 配方）——覆盖 native_slice/native_clip/draft/recipe 四种载体 |
-| 视觉精调 | 上述 16 条动作已逐相位截图验收并定稿窗口/混合参数（[台账](../experiments/motion-library/tuning/TUNING-LOG.md)，截图本地保留）；配方视觉合成待播放接线 |
-| llm_nod / llm_lean_blink | llm_nod **已完成 V1→V1.1 转换并通过七步管线重验证**（drafts/lafei.nod.v11.json，bezier 转 smooth 后按限速 retime 1.25×）；llm_lean_blink 待同法转换 |
-| 托腮 routine.chin_rest | 能力缺口（无双手-脸接触标定）；authorable=disabled，重点备案不承诺生成 |
-| 可播放投影 | 0 条 approved——candidate 提升路径见 §3；枕位注意：全部条目仍为 candidate，approved 需 §3 三项齐备 |
+| 目录备案 | 110 动作族/154 变体中，**31 族/34 变体 `registered`**（有 approved 实现的族），其余保持 `planned`；catalogRevision `activation-2026-09-16.1` |
+| manifest 条目 | **34/34 条 approved**（9 §9.1 种子迁移 + 6 P0 扩展族 + 1 head.nod V1→V1.1 转换 + 17 受限 Author 创作 + 1 routine.greet 配方）——覆盖 native_slice/native_clip/draft/recipe 四种载体 |
+| 验收证据 | 每条 approved 均有 trajectory+visual 证据与 reviewedAt（`scripts/promotion/stage1-33.json` / `stage2-greet.json` 为决策备案；contact 三条另有接触契约，见下） |
+| 对话链路 | Lab 实际对话入口已切至 PlanAdapter → Selector → materialization → PlanCoordinator（buffered）：`chat=你好` → routine.greet 整条配方 HIT → **0 次 Author 调用** → wave+nod 按时间轴合成播放（E2E 相位证据 `tuning/act-e2e-greet/`） |
+| 接触契约 | chin_rest / cheek_touch / scratch_head 已建立 `requiredContacts` 锚点 + 0.02H 误差阈值（`contacts.json` + `tests/contact-verification.test.ts`）；左臂在已验证域（±45°）内不可达左颊，chin_rest 左手为下巴前下方收拢位（`contact:face.chin_under_left`），域扩展后可上调 |
+| mixIn 缺陷 | overlay 首个 entry 混入无效的 infra TODO 已落地：`playSlice` opt-in `alphaRamp`（0→1 渐升，`tickAlphaRamps` 每帧驱动），sleep 保持型切片入场平滑已视觉验证（`tuning/act-alpha-sleep2/`）；已验收切片默认不启用，视觉定稿不变 |
+| rolling | 继续默认 buffered；RTF 真实证据（8 样本、15s 连续、首帧延迟）未采前不开启自动 rolling |
+| 新缺口备案 | 离线批量制作 runner 未实现（格式见 §4，优先级靠后不影响主链路）；sit 姿态下的坐姿复验（reaction.shy 等）；lipsync/fingers/back 仍为 planned |
 
 ## 1. 逐模型制作方式
 
@@ -65,7 +67,7 @@
 - 嘴型（mouth 通道无独立附件控制证据）
 - 手指/手型（thumbs_up、ok、peace、clap 等）
 - 背面动作（唯一 default 皮肤无背面部件）
-- 接触类：chin_rest、cheek_touch、hug_self 等（无接触标定）
+- 接触类残余缺口：hug_self 等多点接触（chin_rest/cheek_touch/scratch_head 已于 Activation Pass 建立锚点+0.02H 误差契约并 approved）
 - locomotion.to_target/approach（场景根节点位移与步态相位联动未标定）
 
 以上条目保持 planned/unsupported；在能力卡中按 `authorable=disabled` 呈现，Selector 返回 UNSUPPORTED_CAPABILITY/MISS_ASSET，不调用不可能完成任务的 Author。

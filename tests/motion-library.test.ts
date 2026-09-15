@@ -135,8 +135,22 @@ describe("真实目录加载（public/motion-library/catalog.json）", () => {
     expect(variantCount).toBe(154);
   });
 
-  it("全部条目为 planned（本包备案不承诺可播放）", () => {
-    for (const a of view.catalog.actions) expect(a.status).toBe("planned");
+  it("registered 族 = 有 approved 实现的族；其余保持 planned（备案不承诺可播放）", () => {
+    const manifest = JSON.parse(readFileSync(resolve("public/motion-library/models/lafei_8/front/manifest.json"), "utf-8"));
+    const approvedActions = new Set<string>(
+      manifest.entries.filter((e: { status: string }) => e.status === "approved").map((e: { actionId: string }) => e.actionId),
+    );
+    let registered = 0;
+    for (const a of view.catalog.actions) {
+      if (a.status === "registered") {
+        registered += 1;
+        expect(approvedActions.has(a.actionId), `${a.actionId} registered 但无 approved 实现`).toBe(true);
+      } else {
+        expect(a.status).toBe("planned");
+        expect(approvedActions.has(a.actionId), `${a.actionId} 有 approved 实现但目录未 registered`).toBe(false);
+      }
+    }
+    expect(registered).toBeGreaterThan(0);
   });
 
   it("别名唯一指向登记语义；能力卡只含登记键不含资产路径", () => {

@@ -1,0 +1,188 @@
+{
+  "reviewedAt": "2026-09-16T02:30:00+08:00",
+  "catalogRevision": "activation-2026-09-16.1",
+  "rigRefAnchor": "lafei.wave.small_screen_right",
+  "draftDigestRefresh": [
+    "lafei.chin_rest.both"
+  ],
+  "contacts": {
+    "lafei.chin_rest.both": [
+      "contact:face.chin_under_left",
+      "contact:face.chin_right"
+    ],
+    "lafei.cheek_touch.screen_right": [
+      "contact:face.cheek_right"
+    ],
+    "lafei.scratch_head.screen_right": [
+      "contact:head.side_right"
+    ]
+  },
+  "evidence": {
+    "lafei.wave.small_screen_right": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/wave_v3/（10 相位 + 3D×2）"
+    },
+    "lafei.raise_hand.screen_left": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/raise_hand_v2/（9 相位 + 3D×1）"
+    },
+    "lafei.reaction.dizzy.small": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/dizzy_v5/（9 相位；附件混出恢复修复验证用例）"
+    },
+    "lafei.reaction.happy.small": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/happy_v1/（8 相位）"
+    },
+    "lafei.reaction.shy.small": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/shy_v2/（8 相位；站姿合成已验证，坐姿复验列入制作计划）"
+    },
+    "lafei.pump.screen_right": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/pump_v2/（8 相位）"
+    },
+    "lafei.idle_fidget.default": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/idle_fidget_scan/（9 相位）"
+    },
+    "lafei.point.screen_right": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/point_scan/（8 相位）"
+    },
+    "lafei.touch_table.screen_right": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/touch_table_scan/（7 相位）+ 触碰场景接触误差实测 ≤0.02H（scene:table.calibrated_0.27H）"
+    },
+    "lafei.head_shake.normal": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/head_shake_scan/（8 相位）"
+    },
+    "lafei.reaction_sleepy.small": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/head_lower_scan/（9 相位）"
+    },
+    "lafei.head_lower.small": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/head_lower_small_v1/（6 相位）"
+    },
+    "lafei.life_blink.paired": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/eyes_blink_scan/（8 相位）"
+    },
+    "lafei.eyes_squeeze.paired": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "tuning/eyes_squeeze_scan/（8 相位）"
+    },
+    "lafei.life_idle.default": {
+      "decision": "approve",
+      "trajectory": "native-source 完整弧线（台账逐相位窗口定稿）",
+      "visual": "Lab 默认待机视图（stand 全段原生封装，首尾同相位可循环）"
+    },
+    "lafei.chin_rest.both": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "tuning/contact.chin_rest__both/v4_pose150（定稿）+ act-chin-rest（3 相位复验）",
+      "note": "左臂受验证域 ±45 限制，左手为下巴前下方收拢位（contact:face.chin_under_left），域扩展后可上调至左颊"
+    },
+    "lafei.cheek_touch.screen_right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "tuning/contact.cheek_touch__screen_right/v1_pose065（定稿）"
+    },
+    "lafei.scratch_head.screen_right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "tuning/contact.scratch_head__screen_right/v1_pose090（定稿）"
+    },
+    "lafei.beckon.screen_right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "tuning/gesture.beckon__screen_right/v1_waggle（定稿）"
+    },
+    "lafei.stop.screen_right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-stop（0.2/0.8/1.4s 相位冻结，Activation Pass）"
+    },
+    "lafei.present.both": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-present（0.3/0.8/1.3s 相位冻结，Activation Pass）"
+    },
+    "lafei.hands_reset.both": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-hands-reset（0.2/0.45/0.75s 相位冻结，Activation Pass）"
+    },
+    "lafei.breathe.subtle": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-breathe（0.8/1.6/2.4s 相位冻结，Activation Pass；±0.006H 设计即细微）"
+    },
+    "lafei.shift_weight.left": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-shift-weight-left（0.5/1.2/1.9s 相位冻结，Activation Pass）"
+    },
+    "lafei.shift_weight.right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-shift-weight-right（0.5/1.2/1.9s 相位冻结，Activation Pass）"
+    },
+    "lafei.body_lean.screen_right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-body-lean-right（0.3/0.7/1.1s 相位冻结，Activation Pass）"
+    },
+    "lafei.body_lean.screen_left": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-body-lean-left（0.3/0.7/1.1s 相位冻结，Activation Pass）"
+    },
+    "lafei.body_sway.gentle": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-body-sway（0.7/1.4/2.1s 相位冻结，Activation Pass）"
+    },
+    "lafei.celebrate.small": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "tuning/reaction.celebrate__small/v1_peak（定稿）"
+    },
+    "lafei.eyes_close.paired": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-eyes-close（0.3/0.6/1.0s 相位冻结，Activation Pass）"
+    },
+    "lafei.head_tilt.screen_right": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-head-tilt-right（0.4/0.9/1.4s 相位冻结，Activation Pass）"
+    },
+    "lafei.head_tilt.screen_left": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-head-tilt-left（0.4/0.9/1.4s 相位冻结，Activation Pass）"
+    },
+    "lafei.head_nod.small": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts",
+      "visual": "act-head-nod（0.2/0.5/0.9s 相位冻结，Activation Pass）+ MiMo 在线实测（experiments/motion-guide/run-llm-mimo）"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "pliette.motion-contacts/1.0",
+  "note": "接触类动作的接触锚点与误差阈值（Spec §4.4 requiredContacts / §15.2）。锚点=相对 face 骨的解剖学偏移（H 单位，随头部姿态移动）；标定方法与 touch_table 场景一致：视觉验收定稿姿态 → 实测手位 → 冻结锚点与阈值。maxErrorH 与 touch_table 的 0.02H 同标准。",
+  "anchors": {
+    "contact:face.chin_right": {
+      "bone": "face",
+      "offsetHX": 0.171,
+      "offsetHY": -0.023,
+      "anatomyNote": "右颊/颌侧（右手持可乐贴右颊，真接触；face 骨右侧偏下）",
+      "kind": "side"
+    },
+    "contact:face.chin_under_left": {
+      "bone": "face",
+      "offsetHX": 0.028,
+      "offsetHY": -0.146,
+      "anatomyNote": "下巴前下方偏左收拢位（左臂 ±45 验证域内最近位，域扩展后可上调至左颊；face 骨正下方）",
+      "kind": "under"
+    },
+    "contact:face.cheek_right": {
+      "bone": "face",
+      "offsetHX": 0.17,
+      "offsetHY": -0.051,
+      "anatomyNote": "右颊/颌侧（可乐+手套贴脸侧）",
+      "kind": "side"
+    },
+    "contact:head.side_right": {
+      "bone": "face",
+      "offsetHX": 0.172,
+      "offsetHY": -0.025,
+      "anatomyNote": "头旁挠动位（袖手簇贴头侧）",
+      "kind": "side"
+    }
+  },
+  "motions": {
+    "lafei.chin_rest.both": {
+      "draftFile": "lafei.chin_rest.both.v11.json",
+      "anchors": {
+        "hand_L2": "contact:face.chin_under_left",
+        "hand_R2": "contact:face.chin_right"
+      },
+      "windowSec": [
+        0.9,
+        2.0
+      ],
+      "maxErrorH": 0.02
+    },
+    "lafei.cheek_touch.screen_right": {
+      "draftFile": "lafei.cheek_touch.screen_right.v11.json",
+      "anchors": {
+        "hand_R2": "contact:face.cheek_right"
+      },
+      "windowSec": [
+        0.5,
+        0.85
+      ],
+      "maxErrorH": 0.02
+    },
+    "lafei.scratch_head.screen_right": {
+      "draftFile": "lafei.scratch_head.screen_right.v11.json",
+      "anchors": {
+        "hand_R2": "contact:head.side_right"
+      },
+      "windowSec": [
+        0.6,
+        1.1
+      ],
+      "maxErrorH": 0.02
+    }
+  }
+}

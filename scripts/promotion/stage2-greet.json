@@ -1,0 +1,15 @@
+{
+  "reviewedAt": "2026-09-16T02:45:00+08:00",
+  "catalogRevision": "activation-2026-09-16.1",
+  "rigRefAnchor": "lafei.wave.small_screen_right",
+  "draftDigestRefresh": [],
+  "contacts": {},
+  "evidence": {
+    "lafei.routine_greet.default": {
+      "decision": "approve",
+      "trajectory": "配方结构校验+子动作冻结引用一致（wave@r1+nod@r1，通道不相交，时长覆盖 1.6s）",
+      "visual": "act-recipe-greet（0.3s 挥手起势 / 0.9s 挥手+点头双通道合成 / 1.5s 回归待机；PlanCoordinator→Scheduler materialization 路径）",
+      "note": "组件全部 approved 后转正；端到端对话链路验收（chat=你好）另行记录"
+    }
+  }
+}

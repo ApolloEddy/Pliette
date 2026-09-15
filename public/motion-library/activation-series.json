@@ -1,0 +1,131 @@
+{
+  "note": "Activation Pass 草稿相位序列采集清单（?asset=lafei_8&view=flat&seriesAll=1 一次导航顺序执行；截图落盘 experiments/motion-library/tuning/<dir>/）。phases 为每个动作的 上升段/保持段/释放段 采样点（秒）。",
+  "series": [
+    {
+      "file": "lafei.chin_rest.both.v11.json",
+      "phases": [
+        0.5,
+        1.5,
+        2.5
+      ],
+      "dir": "act-chin-rest"
+    },
+    {
+      "file": "lafei.stop.screen_right.v11.json",
+      "phases": [
+        0.2,
+        0.8,
+        1.4
+      ],
+      "dir": "act-stop"
+    },
+    {
+      "file": "lafei.present.both.v11.json",
+      "phases": [
+        0.3,
+        0.8,
+        1.3
+      ],
+      "dir": "act-present"
+    },
+    {
+      "file": "lafei.hands_reset.both.v11.json",
+      "phases": [
+        0.2,
+        0.45,
+        0.75
+      ],
+      "dir": "act-hands-reset"
+    },
+    {
+      "file": "lafei.breathe.subtle.v11.json",
+      "phases": [
+        0.8,
+        1.6,
+        2.4
+      ],
+      "dir": "act-breathe"
+    },
+    {
+      "file": "lafei.shift_weight.left.v11.json",
+      "phases": [
+        0.5,
+        1.2,
+        1.9
+      ],
+      "dir": "act-shift-weight-left"
+    },
+    {
+      "file": "lafei.shift_weight.right.v11.json",
+      "phases": [
+        0.5,
+        1.2,
+        1.9
+      ],
+      "dir": "act-shift-weight-right"
+    },
+    {
+      "file": "lafei.body_lean.screen_right.v11.json",
+      "phases": [
+        0.3,
+        0.7,
+        1.1
+      ],
+      "dir": "act-body-lean-right"
+    },
+    {
+      "file": "lafei.body_lean.screen_left.v11.json",
+      "phases": [
+        0.3,
+        0.7,
+        1.1
+      ],
+      "dir": "act-body-lean-left"
+    },
+    {
+      "file": "lafei.body_sway.gentle.v11.json",
+      "phases": [
+        0.7,
+        1.4,
+        2.1
+      ],
+      "dir": "act-body-sway"
+    },
+    {
+      "file": "lafei.eyes_close.paired.v11.json",
+      "phases": [
+        0.3,
+        0.6,
+        1.0
+      ],
+      "dir": "act-eyes-close"
+    },
+    {
+      "file": "lafei.head_tilt.gentle.screen_right.v11.json",
+      "phases": [
+        0.4,
+        0.9,
+        1.4
+      ],
+      "dir": "act-head-tilt-right"
+    },
+    {
+      "file": "lafei.head_tilt.gentle.screen_left.v11.json",
+      "phases": [
+        0.4,
+        0.9,
+        1.4
+      ],
+      "dir": "act-head-tilt-left"
+    },
+    {
+      "file": "lafei.nod.v11.json",
+      "phases": [
+        0.2,
+        0.5,
+        0.9
+      ],
+      "dir": "act-head-nod"
+    }
+  ]
+}

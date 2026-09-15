@@ -119,3 +119,55 @@ native_slice（14）/ native_clip（1）/ draft（1）三种载体；配方族�
   interaction 预算 [0.4,5]s；2 个前臂曲线 7 键超 ≤6 键预算——减一次摆动）
 - 复验 **18/18 全部通过**（含 chin_rest/celebrate 多曲线组合、breathe/sway 向量曲线、
   eyes_close stepped 组合控制）
+
+## Activation Pass（2026-09-16：candidate → approved 全量转正）
+
+目标：把"框架已搭好但未进入可用状态"的 34 条 candidate 全量完成 promotion，并把 Lab 实际
+对话入口切到 PlanAdapter → Selector → materialization → PlanCoordinator 新链路。
+
+### 接触契约建立（chin_rest / cheek_touch / scratch_head）
+
+方法与 touch_table 场景标定一致：视觉定稿姿态 → 实测手部佩戴锚点（hand_R2/hand_L2 槽位
+附件基准点，即可乐/手套精灵跟随点）→ 冻结锚点与阈值。几何实测（face 骨原点在颈部 0.376H）：
+
+| 逻辑键 | 锚点（相对 face 骨，H） | 窗口误差 | 结论 |
+|---|---|---|---|
+| chin_rest/both·右手 | contact:face.chin_right (0.171, −0.023) | max 0.0006H | ✅ 真接触（持可乐贴右颊） |
+| chin_rest/both·左手 | contact:face.chin_under_left (0.028, −0.146) | 同上 | ✅ 下巴前下方收拢位 |
+| cheek_touch·右手 | contact:face.cheek_right (0.170, −0.051) | max 0.0003H | ✅ |
+| scratch_head·右手 | contact:head.side_right (0.172, −0.024) | max 0.0078H | ✅ |
+
+**左臂几何实测结论（重要，后续创作必读）**：左臂在已验证域（raise −40~+45°、forearm ±20°）内
+可达域盒实测——外展角 (−40,−20) 手位 (−0.168,−0.061)，为右 successful 位的镜像但靠近头发侧；
+内收角 (+45,+20) 手位 (+0.028,−0.146)。**左颊/颌侧在域内不可达**（v4 当初"手位在下巴而非腮侧"
+的备案即此原因）。曾试将 chin_rest 左臂改外展 −40/−20 冻结截图，读法变"摊手"不如 v4 定稿，
+已回退：v4 视觉定稿保持，接触契约如实登记为 `contact:face.chin_under_left`。
+阈值统一 0.02H（与 touch_table 同标准）；锚点解剖学约束按 kind 校验（side=|x|≥0.08H，
+under=|x|≤0.06H 且 y≤−0.08H），`tests/contact-verification.test.ts` 为准。
+
+### 补充相位证据（Activation Pass 批量采集，`?seriesAll=1` 一次导航 14 组）
+
+此前仅有"管线证据"的 13 条草稿 + nod 全部补齐冻结相位截图（上升/保持/释放）：
+`act-chin-rest`（v4 回退后复验）、`act-stop`、`act-present`、`act-hands-reset`、`act-breathe`、
+`act-shift-weight-left/right`、`act-body-lean-right/left`、`act-body-sway`、`act-eyes-close`、
+`act-head-tilt-right/left`、`act-head-nod`。全部逐张人工审查通过。
+
+### 配方合成验收（routine.greet）
+
+PlanCoordinator → Scheduler 组合实例（rightArm+head+face 原子取权）+ 步骤时间轴
+（wave@0 + nod@600ms）驱动播放：0.3s 挥手起势 / 0.9s 挥手+点头双通道合成 / 1.5s 干净回归待机
+（`act-recipe-greet/`）。组件全部 approved 后 greet 方转正（expandRecipe 冻结引用门先于视觉
+拒绝过一次 candidate 配方——门行为符合设计）。
+
+### alpha 渐升混入落地（infra TODO 闭环）
+
+`playSlice` 新增 opt-in `alphaRamp`：轨道为空时 entry.alpha 0→1 按 mixInSec 线性爬升
+（`tickAlphaRamps` 每帧驱动）。sleep 保持型切片（此前因"混入无效"被判不适合直接切片）实测：
+0.05s 近直立 → 0.15s 半垂 → 1.0s 全垂（`act-alpha-sleep2/`），入场平滑达成。
+已验收切片默认不启用（窗口自带准备段，视觉定稿不变）；Node 侧单测锁定爬升曲线。
+
+### 端到端验收（真实对话链路）
+
+`?chat=你好`：rule-plan → Selector s1（routine.greet/default）→ HIT_READY（lafei.routine_greet.default@r1）
+→ PlanCoordinator buffered → 组合实例提交 → wave+nod 合成播放 → 相位 3/3 落盘
+（`act-e2e-greet/`）。**Author 调用数 = 0**（库命中零增量生成），wholeRoutine=true。

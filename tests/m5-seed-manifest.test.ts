@@ -91,16 +91,29 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
     expect(touch.preconditions.requiredResources).toContain("scene:table.calibrated_0.27H");
   });
 
-  it("全部条目 status=candidate（候选不进默认可播放投影，不假称已验收）", () => {
+  it("Activation Pass：34 条全部 approved（轨迹/视觉/评审时间齐备）且全部可播放命中", () => {
     for (const e of manifest.entries) {
-      expect(e.status).toBe("candidate");
-      expect(e.validation.visual).toBe("pending");
+      expect(e.status, e.motionId).toBe("approved");
+      expect(e.validation.trajectory, e.motionId).toBe("passed");
+      expect(e.validation.visual, e.motionId).toBe("passed");
+      expect(typeof e.validation.reviewedAt === "string" && e.validation.reviewedAt.length > 0, e.motionId).toBe(true);
+      expect(e.validation.evidenceRefs.some((r) => r.includes("[activation@")), e.motionId).toBe(true);
     }
     const rig = manifest.entries[0].rigRef;
     const index = new MotionIndex();
     index.rebuild(manifest);
-    const { matches } = index.lookup({ actionId: "gesture.wave", variantId: "small.screen_right", segmentId: "full" }, rig);
-    expect(matches.length).toBe(0); // candidate 不可播放——验收提升后才有投影
+    expect(index.lookup({ actionId: "gesture.wave", variantId: "small.screen_right", segmentId: "full" }, rig).matches.length).toBe(1);
+    expect(index.lookup({ actionId: "routine.greet", variantId: "default", segmentId: "full" }, rig).matches.length).toBe(1);
+  });
+
+  it("contact 三条带 requiredContacts 契约（不得凭视觉像就转正）", () => {
+    const expectContacts = (motionId: string, contacts: string[]) => {
+      const e = manifest.entries.find((x) => x.motionId === motionId)!;
+      expect(e.preconditions.requiredContacts.sort()).toEqual([...contacts].sort());
+    };
+    expectContacts("lafei.chin_rest.both", ["contact:face.chin_under_left", "contact:face.chin_right"]);
+    expectContacts("lafei.cheek_touch.screen_right", ["contact:face.cheek_right"]);
+    expectContacts("lafei.scratch_head.screen_right", ["contact:head.side_right"]);
   });
 
   it("V17：contentDigest 排除自身字段并可复算（导入防篡改机制）", async () => {

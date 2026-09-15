@@ -1,6 +1,6 @@
 {
   "schemaVersion": "pliette.motion-manifest/1.0",
-  "catalogRevision": "planning-2026-09-14.1",
+  "catalogRevision": "activation-2026-09-16.1",
   "entries": [
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -8,7 +8,7 @@
       "motionRevision": 1,
       "actionId": "gesture.wave",
       "variantId": "small.screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -116,15 +116,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/wave_v3/（10 相位 + 3D×2）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-48f3bc8545ed80c534a0ab02803804e9577a3786e556805a12e7dbc97fbca941"
+      "contentDigest": "sha256-a4e3b5b8b329e0d77898a8dd61ece4950cb1871e95dc5d2a9af256e153cad500"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -132,7 +133,7 @@
       "motionRevision": 1,
       "actionId": "gesture.raise_hand",
       "variantId": "screen_left",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -237,15 +238,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/raise_hand_v2/（9 相位 + 3D×1）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-67dda2aebff843790339bd4d2e4b7cbf73fa9f49e1e5fc05f49630303a38741e"
+      "contentDigest": "sha256-6563cdba92bb6034fa05b6813b664e7f0650ec1ecfaf1756d8255ca0ecdcd857"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -253,7 +255,7 @@
       "motionRevision": 1,
       "actionId": "reaction.dizzy",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -491,15 +493,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/dizzy_v5/（9 相位；附件混出恢复修复验证用例）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-372e69a821955e6aedeaf5c7f47bac6f66588e94e22694b7bc39c4abc9cf17a2"
+      "contentDigest": "sha256-5e9fc0fdf61f89c3f7b975cb9f1c77110b7b6e2c7a460cc5b65bf76d77edb0fb"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -507,7 +510,7 @@
       "motionRevision": 1,
       "actionId": "reaction.happy",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -745,15 +748,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/happy_v1/（8 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-dfc0ad217b955671693614fc6265a4a9d1da08eaacd7b6b8ab05b3603036ed66"
+      "contentDigest": "sha256-25ab19e2808426ed1f4c0d2022fe7e1384c4a59acffa6baa57f9c6e23370ade0"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -761,7 +765,7 @@
       "motionRevision": 1,
       "actionId": "reaction.shy",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -999,15 +1003,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/shy_v2/（8 相位；站姿合成已验证，坐姿复验列入制作计划）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-987605e00331da708e14392796f094fde939a7d446839a362b2aebadef2ae2e4"
+      "contentDigest": "sha256-d1a3e6d5a62b36e1fa628f69511e262be065bbfb5697b73731620afd7e585e0f"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1015,7 +1020,7 @@
       "motionRevision": 1,
       "actionId": "gesture.pump",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -1123,15 +1128,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/pump_v2/（8 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-244692738791e40f6a6432a8ef69e9787cd4f3f4a04018919216ac832b707dcd"
+      "contentDigest": "sha256-ef38b6a12e527625805f5a6f07f23feae1685920d49318bae6a4c3116c15bf47"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1139,7 +1145,7 @@
       "motionRevision": 1,
       "actionId": "life.idle_fidget",
       "variantId": "default",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -1376,15 +1382,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/idle_fidget_scan/（9 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-6d6b8ca4fd7fda12bc0c9e11040c0d8c648450a5f09343f99bff9ac6efd2dd53"
+      "contentDigest": "sha256-7af9f3fb62a28ac6013a481df41f33a3afb15416b5a7d2895b3ecce36f21c42f"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1392,7 +1399,7 @@
       "motionRevision": 1,
       "actionId": "gesture.point",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -1500,15 +1507,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/point_scan/（8 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-0935d952fc61d7fa94ce0a9944969425e4eadb5676202779ef9c3b59183c4040"
+      "contentDigest": "sha256-2bfca508482f05881ac99497dccdef781f02bad028c0bc8d0ae6d2f97d1c7b7f"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1516,7 +1524,7 @@
       "motionRevision": 1,
       "actionId": "contact.touch_table",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -1626,15 +1634,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/touch_table_scan/（7 相位）+ 触碰场景接触误差实测 ≤0.02H（scene:table.calibrated_0.27H）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-37be70cf416b46561ebc40b3824925561091ebfb83f6522a3ad5c8637f76c9c5"
+      "contentDigest": "sha256-15c1bf43e65b896dcfbc061dde40b9a5bb98aff3d8d11a5fdac5311840d5f260"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1642,7 +1651,7 @@
       "motionRevision": 1,
       "actionId": "head.shake",
       "variantId": "normal",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -1882,15 +1891,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/head_shake_scan/（8 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-c7a8430beb260025035150b1f0b99ae08d4847a1e0b563d5dca1a0fafe339910"
+      "contentDigest": "sha256-89245eb1983dc785a958ab75f54484c65741d4e79275d124ec6d848604c2cbe1"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -1898,7 +1908,7 @@
       "motionRevision": 1,
       "actionId": "reaction.sleepy",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -2136,15 +2146,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/head_lower_scan/（9 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-571d156710bfb3919694c2df4a425d86131192740b26134d5449f9722d563dd1"
+      "contentDigest": "sha256-77337838719e14467c1ea111d252662bba99ea0c7f40b27007e9a7dec9b45e46"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2152,7 +2163,7 @@
       "motionRevision": 1,
       "actionId": "head.lower",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -2390,15 +2401,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/head_lower_small_v1/（6 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-2bca4c756e7b80d82e0e77e72300c8cfa1a3655b233a23ca1e5a6326f306bf2b"
+      "contentDigest": "sha256-06f927e7004f0fbedc9c21180030fa91faa282d11e0572476a3f698d95b27167"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2406,7 +2418,7 @@
       "motionRevision": 1,
       "actionId": "life.blink",
       "variantId": "paired",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -2502,15 +2514,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/eyes_blink_scan/（8 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-73a83c9b67f5f779c14821ec957be43a5e3c412680af60b94b0085d6259c8200"
+      "contentDigest": "sha256-3efc58289c87bcb8ac8a7a6fdccb1c77d86835474c989d7427ecae4eca345c1d"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2518,7 +2531,7 @@
       "motionRevision": 1,
       "actionId": "face.eyes_squeeze",
       "variantId": "paired",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -2615,15 +2628,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=tuning/eyes_squeeze_scan/（8 相位）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-30e2eb322253a9a0747eb2531dd723b78091c73ebbd64ed98263e5e04c80e302"
+      "contentDigest": "sha256-97729798f6d9c1ae9e9a540ac7967ce24ee87367f8dfda4e1beee18eaa8b9e65"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2631,7 +2645,7 @@
       "motionRevision": 1,
       "actionId": "life.idle",
       "variantId": "default",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -2961,15 +2975,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "build-seed-manifest@2026-09-15T00:27:10.105Z",
-          "tuning-log#视觉精调"
+          "tuning-log#视觉精调",
+          "[activation@2026-09-16T02:30:00+08:00] traj=native-source 完整弧线（台账逐相位窗口定稿）; visual=Lab 默认待机视图（stand 全段原生封装，首尾同相位可循环）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-89bf4ea76785759baa37877bb9ebfb82d3a56a80b350230f8b8c008180496bb2"
+      "contentDigest": "sha256-0b9cf5aff928fc2c9a1ef48f55b935f84315926e72c2a2a0bf3756f05913604b"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -2977,7 +2992,7 @@
       "motionRevision": 1,
       "actionId": "contact.chin_rest",
       "variantId": "both",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3020,7 +3035,10 @@
           "stand"
         ],
         "requiredResources": [],
-        "requiredContacts": []
+        "requiredContacts": [
+          "contact:face.chin_right",
+          "contact:face.chin_under_left"
+        ]
       },
       "segments": {
         "full": {
@@ -3074,15 +3092,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=tuning/contact.chin_rest__both/v4_pose150（定稿）+ act-chin-rest（3 相位复验）; note=左臂受验证域 ±45 限制，左手为下巴前下方收拢位（contact:face.chin_under_left），域扩展后可上调至左颊"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-178b586faa72bb2b6321e20a87dac4f9b863934575b9b68eac064cd118cc583e"
+      "contentDigest": "sha256-b8416c3bb1fdd27e932f8cc7effa90e166e337a8a88d52e58edb6797b443acd3"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3090,7 +3109,7 @@
       "motionRevision": 1,
       "actionId": "contact.cheek_touch",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3130,7 +3149,9 @@
           "stand"
         ],
         "requiredResources": [],
-        "requiredContacts": []
+        "requiredContacts": [
+          "contact:face.cheek_right"
+        ]
       },
       "segments": {
         "full": {
@@ -3184,15 +3205,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=tuning/contact.cheek_touch__screen_right/v1_pose065（定稿）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-e57e57b21e037c594c9ba1175e61a6e26049a8fd479d4c95f5361e9d4d247a9f"
+      "contentDigest": "sha256-1b1b9046f15afb90b3c9a7a579ad5b3a1fd03af4a2d24a386e3b0918dd758735"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3200,7 +3222,7 @@
       "motionRevision": 1,
       "actionId": "contact.scratch_head",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3240,7 +3262,9 @@
           "stand"
         ],
         "requiredResources": [],
-        "requiredContacts": []
+        "requiredContacts": [
+          "contact:head.side_right"
+        ]
       },
       "segments": {
         "full": {
@@ -3294,15 +3318,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=tuning/contact.scratch_head__screen_right/v1_pose090（定稿）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-a49821c36a7a9d8efc560ec838f7c38a756d89c455876ba90fc4e8c2e7c959ec"
+      "contentDigest": "sha256-556c53ad0e22577147031d89e68cd43f71f5e27e31c4d72ffd53da749504fdb0"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3310,7 +3335,7 @@
       "motionRevision": 1,
       "actionId": "gesture.beckon",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3402,15 +3427,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=tuning/gesture.beckon__screen_right/v1_waggle（定稿）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-7683f5845056978aa50394b2d3290b6a691b0405e2bd8e145e235ff45b8fe10d"
+      "contentDigest": "sha256-18498f94cefa911f31ac00a9f7b823e4f5f4b29567834582b5b02c4d8c68e6e6"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3418,7 +3444,7 @@
       "motionRevision": 1,
       "actionId": "gesture.stop",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3510,15 +3536,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-stop（0.2/0.8/1.4s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-e9693466ca0252aebf02cb4a707a86e4bbf624fbd9fbe51b4431d475de86f960"
+      "contentDigest": "sha256-30d40a5ad90119f0da2bd5e2df1be8d7d41c7a32c72d18d597bfb98707410b00"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3526,7 +3553,7 @@
       "motionRevision": 1,
       "actionId": "gesture.present",
       "variantId": "both",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3619,15 +3646,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-present（0.3/0.8/1.3s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-d5bdf4749c0b5ddb817650e099ba494c94dc9f419e8b07df4ae66db78cff18ad"
+      "contentDigest": "sha256-856d9f26037362615f04ea7e8276ad5988f664cc6e7d226d1497d63be983bc3a"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3635,7 +3663,7 @@
       "motionRevision": 1,
       "actionId": "gesture.hands_reset",
       "variantId": "both",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3728,15 +3756,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-hands-reset（0.2/0.45/0.75s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-f550b5ddacc76bf991628baee21ce9757d363fc50d66f4f5b8d6ac9a10ea7e7e"
+      "contentDigest": "sha256-fe705fc440be4e01fd7e46e3a1b14710cc011f3e703fdd98bff619fc5f5b48c7"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3744,7 +3773,7 @@
       "motionRevision": 1,
       "actionId": "life.breathe",
       "variantId": "subtle",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3833,15 +3862,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-breathe（0.8/1.6/2.4s 相位冻结，Activation Pass；±0.006H 设计即细微）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-c7af53cf41f2adf0cd6e13d4914e14e61426667bfbfcaf8d309e5395cf6ea83d"
+      "contentDigest": "sha256-66cba4effecd274fe17495985d679174b4447022d54e5c403be6e7daeb9e1f50"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3849,7 +3879,7 @@
       "motionRevision": 1,
       "actionId": "life.shift_weight",
       "variantId": "left",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -3938,15 +3968,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-shift-weight-left（0.5/1.2/1.9s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-b3a27a12ffa11036bed12c928df788b852bcf40ee3006b88e2a348c0effab8d5"
+      "contentDigest": "sha256-1d71b1a61d165f858f3dce261cc5b391d315e7cfdfb200a3717cbe46a6b6f60d"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -3954,7 +3985,7 @@
       "motionRevision": 1,
       "actionId": "life.shift_weight",
       "variantId": "right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4043,15 +4074,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-shift-weight-right（0.5/1.2/1.9s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-9548ce733e1298f084c539ba05c15349f6a8021ae7456bf66919ecf8b7a83dd6"
+      "contentDigest": "sha256-715eb1005ab9662c747984af4512dfc476dd2eee24800c0cec9c176a59d1b3c7"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4059,7 +4091,7 @@
       "motionRevision": 1,
       "actionId": "body.lean",
       "variantId": "screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4148,15 +4180,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-body-lean-right（0.3/0.7/1.1s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-3082b8b57ed1cc61d0287205c63874057aac8872069e8339bf513d5a32b2140e"
+      "contentDigest": "sha256-a778025331db215007e041bf58ea0e626484ffb0436e7aaa82cccad637449846"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4164,7 +4197,7 @@
       "motionRevision": 1,
       "actionId": "body.lean",
       "variantId": "screen_left",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4253,15 +4286,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-body-lean-left（0.3/0.7/1.1s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-8f64d9f19aafdc549f7610aef5bc224d81362d365cc44829f50020c7a88548a9"
+      "contentDigest": "sha256-43451f23cc6b5ed08c94d26edb898ce4d3764e30f03bb53dd74ef52788993ff2"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4269,7 +4303,7 @@
       "motionRevision": 1,
       "actionId": "body.sway",
       "variantId": "gentle",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4358,15 +4392,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-body-sway（0.7/1.4/2.1s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-9822b87bc0752e27d67fc3a95a47f4ea75a41603ec2b9cfc705a5510c00d4f0b"
+      "contentDigest": "sha256-cbaaf12f7e57d99ff2a7b93ee3d12adc6b84934091e1b72fc709f5ef54df262a"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4374,7 +4409,7 @@
       "motionRevision": 1,
       "actionId": "reaction.celebrate",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4468,15 +4503,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=tuning/reaction.celebrate__small/v1_peak（定稿）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-20ff177e975a85fddad4c4cfc90f1cdc6a5569eb987552e9b9b55e14fffa3e1d"
+      "contentDigest": "sha256-fc0962cea9cbee1741ca33b439b89d62fac5b9aa0d77d8b8fe18b1c114803ecb"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4484,7 +4520,7 @@
       "motionRevision": 1,
       "actionId": "face.eyes_close",
       "variantId": "paired",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4574,15 +4610,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-eyes-close（0.3/0.6/1.0s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-8d9e95d3951cbff082cc7d03dcc583da9f85156685ec1f201f2e5547f1de6db2"
+      "contentDigest": "sha256-15023db2d12afc957e7550539d85faf0be9fa24c524b5088cfd35b57e79b09d7"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4590,7 +4627,7 @@
       "motionRevision": 1,
       "actionId": "head.tilt",
       "variantId": "gentle.screen_right",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4679,15 +4716,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-head-tilt-right（0.4/0.9/1.4s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-5f8e67220eb9e6eb36a3bb30b941fb4cb0894808cd4b02f81ab321116b350cb6"
+      "contentDigest": "sha256-eb0fa7625adafa622f118bb1a03c84ca4243006dde72b8ad9d490bcf26a9b481"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4695,7 +4733,7 @@
       "motionRevision": 1,
       "actionId": "head.tilt",
       "variantId": "gentle.screen_left",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4784,15 +4822,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "authored-draft@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"
+          "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-head-tilt-left（0.4/0.9/1.4s 相位冻结，Activation Pass）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-9c3b09cfaf8a3141c6aa0594109062e93e10624c5e448cf047c1bca031cde940"
+      "contentDigest": "sha256-5285e929006cc7afeb5dc163e44e484fab9b48b0e38ec96ab94007ba908105dd"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4800,7 +4839,7 @@
       "motionRevision": 1,
       "actionId": "head.nod",
       "variantId": "small",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4892,15 +4931,16 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "convert-llm-nod@2026-09-15T00:27:10.105Z",
-          "tests/m5-seed-manifest.test.ts#head.nod 管线重验证"
+          "tests/m5-seed-manifest.test.ts#head.nod 管线重验证",
+          "[activation@2026-09-16T02:30:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts + scripts/validate-authored-drafts.mts; visual=act-head-nod（0.2/0.5/0.9s 相位冻结，Activation Pass）+ MiMo 在线实测（experiments/motion-guide/run-llm-mimo）"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:30:00+08:00"
       },
-      "contentDigest": "sha256-2f337eb1adcca75f7c038a9485b1c5d13ea2ce66cbcdae7b3ef1d4a52bffa1ac"
+      "contentDigest": "sha256-01640a17e040d2b51fa164a510459a7bde2babd61ca71a9c6b7be06a73d6ae41"
     },
     {
       "schemaVersion": "pliette.motion-entry/1.0",
@@ -4908,7 +4948,7 @@
       "motionRevision": 1,
       "actionId": "routine.greet",
       "variantId": "default",
-      "status": "candidate",
+      "status": "approved",
       "rigRef": {
         "modelId": "lafei_8",
         "profileId": "lafei_8.front.cp1",
@@ -4927,7 +4967,7 @@
             "stepId": "wave",
             "motionId": "lafei.wave.small_screen_right",
             "motionRevision": 1,
-            "contentDigest": "sha256-48f3bc8545ed80c534a0ab02803804e9577a3786e556805a12e7dbc97fbca941",
+            "contentDigest": "sha256-a4e3b5b8b329e0d77898a8dd61ece4950cb1871e95dc5d2a9af256e153cad500",
             "segmentId": "full",
             "offsetMs": 0,
             "parameters": {}
@@ -4936,7 +4976,7 @@
             "stepId": "nod",
             "motionId": "lafei.head_nod.small",
             "motionRevision": 1,
-            "contentDigest": "sha256-2f337eb1adcca75f7c038a9485b1c5d13ea2ce66cbcdae7b3ef1d4a52bffa1ac",
+            "contentDigest": "sha256-01640a17e040d2b51fa164a510459a7bde2babd61ca71a9c6b7be06a73d6ae41",
             "segmentId": "full",
             "offsetMs": 600,
             "parameters": {}
@@ -5038,15 +5078,18 @@
       },
       "validation": {
         "structural": "passed",
-        "trajectory": "pending",
-        "visual": "pending",
+        "trajectory": "passed",
+        "visual": "passed",
         "evidenceRefs": [
           "tuning-log#视觉合成待接线",
-          "tests/m5-seed-manifest.test.ts#配方引用与时长一致性"
+          "tests/m5-seed-manifest.test.ts#配方引用与时长一致性",
+          "[activation@2026-09-16T02:30:00+08:00] 配方步骤 wave 冻结引用重同步 → sha256-a4e3b5b8b32…（组件提升后、配方发布前）",
+          "[activation@2026-09-16T02:30:00+08:00] 配方步骤 nod 冻结引用重同步 → sha256-01640a17e04…（组件提升后、配方发布前）",
+          "[activation@2026-09-16T02:45:00+08:00] traj=配方结构校验+子动作冻结引用一致（wave@r1+nod@r1，通道不相交，时长覆盖 1.6s）; visual=act-recipe-greet（0.3s 挥手起势 / 0.9s 挥手+点头双通道合成 / 1.5s 回归待机；PlanCoordinator→Scheduler materialization 路径）; note=组件全部 approved 后转正；端到端对话链路验收（chat=你好）另行记录"
         ],
-        "reviewedAt": null
+        "reviewedAt": "2026-09-16T02:45:00+08:00"
       },
-      "contentDigest": "sha256-cd24199cad73ac9d55c0ec3e37e69909033c8a0fde57f3353be2f71ebad439ad"
+      "contentDigest": "sha256-9acb279d47159a4af8e03f77367b5d67ae9c3b1a452c76a70e7253ea7b959aa0"
     }
   ]
 }

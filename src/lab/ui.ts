@@ -12,19 +12,25 @@ import { GestureLayer, CHANNEL_TRACK } from "../motion/runtime/gestureLayer.js";
 import { P1_FIRST_OUTPUT } from "../motion/authoring/p1-drafts.js";
 import { DEFAULT_CATALOG } from "../motion/parameters/presets.js";
 import { resolveParams, applyStyle, STYLE_HAPPY } from "../motion/parameters/registry.js";
-import { buildChannels, filterAnimation, playSlice, type ChannelDef, type OverlayHandle } from "../motion/library/overlay.js";
+import { buildChannels, filterAnimation, playSlice, tickAlphaRamps, type ChannelDef, type OverlayHandle } from "../motion/library/overlay.js";
 import { findGesture, gestureWindowSec } from "../motion/library/gestures.js";
 import { spine36 as spine } from "spine-webgl";
 import { LabRecorder } from "./recorder.js";
-import { createDialogueAdapter } from "../dialogue/adapter.js";
+import { createPlanAdapter, type MotionPlanAdapter } from "../dialogue/planAdapter.js";
 import { MockTts } from "../speech/adapter.js";
 import { parseControlProfile, type ControlProfile } from "../rig/controlProfile.js";
 import { assembleRequest } from "../motion/author/context.js";
 import { validateCandidate } from "../motion/author/validateV11.js";
 import { translateDraft } from "../motion/author/translate.js";
-import { MockAuthorClient, importCandidateFile, reidentityForOfflineImport } from "../motion/author/client.js";
+import type { DraftV11 } from "../motion/author/protocol.js";
+import { MockAuthorClient, LlmAuthorClient, importCandidateFile, reidentityForOfflineImport } from "../motion/author/client.js";
 import { AuthorBroker, type PlaybackHooks } from "../motion/author/authorBroker.js";
 import { formatDiagnostic, type AuthorDiagnostic } from "../motion/author/diagnostics.js";
+import { preparedFromEntry } from "../motion/runtime/materialize.js";
+import type { PreparedMotion } from "../motion/runtime/prepared.js";
+import type { SliceRoute } from "../motion/library/selector.js";
+import { LEGACY_EVENT_KEYS } from "../motion/library/legacyAdapter.js";
+import { MotionLibraryRuntime, type PlanSummary } from "./planRuntime.js";
 import lafeiProfileJson from "../../characters/lafei_8.rig-profile.json";
 
 interface AssetEntry extends AssetSourceConfig {
@@ -334,6 +340,33 @@ async function loadAsset(entry: AssetEntry): Promise<void> {
   gesture3d = new GestureLayer(actor.view.state!, scheduler);
   buildOverlayPanel();
 
+  // MotionLibrary 运行时：catalog/manifest 装配（Selector 能力投影以 approved 为准）；仅 lafei_8 主角色
+  if (controlProfile && currentEntry?.characterId === "lafei_8") {
+    const rt = new MotionLibraryRuntime({
+      catalogUrl: "/motion-library/catalog.json",
+      manifestUrl: "/motion-library/models/lafei_8/front/manifest.json",
+      draftsBaseUrl: "/motion-library/models/lafei_8/front/drafts",
+      controlProfile,
+      rigProfile: currentRig,
+      scheduler,
+      skeletonData: () => flatView.skeletonData!,
+      states: () => [flatView.state!, actor.view.state!],
+      onAuthorFallback: planAuthorFallback,
+      log,
+    });
+    try {
+      await rt.load();
+      planRt = rt;
+      const snap = rt.snapshot();
+      log(
+        `MotionLibrary 就绪：catalog ${snap.catalogRevision} · ${rt.manifest.entries.length} 条实现（${snap.approved} approved）· 可播放动作族 ${rt.playableActions().size}`,
+        "good",
+      );
+    } catch (e) {
+      log(`MotionLibrary 装载失败（对话新链路不可用，Panel 仍可调试）：${(e as Error).message}`, "bad");
+    }
+  }
+
   const animName = ($("anim-select") as HTMLSelectElement).value || null;
   flatView.setAnimation(animName, ($("loop-check") as HTMLInputElement).checked);
   actor.view.setAnimation(animName, ($("loop-check") as HTMLInputElement).checked);
@@ -534,6 +567,9 @@ function frame(now: number): void {
   const completedInstances = scheduler.tick(dt);
   gestureFlat?.sync();
   gesture3d?.sync();
+  planRt?.tick(dt);
+  if (flatView.state) tickAlphaRamps(flatView.state, dt);
+  if (actor.view.state) tickAlphaRamps(actor.view.state, dt);
   // 自然结束释放 Author 播放句柄（F4：不能只靠 FIFO 丢弃记录替代生命周期回收）
   for (const inst of completedInstances) authorBroker?.releasePlayback(inst.requestId);
   autoTick(logicalTime);
@@ -689,10 +725,12 @@ function playOverlayFromPanel(mixOutOverride?: number): void {
   }
   const windowSec = Math.max(0.2, Math.min(t1, source.duration) - Math.min(t0, source.duration));
   const handle: OverlayHandle = { source: sourceName, channel: channelName, startTime: t0, windowSec, track: channel.track };
+  const alphaRamp = bootParams.get("alphaRamp") === "1";
   for (const [view, layer] of [[flatView, gestureFlat], [actor.view, gesture3d]] as const) {
     if (!view.state) continue;
-    playSlice(view.state, filtered, handle, mixIn, mixOut);
+    playSlice(view.state, filtered, handle, mixIn, mixOut, { alphaRamp });
   }
+  if (alphaRamp) log(`叠加启用 alpha 渐升混入（${mixIn}s 0→1，保持型切片入场平滑机制）`);
   activeOverlays.set(channelName, { handle, flatTrack: channel.track, threeTrack: channel.track });
   log(
     `叠加：${sourceName} [${t0.toFixed(2)}~${(t0 + windowSec).toFixed(2)}s] → 通道 ${channelName}（轨道 ${channel.track}，混合 ${mixIn}s/${mixOut}s），` +
@@ -721,6 +759,7 @@ function wireOverlayPanel(): void {
  * URL: overlay=源:通道:t0:t1[:mixIn[:mixOut]]&phases=0.2,0.5,...&shotDir=<目录名>
  */
 async function captureOverlaySeries(mixOutOverride?: number): Promise<void> {
+  const alphaRamp = bootParams.get("alphaRamp") === "1";
   if (!channels || !flatView.skeletonData || !flatView.state) return;
   const sourceName = ($("overlay-source") as HTMLSelectElement).value;
   const channelName = ($("overlay-channel") as HTMLSelectElement).value;
@@ -760,13 +799,14 @@ async function captureOverlaySeries(mixOutOverride?: number): Promise<void> {
     const handle: OverlayHandle = { source: sourceName, channel: channelName, startTime: t0, windowSec, track: channel.track };
     for (const [view, layer] of [[flatView, gestureFlat], [actor.view, gesture3d]] as const) {
       if (!view.state) continue;
-      playSlice(view.state, filtered, handle, mixIn, mixOut);
+      playSlice(view.state, filtered, handle, mixIn, mixOut, { alphaRamp });
     }
     // 逐帧步进（与真实播放语义一致；单步大跳会跳过混出边界的满权重帧）
     for (const view of [flatView, actor.view]) {
       let done = 0;
       while (done < t - 1e-9) {
         const step = Math.min(1 / 60, t - done);
+        if (view.state) tickAlphaRamps(view.state, step);
         view.state?.update(step);
         done += step;
       }
@@ -1258,29 +1298,6 @@ function blinkTick(logicalTime: number): void {
   blinkState.nextAt = logicalTime + 2.2 + Math.random() * 3.4;
 }
 
-/* ---------------- 行为配方：对话事件 → 手势（P4 对话层的映射表雏形） ---------------- */
-
-const EVENT_RECIPES: Record<string, string[]> = {
-  greet: ["wave"],
-  praise: ["pump", "happy"],
-  pet: ["happy"],
-  scare: ["dizzy"],
-  tease: ["shy"],
-  question: ["shy"],
-  ambient: ["fresh"],
-  drink: ["wave"],
-};
-
-function emitEvent(name: string): void {
-  const actions = EVENT_RECIPES[name];
-  if (!actions) {
-    log(`未知事件：${name}（可用：${Object.keys(EVENT_RECIPES).join(", ")}）`, "warn");
-    return;
-  }
-  for (const action of actions) submitGesture(action, action === "wave" ? "auto" : undefined);
-  log(`事件 ${name} → 配方 ${actions.join("+")}`);
-}
-
 /* ---------------- P3：触碰矮桌接触交互（Spec 15.2 接触误差 ≤0.02H） ---------------- */
 
 // 接触锚点：矮桌前沿 (0.85, 0.27)；victory[0.7-1.2] 右手稳定高度实测 90/335=0.2687
@@ -1370,11 +1387,12 @@ function touchReport(s: TouchState): string {
   return `接触误差（${e.length} 采样，排除首尾）: max=${max.toFixed(4)}H avg=${avg.toFixed(4)}H → ${max <= 0.02 ? "≤0.02H 达标 ✅" : "超标 ❌"}`;
 }
 
-/* ---------------- 对话（Select 层）与语音（P4） ---------------- */
+/* ---------------- 对话（PlanAdapter → Selector → MotionLibrary）与语音（P4） ---------------- */
 
-const dialogue = createDialogueAdapter(false);
+const planAdapter: MotionPlanAdapter = createPlanAdapter(true);
 const tts = new MockTts();
 let currentPosture: "standing" | "seated" = "standing";
+let planRt: MotionLibraryRuntime | null = null;
 
 function appendChat(who: "user" | "char", text: string): void {
   const box = $("chat-history");
@@ -1396,28 +1414,193 @@ function updateSpeechBubble(): void {
   }
 }
 
-function handleChatSend(): void {
+/** Author 初始化（密钥只存宿主侧；无配置时用确定性 mock 兜底）。 */
+function createAuthorClient(): MockAuthorClient | LlmAuthorClient {
+  const cfg = (window as unknown as { __llmConfig?: { endpoint: string; apiKey: string; model: string } }).__llmConfig;
+  if (cfg?.apiKey) {
+    return new LlmAuthorClient(cfg, { deadlineMs: 12000, maxBytes: 65536 });
+  }
+  return new MockAuthorClient(120);
+}
+
+/**
+ * Selector MISS_* 且可生成 → 受限 Author 回退（单飞/陈旧性由 AuthorBroker 管）。
+ * 产出经 preparedFromEntry 等价装配为 PreparedMotion 回填计划单元，由 PlanCoordinator
+ * 统一按序提交——不在此处直接播放（避免越序/双重播放）。
+ */
+function planAuthorFallback(
+  sliceRoute: SliceRoute,
+  unit: { planId: string; unitIndex: number },
+  ready: (p: PreparedMotion) => void,
+  fail: (reason: string) => void,
+): void {
+  if (!controlProfile || !flatView.skeletonData || !authorBroker || !planRt) {
+    fail("author 未就绪（档案/资产/broker 缺失）");
+    return;
+  }
+  const profile = controlProfile;
+  const requestId = `author/${unit.planId}/${unit.unitIndex}`;
+  const request = assembleRequest(profile, {
+    requestId,
+    contextId: `pctx-${unit.planId}`,
+    goal: `${sliceRoute.slice.description}（语义键 ${sliceRoute.slice.lookup.actionId}/${sliceRoute.slice.lookup.variantId}；路由：${sliceRoute.code} ${sliceRoute.reason ?? ""}）`,
+    runtimeState: {
+      monoClockMs: Math.round(performance.now()),
+      viewId: controlProfile.identity.viewId,
+      skinId: controlProfile.identity.skinId,
+      stateVersion: authorStateVersion,
+      occupiedChannels: authorSnapshotState().occupiedChannels,
+      contacts: [],
+    },
+  });
+  const begin = authorBroker.beginGeneration(
+    controlProfile.identity.profileId,
+    requestId,
+    request.contextId,
+    authorStateVersion,
+    request.generationBudget.deadlineMs,
+  );
+  if (!begin.ok) {
+    fail(`author begin：${begin.reason}`);
+    return;
+  }
+  const client = createAuthorClient();
+  void client
+    .generate(request, profile)
+    .then((gen) => {
+      const result = validateCandidate(gen.raw, request, profile, { skeletonData: flatView.skeletonData! });
+      const failures = result.findings.filter((f) => !f.note);
+      if (!result.ok || !result.response || result.response.status !== "motion" || !result.compiled) {
+        fail(`author 候选未通过校验：${failures.map((f) => `${f.code} ${f.message}`).join("; ") || "非 motion 产物"}`);
+        return;
+      }
+      const compiled = result.compiled;
+      const nowMs = performance.now();
+      const prepared = preparedFromEntry(
+        {
+          ...planRt!.manifest.entries[0],
+          motionId: `author-${requestId}`,
+          motionRevision: 0,
+          contentDigest: "author-candidate",
+          channels: compiled.channels as ChannelId[],
+          writes: compiled.writes,
+          preconditions: { ...planRt!.manifest.entries[0].preconditions, requiredResources: [] },
+        },
+        {
+          planId: unit.planId,
+          sliceId: sliceRoute.slice.sliceId,
+          unitIndex: unit.unitIndex,
+          generationRequestId: requestId,
+          actorEpoch: authorStateVersion,
+          expectedPrefixHash: "plan",
+          clockMs: nowMs,
+          playbackDeadlineMs: nowMs + 30_000,
+          compiledHandle: {
+            kind: "compiled",
+            animation: compiled.animation,
+            channel: (compiled.channels[0] ?? "torso") as ChannelId,
+            mixInSec: 0.15,
+            mixOutSec: 0.2,
+            durationSec: compiled.durationSec,
+          },
+        },
+      );
+      ready(prepared);
+      log(`Author 回退产物就绪（${client.name}，${gen.meta.latencyMs ?? 0}ms，通道 ${compiled.channels.join("+")}）`, "good");
+    })
+    .catch((e: Error) => fail(`author 生成失败：${e.message}`));
+}
+
+async function routeAndPlay(planRtInstance: MotionLibraryRuntime, reply: string, description: string, lookups: { sliceId: string; description: string; lookup: { actionId: string; variantId: string; segmentId: string }; parameters: Record<string, unknown> }[], requestId: string): Promise<PlanSummary> {
+  const plan = {
+    schemaVersion: "pliette.motion-plan/1.0" as const,
+    requestId,
+    catalogRevision: planRtInstance.catalog.revision,
+    reply,
+    description,
+    slices: lookups,
+  };
+  const route = planRtInstance.route(plan);
+  for (const sr of route.slices) {
+    const key = `${sr.slice.lookup.actionId}/${sr.slice.lookup.variantId}`;
+    log(
+      `Selector ${sr.slice.sliceId}（${key}）→ ${sr.code}${sr.match ? `（${sr.match.entry.motionId}@r${sr.match.entry.motionRevision}）` : ""}${sr.reason ? `：${sr.reason}` : ""}`,
+      sr.code === "HIT_READY" ? "good" : "warn",
+    );
+  }
+  const summary = planRtInstance.beginPlan(route, authorStateVersion);
+  log(
+    `计划 ${summary.planId} 已受理：${route.slices.length} 切片` +
+      (route.wholeRoutineMatch ? ` · 整条配方命中 ${route.wholeRoutineMatch.entry.motionId}` : ""),
+  );
+  // 终态计数在物化/Author 回填 settled 后输出（受理时刻的瞬时值无诊断意义）
+  void (async () => {
+    await waitFor(() => summary.settled, 15000);
+    log(
+      `计划 ${summary.planId} 终态：HIT ${summary.hits} · Author 回退 ${summary.authorFallbacks} · 不可支持 ${summary.unsupported} · 失败 ${summary.failed}`,
+      summary.unsupported + summary.failed > 0 ? "warn" : "good",
+    );
+  })();
+  return summary;
+}
+
+async function handleChatSend(): Promise<void> {
   const input = $("chat-input") as HTMLInputElement;
   const text = input.value.trim();
   if (!text) return;
+  if (!planRt) {
+    log("MotionLibrary 运行时未就绪（资产未加载？）", "warn");
+    return;
+  }
   input.value = "";
   appendChat("user", text);
-  const resp = dialogue.respond({
-    text,
-    context: { posture: currentPosture, busyChannels: Object.keys(scheduler.snapshot().ownership) as ChannelId[] },
-  });
+  const requestId = `chat-${Date.now().toString(36)}`;
+  let resp;
+  try {
+    resp = await planAdapter.respond({
+      text,
+      context: { posture: currentPosture, busyChannels: Object.keys(scheduler.snapshot().ownership) as ChannelId[] },
+      catalog: planRt.catalog,
+      playableActions: planRt.playableActions(),
+      requestId,
+    });
+  } catch (e) {
+    log(`语义规划失败：${(e as Error).message}`, "bad");
+    appendChat("char", "（脑子短路了一下，再说一遍？）");
+    return;
+  }
   appendChat("char", resp.reply);
-  log(`对话 → Select(${dialogue.name})：事件 [${resp.events.join(", ")}]`);
   tts.speak(resp.reply);
-  submitGesture("fresh");
-  for (const e of resp.events) emitEvent(e);
+  log(`语义规划（${resp.meta.adapter}，${resp.meta.latencyMs}ms，${resp.meta.rounds} 轮）：${resp.plan.slices.length} 切片`);
+  await routeAndPlay(planRt, resp.reply, resp.plan.description, resp.plan.slices, requestId);
+}
+
+/** 旧事件名（?event= 兼容）→ 登记逻辑键计划 → 同一条 Selector 链路（不再直连 submitGesture）。 */
+function emitEvent(name: string): void {
+  const keys = LEGACY_EVENT_KEYS[name];
+  if (!keys) {
+    log(`未知事件：${name}（可用：${Object.keys(LEGACY_EVENT_KEYS).join(", ")}）`, "warn");
+    return;
+  }
+  if (!planRt) {
+    log("MotionLibrary 运行时未就绪", "warn");
+    return;
+  }
+  log(`事件 ${name} → 逻辑键 [${keys.map((k) => `${k.actionId}/${k.variantId}`).join(", ")}]`);
+  void routeAndPlay(
+    planRt,
+    "",
+    `legacy event ${name}`,
+    keys.map((k, i) => ({ sliceId: `e${i + 1}`, description: name, lookup: k, parameters: {} })),
+    `event-${Date.now().toString(36)}`,
+  );
 }
 
 function wireChatPanel(): void {
   tts.onListen(() => updateSpeechBubble());
-  $("btn-chat-send").addEventListener("click", handleChatSend);
+  $("btn-chat-send").addEventListener("click", () => void handleChatSend());
   $("chat-input").addEventListener("keydown", (e) => {
-    if (e.key === "Enter") handleChatSend();
+    if (e.key === "Enter") void handleChatSend();
   });
   $("btn-chat-cancel").addEventListener("click", () => {
     tts.cancel();
@@ -1427,8 +1610,167 @@ function wireChatPanel(): void {
     setBase("sit", true);
     currentPosture = "seated";
     ($("chat-input") as HTMLInputElement).value = "在吗？";
-    handleChatSend();
+    void handleChatSend();
   });
+}
+
+/* ---------------- 端到端确定性验收（?chat=&e2ePhases=&shotDir=） ---------------- */
+
+async function waitFor(cond: () => boolean, timeoutMs = 8000): Promise<boolean> {
+  const t0 = performance.now();
+  while (!cond()) {
+    if (performance.now() - t0 > timeoutMs) return false;
+    await new Promise((r) => setTimeout(r, 20));
+  }
+  return true;
+}
+
+async function captureShots(title: string, phases: number[], dir: string, stepFn: (dt: number) => void): Promise<void> {
+  flatView.render(0);
+  actor.view.render(0);
+  let t = 0;
+  let saved = 0;
+  for (const phase of phases) {
+    while (t < phase - 1e-9) {
+      const step = Math.min(1 / 60, phase - t);
+      stepFn(step);
+      t += step;
+    }
+    flatView.render(0);
+    actor.view.render(0);
+    const dataUrl = flatCanvas.toDataURL("image/png");
+    try {
+      const res = await fetch("/__save-shot", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ dir, name: `t${String(Math.round(t * 1000)).padStart(5, "0")}`, dataUrl }),
+      });
+      const data = (await res.json()) as { ok: boolean };
+      if (data.ok) saved += 1;
+    } catch {
+      log(`截图落盘失败（dev server 未运行 /__save-shot？）`, "bad");
+      return;
+    }
+  }
+  log(`${title}：${saved}/${phases.length} 相位已落盘 → tuning/${dir}/`, "good");
+}
+
+/** 端到端验收：文本 → PlanAdapter → Selector → 物化 → Coordinator 按序提交 → 相位截图。 */
+async function runE2E(text: string, phases: number[], dir: string): Promise<void> {
+  if (!planRt) {
+    log("E2E：MotionLibrary 运行时未就绪", "bad");
+    return;
+  }
+  autoState.active = false;
+  blinkEnabled = false;
+  for (const view of [flatView, actor.view]) {
+    view.state?.clearTracks();
+    view.state?.update(0);
+    view.setAnimation("stand", true);
+  }
+  log(`E2E 开始：\"${text}\"（phases=${phases.join(",")}）`);
+  const requestId = `e2e-${Date.now().toString(36)}`;
+  const resp = await planAdapter.respond({
+    text,
+    context: { posture: currentPosture, busyChannels: [] },
+    catalog: planRt.catalog,
+    playableActions: planRt.playableActions(),
+    requestId,
+  });
+  log(`E2E 规划（${resp.meta.adapter}）：reply="${resp.reply}" slices=${resp.plan.slices.length}`);
+  const summary = await routeAndPlay(planRt, resp.reply, resp.plan.description, resp.plan.slices, requestId);
+  const settled = await waitFor(() => summary.settled);
+  if (!settled) {
+    log("E2E 失败：计划单元未在时限内全部就绪", "bad");
+    return;
+  }
+  await captureShots("E2E 相位", phases, dir, (dt) => {
+    planRt!.tick(dt);
+    scheduler.tick(dt);
+    for (const view of [flatView, actor.view]) view.state?.update(dt);
+  });
+  log(
+    `E2E 断言：Author 调用数=${planRt.authorCalls}（要求 0）· HIT=${summary.hits} · wholeRoutine=${summary.wholeRoutine}`,
+    planRt.authorCalls === 0 && summary.wholeRoutine && summary.unsupported === 0 ? "good" : "bad",
+  );
+  for (const view of [flatView, actor.view]) view.paused = true;
+  $("btn-play").textContent = "播放";
+}
+
+/** 配方/条目 materialization 视觉验收：不经 Selector，直接 playDirect（同一提交/播放路径）。 */
+async function runRecipePreview(motionId: string, phases: number[], dir: string): Promise<void> {
+  if (!planRt) {
+    log("recipe 预览：运行时未就绪", "bad");
+    return;
+  }
+  autoState.active = false;
+  blinkEnabled = false;
+  for (const view of [flatView, actor.view]) {
+    view.state?.clearTracks();
+    view.state?.update(0);
+    view.setAnimation("stand", true);
+  }
+  try {
+    await planRt.playDirect(motionId);
+  } catch (e) {
+    log(`recipe 物化失败：${(e as Error).message}`, "bad");
+    return;
+  }
+  log(`recipe 预览 ${motionId}：已提交（materialization 路径）`);
+  if (phases.length > 0) {
+    await captureShots(`recipe ${motionId} 相位`, phases, dir, (dt) => {
+      planRt!.tick(dt);
+      scheduler.tick(dt);
+      for (const view of [flatView, actor.view]) view.state?.update(dt);
+    });
+    for (const view of [flatView, actor.view]) view.paused = true;
+    $("btn-play").textContent = "播放";
+  }
+}
+
+/** 草稿相位序列（Activation Pass 视觉验收）：V1.1 草稿编译 → 隔离预览（track 0）→ 逐相位冻结截图。 */
+async function runDraftSeries(draftFile: string, phases: number[], dir: string): Promise<void> {
+  let v11: unknown;
+  try {
+    const res = await fetch(`/motion-library/models/lafei_8/front/drafts/${draftFile}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    v11 = await res.json();
+  } catch (e) {
+    log(`draft 序列加载失败：${(e as Error).message}`, "bad");
+    return;
+  }
+  if (!controlProfile || !flatView.skeletonData) {
+    log("draft 序列：档案或资产未就绪", "bad");
+    return;
+  }
+  autoState.active = false;
+  blinkEnabled = false;
+  const tr = translateDraft(v11 as DraftV11, controlProfile, currentRig.id);
+  if (!tr.draft) {
+    log(`draft 序列：V1.1 翻译失败 ${draftFile}`, "bad");
+    return;
+  }
+  const { motion, diagnostics } = compileDraft(tr.draft, currentRig, flatView.skeletonData);
+  const errors = diagnostics.filter((d) => d.level === "error");
+  if (!motion || errors.length > 0) {
+    log(`draft 序列：编译失败 ${draftFile}（${errors.map((d) => d.code).join(",")}）`, "bad");
+    return;
+  }
+  for (const view of [flatView, actor.view]) {
+    view.state?.clearTracks();
+    view.skeleton?.setToSetupPose();
+    view.state?.update(0);
+  }
+  playCompiledOnView(flatView, null, motion);
+  playCompiledOnView(actor.view, null, motion);
+  await captureShots(`draft ${draftFile}`, phases, dir, (dt) => {
+    for (const view of [flatView, actor.view]) view.state?.update(dt);
+  });
+  for (const view of [flatView, actor.view]) {
+    view.state?.clearTracks();
+    view.state?.update(0);
+    view.setAnimation("stand", true);
+  }
 }
 
 /* ---------------- 启动 ---------------- */
@@ -1640,6 +1982,61 @@ function applyBootParams(): Promise<void> {
     }
     const event = bootParams.get("event");
     if (event) setTimeout(() => emitEvent(event), 300);
+    const chat = bootParams.get("chat");
+    if (chat) {
+      // 端到端验收：?asset=lafei_8&chat=你好&e2ePhases=0.2,0.8,1.4&shotDir=e2e-greet
+      const phases = (bootParams.get("e2ePhases") ?? "")
+        .split(",")
+        .map((x) => Number(x.trim()))
+        .filter((x) => Number.isFinite(x) && x > 0);
+      setTimeout(() => {
+        if (phases.length > 0) void runE2E(chat, phases, bootParams.get("shotDir") ?? `e2e-${Date.now().toString(36)}`);
+        else {
+          ($("chat-input") as HTMLInputElement).value = chat;
+          void handleChatSend();
+        }
+      }, 500);
+    }
+    const recipeParam = bootParams.get("recipe");
+    if (recipeParam) {
+      // materialization 视觉验收：?recipe=lafei.routine_greet.default&phases=0.3,0.9,1.5&shotDir=...
+      const phases = (bootParams.get("phases") ?? "")
+        .split(",")
+        .map((x) => Number(x.trim()))
+        .filter((x) => Number.isFinite(x) && x > 0);
+      setTimeout(() => {
+        void runRecipePreview(recipeParam, phases, bootParams.get("shotDir") ?? `recipe-${Date.now().toString(36)}`);
+      }, 500);
+    }
+    const draftSeries = bootParams.get("draftSeries");
+    if (draftSeries) {
+      // 草稿相位序列：?draftSeries=lafei.stop.screen_right.v11.json&phases=0.2,0.8,1.4&shotDir=...
+      const phases = (bootParams.get("phases") ?? "")
+        .split(",")
+        .map((x) => Number(x.trim()))
+        .filter((x) => Number.isFinite(x) && x > 0);
+      setTimeout(() => {
+        void runDraftSeries(draftSeries, phases, bootParams.get("shotDir") ?? `draft-${Date.now().toString(36)}`);
+      }, 500);
+    }
+    if (bootParams.get("seriesAll") === "1") {
+      // Activation Pass 批量相位采集：一次导航顺序跑完 activation-series.json 全部条目
+      setTimeout(() => {
+        void (async () => {
+          try {
+            const res = await fetch("/motion-library/activation-series.json");
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const list = ((await res.json()) as { series: { file: string; phases: number[]; dir: string }[] }).series;
+            for (const item of list) {
+              await runDraftSeries(item.file, item.phases, item.dir);
+            }
+            log(`批量序列完成：${list.length} 组 → tuning/`, "good");
+          } catch (e) {
+            log(`批量序列失败：${(e as Error).message}`, "bad");
+          }
+        })();
+      }, 600);
+    }
     const draftParam = bootParams.get("draft");
     if (draftParam) {
       // V1.1 草稿预览（受限 Author 创作循环）：fetch drafts/<name> → translateDraft → 编译 → 预览/冻结
@@ -1647,7 +2044,7 @@ function applyBootParams(): Promise<void> {
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
         .then((v11) => {
           if (!controlProfile || !flatView.skeletonData) throw new Error("档案或资产未就绪");
-          const tr = translateDraft(v11, controlProfile, currentRig.id);
+          const tr = translateDraft(v11 as DraftV11, controlProfile, currentRig.id);
           if (!tr.draft) throw new Error("V1.1 翻译失败");
           const { motion, diagnostics } = compileDraft(tr.draft, currentRig, flatView.skeletonData!);
           renderDiagnostics(diagnostics);
@@ -1729,6 +2126,12 @@ function boot(): void {
     actorView: actor.view,
     stage,
     scheduler,
+    planRuntime: () => planRt,
+    /** 探针：直接物化并提交一条 manifest 实现（materialization 视觉验收） */
+    playMotion: (motionId: string) => {
+      if (!planRt) return Promise.reject(new Error("运行时未就绪"));
+      return planRt.playDirect(motionId);
+    },
     skeleton: () => flatView.skeleton,
     eyeSlot: () => flatView.skeleton?.findSlot("eye_L"),
     emit: emitEvent,
