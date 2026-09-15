@@ -16,7 +16,7 @@ FPS="${FPS:-15}"
 OUT="experiments/media/p1"
 FRAMES="$OUT/frames"
 mkdir -p "$FRAMES"
-T="C:/Users/Eddy/AppData/Local/Temp/pliette-shots"
+T="${PLIETTE_SHOTS:-$PWD/.shots}"
 
 # 无参数=全部默认集；参数支持 name 或 name:duration（时长缺省时从 public/motions/<name>.json 读取）
 ALL_MOTIONS=(

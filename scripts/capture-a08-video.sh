@@ -15,7 +15,7 @@ FPS=24
 OUT="experiments/media/p1"
 FRAMES="$OUT/frames-a08"
 mkdir -p "$FRAMES"
-T="C:/Users/Eddy/AppData/Local/Temp/pliette-shots"
+T="${PLIETTE_SHOTS:-$PWD/.shots}"
 dir="$FRAMES/a08"
 mkdir -p "$dir"
 total=$(awk -v c="21.8" -v f="$FPS" 'BEGIN{print int(c*f)+1}')

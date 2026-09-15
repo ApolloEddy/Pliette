@@ -8,7 +8,7 @@
 **Pliette（纸栖）** — 让喜欢的 Spine 纸片角色住在桌面 3D 房间里：
 能看见你、听你说话，根据情境实时地说话和做动作。
 
-![License](https://img.shields.io/badge/License-Apache--2.0-blue) ![Tests](https://img.shields.io/badge/tests-167%20passing-brightgreen) ![Spine](https://img.shields.io/badge/Spine%20Runtime-3.6.53-orange) ![Node](https://img.shields.io/badge/node-%E2%89%A518-green)
+![License](https://img.shields.io/badge/License-Apache--2.0-blue) ![Tests](https://img.shields.io/badge/tests-171%20passing-brightgreen) ![Spine](https://img.shields.io/badge/Spine%20Runtime-3.6.53-orange) ![Node](https://img.shields.io/badge/node-%E2%89%A518-green)
 
 Spine 3.6 官方运行时 · 通道切片动作架构 · 模型专属动作指导书 · Three.js 3D 场景 · Apache-2.0
 
@@ -153,8 +153,13 @@ LLM（或任何决策器）站在最上层选择与编排；在 Author 通路里
 - **三种载体**：原生完整动画/命名切片、已验收受限 Draft、引用已存在动作的完整配方（recipe）。
 - **目录备案**：110 动作族/154 变体（`public/motion-library/catalog.json`）全部 `planned`；
   目录有记录 ≠ 当前角色能做——只有 approved 实现进入可播放投影。
-- **种子迁移**：旧 9 条手势已迁移为 candidate 条目（写集从真实源动画 timeline 派生，
-  contentDigest 实算）；轨迹/视觉验收后按 [production-plan](docs/motion-library/production-plan.md) §3 提升。
+- **34 条 candidate 动作**（2026-09-15）：9 条原动画切片种子（窗口逐相位精调）+
+  6 条 P0 扩展族（摇头/瞌睡/低头/眨眼/眯眼/待机封装）+ 17 条受限 Author 创作草稿
+  （托腮/摸脸/挠头/招手/停止/展示/收臂/呼吸/重心/倾身/摇摆/庆祝/闭眼/歪头）+
+  head.nod V1→V1.1 转换 + routine.greet 配方。每条经七步管线验证（编译+隔离采样）
+  与 Lab 冻结截图视觉验收；逐条调参记录见[精调台账](experiments/motion-library/tuning/TUNING-LOG.md)。
+- **播放层修复**：附件混出残留——Spine 3.6 混合期跳过附件时间线，混出后螺旋眼/眯眼
+  永久残留；修复为混出起点前一帧追加 setup 附件恢复键（`overlay.ts#withAttachmentRestore`）。
 - **生命周期分离**：生成完成 ≠ 播放开始——生成截止不影响已准备动作的播放资格，
   播放时效单独复核；取消/迟到响应按令牌隔离，旧回调不清新实例。
 - **rolling 准入是实测门槛**：单元 RTF p95 ≤ 0.7 且 RTF_total < 1（失败入分母）才有资格滚动启播；
@@ -177,12 +182,13 @@ Spec 关键用例对齐表见 [docs/acceptance-checklist.md](docs/acceptance-che
 | A01/A09 背面相关 | ⚠️ 首个角色仅正面，限制展示朝向 |
 | A10 语音取消 / A07 说话 | 🔶 Mock 层已通，真实 TTS 待接入 |
 | 动作指导书（Spec v1.0 M0–M4） | ✅ 工程全链路 + 真实 LLM 首轮实测（在线门槛未达标，保持关闭） |
-| MotionLibrary M0–M5（Spec v1.0） | ✅ 框架/契约/调度/协调器 + 种子备案；种子验收与真实延迟/rolling 实测待本机（见基线报告） |
+| MotionLibrary M0–M5（Spec v1.0） | ✅ 框架/契约/调度/协调器 + 34 条 candidate（视觉精调定稿）；candidate→approved 提升与真实延迟/rolling 实测待本机（见基线报告） |
 
 ## 路线图
 
-- [ ] MotionLibrary 内容大库：种子 candidate→approved 提升（轨迹+视觉验收）、llm V1 草稿转 V1.1 入册、离线批量队列 runner
+- [ ] MotionLibrary 内容大库：candidate→approved 提升（轨迹+视觉三证据）、llm_lean_blink 转换、左臂验证域扩展标定、离线批量队列 runner
 - [ ] MotionLibrary 实测门槛：真实首帧延迟（planAccepted→firstFrame p95≤100ms）、12s buffered / 15s rolling 序列录像验收、rolling RTF p95≤0.7 实测
+- [ ] MotionLibrary 基建：保持型切片的 alpha 渐升驱动、Lab 对话层切换到 planAdapter、配方播放接线（PlanCoordinator 驱动）
 - [ ] 动作图（Motion Graph）：自动切分 + 图遍历，产出无限不重复的专业动作流（[研究笔记](docs/research-realtime-motion.md)）
 - [ ] 程序化生命层：呼吸不规则化、发/裙弹簧物理（先测与烤入动画的冲突）
 - [ ] A05 拾取/放下完整链（slotState + 桌面 sprite）

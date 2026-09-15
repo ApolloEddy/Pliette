@@ -3,6 +3,54 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased] - 2026-09-15
+
+MotionLibrary 动作精调夜班：候选动作逐条视觉验收 + 不存在的动作由受限 Author 通路创作。
+
+### 视觉精调（9 条种子全部定稿）
+
+- 精调循环基建：Lab `phases=` 相位序列一次导航采集（确定性逐帧回放+预热渲染+落盘中间件）、
+  `overlay` URL 支持混入/混出、3D 视图 `freecam=1` 自由相机多角度验证
+- 逐条窗口定稿：wave [4900,7300]→[5850,6900]（剪死准备段、避开基础层弯倾区）、
+  raise_hand →[12900,14500]（补齐抬-保持-落）、dizzy →[400,1750]（头近中位混出回神）、
+  pump →[3000,4400]、point →[100,800]；happy/shy/idle_fidget/touch_table 确认原窗口
+- 3D 纸片视图（默认机位+拖拽斜视角）复核关键动作
+
+### 播放层缺陷修复
+
+- **附件混出残留**：Spine 3.6 `attachmentThreshold=0` 使附件时间线在混合期被整体跳过——
+  overlay 的螺旋眼/眯眼等附件在混出后永久残留。修复：混出起点前一帧（最后满权重帧）
+  追加 setup 附件恢复键并丢弃其后原始键（`overlay.ts#withAttachmentRestore`）
+
+### 新增动作（+25 条 candidate，manifest 现计 34 条）
+
+- **P0 扩展族 6 条**（勘探 face 骨 arotation 曲线+附件键位表后原动画切片）：
+  head.shake/normal（dance）、reaction.sleepy/small 与 head.lower/small（stand 低头弯倾段，
+  源内自带完整过渡）、life.blink/paired（normal 双眨键）、face.eyes_squeeze/paired
+  （touch 纯 face 通道）、life.idle/default（stand 全段 native_clip，可循环）
+- **受限 Author 创作 17 条**（在 10 个已验证控制域内手写 V1.1 曲线，agent_offline）：
+  contact.chin_rest/both（双手捧脸，4 轮视觉迭代定稿）、cheek_touch、scratch_head、
+  gesture.beckon、stop、present、hands_reset、life.breathe/subtle（可循环）、
+  life.shift_weight/left·right、body.lean/screen_left·right、body.sway/gentle（可循环）、
+  reaction.celebrate/small（挥拳+眯眼）、face.eyes_close/paired、head.tilt/gentle×2
+- **head.nod V1→V1.1 转换**：数据驱动映射（mapsTo/compositeEntries 反查）+ 显式 retime
+  （bezier→smooth 超速 209.6°/s，放慢 1.25×→168°/s），七步管线重验证零失败
+- **routine.greet 配方**：挥手+点头组合，子动作冻结修订、通道不相交、mixIn/mixOut=0
+
+### 验证与工具
+
+- 全部草稿经七步管线全量重验证（新增测试循环：编译+隔离采样）；171/171 测试通过
+- 勘探工具方法入库：face 骨 arotation/位移增量曲线 + 附件键位表 → 候选窗口 → 相位截图
+- 实测记录：左臂 raise 符号语义（正=内收/负=外展，与直觉相反）；stand[7.55,12.1]
+  为低头弯倾段（头部窗口禁区/素材源）
+- 隐私清理：截图脚本本地临时路径改为环境变量覆盖
+
+### 未完成（如实声明）
+
+- candidate→approved 提升（轨迹+视觉三证据齐备后才进可播放投影）
+- rolling/真实首帧延迟实测；托腮 both 变体受左臂验证域 ±45 限制（域扩展标定后可上调）；
+  比心/拇指/OK/比耶需手指骨骼（rig 无手指，维持缺口）；保持型切片需 alpha 渐升驱动（infra TODO）
+
 ## [Unreleased] - 2026-09-14
 
 MotionLibrary 重构：统一动作选择与生成入口（Spec：`docs/Pliette_MotionLibrary_Spec_v1.0/`，M0–M5）。

@@ -15,7 +15,7 @@ FPS=24
 OUT="experiments/media/p1"
 FRAMES="$OUT/frames-a0304"
 mkdir -p "$FRAMES"
-T="C:/Users/Eddy/AppData/Local/Temp/pliette-shots"
+T="${PLIETTE_SHOTS:-$PWD/.shots}"
 
 # 场景: 标签|总时长|取消相位（0=不取消）
 SCENES=(

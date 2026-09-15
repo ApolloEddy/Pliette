@@ -17,7 +17,7 @@ CLIP=4.0
 OUT="experiments/media/p1"
 FRAMES="$OUT/frames-overlay"
 mkdir -p "$FRAMES"
-T="C:/Users/Eddy/AppData/Local/Temp/pliette-shots"
+T="${PLIETTE_SHOTS:-$PWD/.shots}"
 
 # 组合: 标签|叠加 overlay 参数|视频标注
 COMBOS=(
