@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.breathe.subtle.v11",
+  "durationSec": 3.2,
+  "curves": [
+    {
+      "controlId": "torso.bob",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": [
+            0,
+            0.006
+          ],
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 3.2,
+          "value": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

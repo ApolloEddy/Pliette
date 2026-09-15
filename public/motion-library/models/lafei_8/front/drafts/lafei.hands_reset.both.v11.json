@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.hands_reset.both.v11",
+  "durationSec": 0.9,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 25,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.9,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.left.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": -25,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.9,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

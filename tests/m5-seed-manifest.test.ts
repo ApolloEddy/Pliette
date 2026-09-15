@@ -25,8 +25,8 @@ const catalogView = new CatalogView(loadCatalog(JSON.parse(readFileSync(resolve(
 describe("种子 manifest（§9.1 迁移备案）", () => {
   const manifest = loadManifest(JSON.parse(readFileSync(resolve(manifestPath), "utf-8")), catalogView.revision);
 
-  it("17 条种子条目全部通过目录引用/时间窗/参数交集语义校验（含配方与草稿载体）", () => {
-    expect(manifest.entries.length).toBe(17);
+  it("34 条条目全部通过目录引用/时间窗/参数交集语义校验", () => {
+    expect(manifest.entries.length).toBe(34);
     const issues = validateManifest(manifest, catalogView.catalog);
     expect(issues).toEqual([]);
   });
@@ -163,5 +163,49 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
     expect(result.ok).toBe(true);
     expect(result.compiled).toBeDefined();
     expect(result.response?.status).toBe("motion");
+  });
+
+  it("全部创作草稿（agent_offline）经七步管线全量重验证：编译+隔离采样零失败", async () => {
+    if (!lafeiAssetsAvailable) return;
+    const { parseControlProfile, getControl } = await import("../src/rig/controlProfile.js");
+    const { loadSkeleton } = await import("../src/assets/loader.js");
+    const { assembleRequest } = await import("../src/motion/author/context.js");
+    const { validateCandidate } = await import("../src/motion/author/validateV11.js");
+    const { budgetFor } = await import("../src/motion/author/protocol.js");
+
+    const profile = parseControlProfile(JSON.parse(readFileSync(resolve("characters/lafei_8.rig-profile.json"), "utf-8")));
+    const bundle = loadSkeleton({
+      name: "lafei_8",
+      skeletonJson: JSON.parse(readFileSync(resolve("public/assets-local/lafei_8/lafei_8.json"), "utf-8")),
+      atlasText: readFileSync(resolve("public/assets-local/lafei_8/lafei_8.atlas.txt"), "utf-8"),
+      createTexture: dummyTexture,
+    });
+    const drafted = manifest.entries.filter((e) => e.source.kind === "draft");
+    expect(drafted.length).toBe(18); // 17 创作 + 1 转换
+    for (const entry of drafted) {
+      if (entry.source.kind !== "draft") continue;
+      const draft = JSON.parse(readFileSync(resolve("public/motion-library/models/lafei_8/front", entry.source.path), "utf-8"));
+      const subset: string[] = Array.from(new Set<string>(draft.curves.map((c: { controlId: string }) => c.controlId as string)));
+      const request = assembleRequest(profile, {
+        requestId: `revalidate-${entry.motionId}`,
+        contextId: "revalidate-ctx",
+        goal: "创作草稿全量重验证",
+        runtimeState: { monoClockMs: 0, viewId: "front", skinId: "default", stateVersion: 1, occupiedChannels: [], contacts: [] },
+        controlSubset: subset,
+        budget: budgetFor("interaction"),
+      });
+      const raw = {
+        status: "motion",
+        requestId: request.requestId,
+        contextId: request.contextId,
+        profileDigest: request.profileRef.profileDigest,
+        draft,
+      };
+      const result = validateCandidate(raw, request, profile, { skeletonData: bundle.skeletonData });
+      const failures = result.findings.filter((f) => !f.note);
+      expect(failures.map((f) => `${entry.motionId}: ${f.code} ${f.message}`)).toEqual([]);
+      expect(result.ok, entry.motionId).toBe(true);
+      expect(result.compiled, entry.motionId).toBeDefined();
+    }
   });
 });

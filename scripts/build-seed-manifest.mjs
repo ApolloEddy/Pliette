@@ -224,6 +224,102 @@ const entries = SEEDS.map((seed) => {
   return entry;
 });
 
+// ---------------------------------------------------------------------------
+// 受限 Author 创作批次（2026-09-15，agent_offline）：全部经七步管线验证
+// （scripts 流程 + tests/m5-seed-manifest.test.ts 全量重验证），视觉相位截图见台账。
+// 写集/通道从档案 control ownership 派生（不可凭通道名推定）。
+// ---------------------------------------------------------------------------
+
+const AUTHORED_DRAFTS = [
+  { file: "lafei.chin_rest.both.v11.json", motionId: "lafei.chin_rest.both", actionId: "contact.chin_rest", variantId: "both", label: "双手托下巴/捧脸（双臂内收+头轻倾；左臂受验证域 ±45 限制，手位在下巴而非腮侧，域扩展后可再上调）" },
+  { file: "lafei.cheek_touch.screen_right.v11.json", motionId: "lafei.cheek_touch.screen_right", actionId: "contact.cheek_touch", variantId: "screen_right", label: "手碰脸颊（右手持可乐轻碰脸侧）" },
+  { file: "lafei.scratch_head.screen_right.v11.json", motionId: "lafei.scratch_head.screen_right", actionId: "contact.scratch_head", variantId: "screen_right", label: "挠头（举手到头旁+前臂挠动）" },
+  { file: "lafei.beckon.screen_right.v11.json", motionId: "lafei.beckon.screen_right", actionId: "gesture.beckon", variantId: "screen_right", label: "招手（举臂+前臂摆动 ×3）" },
+  { file: "lafei.stop.screen_right.v11.json", motionId: "lafei.stop.screen_right", actionId: "gesture.stop", variantId: "screen_right", label: "抬掌停止（快起长停）" },
+  { file: "lafei.present.both.v11.json", motionId: "lafei.present.both", actionId: "gesture.present", variantId: "both", label: "双手外开展示（左右外展对称）" },
+  { file: "lafei.hands_reset.both.v11.json", motionId: "lafei.hands_reset.both", actionId: "gesture.hands_reset", variantId: "both", label: "双臂收回归位（只释放自身写集）" },
+  { file: "lafei.breathe.subtle.v11.json", motionId: "lafei.breathe.subtle", actionId: "life.breathe", variantId: "subtle", label: "呼吸起伏（torso.bob ±0.006H，首尾同相位可循环）", loop: { allowed: true, segmentId: "full", maxRepeats: 8 } },
+  { file: "lafei.shift_weight.left.v11.json", motionId: "lafei.shift_weight.left", actionId: "life.shift_weight", variantId: "left", label: "重心移向屏幕左（躯干缓倾保持）" },
+  { file: "lafei.shift_weight.right.v11.json", motionId: "lafei.shift_weight.right", actionId: "life.shift_weight", variantId: "right", label: "重心移向屏幕右（躯干缓倾保持）" },
+  { file: "lafei.body_lean.screen_right.v11.json", motionId: "lafei.body_lean.screen_right", actionId: "body.lean", variantId: "screen_right", label: "身体轻倾（屏幕右 10°）" },
+  { file: "lafei.body_lean.screen_left.v11.json", motionId: "lafei.body_lean.screen_left", actionId: "body.lean", variantId: "screen_left", label: "身体轻倾（屏幕左 −10°）" },
+  { file: "lafei.body_sway.gentle.v11.json", motionId: "lafei.body_sway.gentle", actionId: "body.sway", variantId: "gentle", label: "轻轻摇摆（躯干 ±8° 摆动，首尾同相位可循环）", loop: { allowed: true, segmentId: "full", maxRepeats: 8 } },
+  { file: "lafei.celebrate.small.v11.json", motionId: "lafei.celebrate.small", actionId: "reaction.celebrate", variantId: "small", label: "开心庆祝（挥拳+眯眼，多曲线组合）" },
+  { file: "lafei.eyes_close.paired.v11.json", motionId: "lafei.eyes_close.paired", actionId: "face.eyes_close", variantId: "paired", label: "闭眼保持（eyes.pair blink 段保持后睁开）" },
+  { file: "lafei.head_tilt.gentle.screen_right.v11.json", motionId: "lafei.head_tilt.screen_right", actionId: "head.tilt", variantId: "gentle.screen_right", label: "歪头（屏幕右 14° 保持）" },
+  { file: "lafei.head_tilt.gentle.screen_left.v11.json", motionId: "lafei.head_tilt.screen_left", actionId: "head.tilt", variantId: "gentle.screen_left", label: "歪头（屏幕左 −14° 保持）" },
+];
+
+  const controlByCurveId = new Map(PROFILE.controls.map((c) => [c.controlId, c]));
+  // composite 控制的真实写集 = 其子控制写集的并集（档案中 composite 本身无 ownership.writes）
+  function controlWrites(control) {
+    if (control.kind === "composite") {
+      const out = new Set();
+      for (const subId of control.binding.compositeOf ?? []) {
+        const sub = PROFILE.controls.find((c) => c.controlId === subId);
+        for (const w of sub?.ownership.writes ?? []) out.add(w);
+      }
+      return [...out];
+    }
+    return control.ownership.writes;
+  }
+  for (const meta of AUTHORED_DRAFTS) {
+    const draft = JSON.parse(readFileSync(resolve("public/motion-library/models/lafei_8/front/drafts", meta.file), "utf-8"));
+    const writes = new Set();
+    const channels = new Set();
+    for (const curve of draft.curves) {
+      const control = controlByCurveId.get(curve.controlId);
+      if (!control) throw new Error(`草稿 ${meta.file} 引用未登记控制 ${curve.controlId}`);
+      channels.add(control.channel);
+      for (const w of controlWrites(control)) writes.add(w);
+    }
+  const durationMs = Math.round(draft.durationSec * 1000);
+  const loop = meta.loop ?? { allowed: false, segmentId: null, maxRepeats: 1 };
+  const entry = {
+    schemaVersion: "pliette.motion-entry/1.0",
+    motionId: meta.motionId,
+    motionRevision: 1,
+    actionId: meta.actionId,
+    variantId: meta.variantId,
+    status: "candidate",
+    rigRef: rigRefBase,
+    source: { kind: "draft", path: `drafts/${meta.file}`, contentDigest: "", draftSchemaVersion: "pliette.motion-draft/1.1" },
+    durationMs,
+    channels: [...channels],
+    writes: [...writes].sort(),
+    dependsOn: [...channels].includes("rightArm") || [...channels].includes("leftArm") ? ["ancestor:body"] : [],
+    requiredCapabilities: [],
+    preconditions: { postures: ["standing"], baseAnimations: ["stand"], requiredResources: [], requiredContacts: [] },
+    segments: { full: { startMs: 0, endMs: durationMs, entryBoundaryId: "enter", exitBoundaryId: "exit", interruptibleAtEnd: true } },
+    boundaries: {
+      enter: { poseClass: "standing", snapshotRef: "setup-ref", contacts: [], resources: [] },
+      exit: { poseClass: "standing", snapshotRef: "setup-ref", contacts: [], resources: [] },
+    },
+    parameterSchema: { type: "object", properties: {}, additionalProperties: false },
+    retime: { minRate: 1, maxRate: 1 },
+    loop,
+    transition: { mixInMs: 120, mixOutMs: 150, maxBlendMs: 200, continuousEligible: false },
+    events: [],
+    provenance: {
+      origin: "agent_offline",
+      sourceRef: `${meta.file}（受限 Author 创作草稿；档案域内取值，七步管线重验证见测试）`,
+      generatorModel: "zcode-authored",
+      promptDigest: null,
+    },
+    validation: {
+      structural: "passed",
+      trajectory: "pending",
+      visual: "pending",
+      evidenceRefs: [`authored-draft@${now}`, "tests/m5-seed-manifest.test.ts#创作草稿全量管线重验证"],
+      reviewedAt: null,
+    },
+  };
+  entry.source.contentDigest = sha256(draft);
+  const { contentDigest: _omitDraftEntryDigest, ...draftEntryWithoutDigest } = entry;
+  entry.contentDigest = sha256(draftEntryWithoutDigest);
+  entries.push(entry);
+}
+
 const manifest = {
   schemaVersion: "pliette.motion-manifest/1.0",
   catalogRevision: CATALOG_REVISION,

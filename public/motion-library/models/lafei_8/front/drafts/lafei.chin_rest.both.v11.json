@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.chin_rest.both.v11",
+  "durationSec": 2.8,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.7,
+          "value": 58,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.1,
+          "value": 58,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.7,
+          "value": 20,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.1,
+          "value": 20,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.left.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.7,
+          "value": 45,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.1,
+          "value": 45,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.left.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.7,
+          "value": 20,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.1,
+          "value": 20,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.7,
+          "value": -5,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.1,
+          "value": -5,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.8,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

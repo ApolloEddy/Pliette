@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.cheek_touch.screen_right.v11",
+  "durationSec": 1.3,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.45,
+          "value": 48,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.85,
+          "value": 48,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.45,
+          "value": 15,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.85,
+          "value": 15,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.45,
+          "value": -4,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.85,
+          "value": -4,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

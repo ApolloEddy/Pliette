@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.head_tilt.gentle.screen_left.v11",
+  "durationSec": 1.6,
+  "curves": [
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": -14,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.1,
+          "value": -14,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

@@ -85,3 +85,37 @@ entry 立即满权重生效（node 复现确认）——sleep 全程垂姿保持
 
 ### 至此 manifest：16 条 candidate（9 迁移 + 6 P0 扩展 + 1 草稿转换），覆盖
 native_slice（14）/ native_clip（1）/ draft（1）三种载体；配方族待 nod 组件 approved 后组合。
+
+## 受限 Author 创作批次（+17 条 draft 载体，2026-09-15 上午）
+
+应用户指令"不存在的动作由你来创作"：在本 rig 10 个已验证控制的域内直接创作 V1.1 草稿
+（数据驱动写集派生），全部经七步管线重验证（编译+隔离采样，tests 内全量循环），
+关键动作经 Lab 冻结截图视觉迭代。
+
+| # | 逻辑键 | 曲线设计 | 视觉证据 | 结论 |
+|---|---|---|---|---|
+| 18 | contact.chin_rest / both | 双臂内收捧脸+前臂内折+头倾 −5°，2.8s | v1→v4 四轮迭代（v1 右臂横越、v2 左臂腰位、v3 双臂外展、**v4 定稿**） | ✅ 双手收拢下巴/脸颊两侧，读法自然 |
+| 19 | contact.cheek_touch / screen_right | 右手到脸侧轻碰，1.3s | v1_pose065 | ✅ |
+| 20 | contact.scratch_head / screen_right | 举手到头旁+前臂挠动，1.8s | v1_pose090 | ✅ |
+| 21 | gesture.beckon / screen_right | 举臂+前臂摆动×3，1.5s | v1_waggle | ✅ |
+| 22 | gesture.stop / screen_right | 快起长停（45°），1.6s | 管线证据（与 cheek_touch 同 mechanics） | ✅ |
+| 23 | gesture.present / both | 双臂外展对称（左负右正），1.5s | 管线证据 | ✅ |
+| 24 | gesture.hands_reset / both | 双臂回归位，0.9s | 管线证据 | ✅ |
+| 25 | life.breathe / subtle | torso.bob ±0.006H 呼吸，3.2s 可循环 | 管线证据 | ✅ |
+| 26 | life.shift_weight / left·right | 躯干缓倾 ±4° 保持，2.2s | 管线证据 | ✅ |
+| 27 | body.lean / screen_right·left | 躯干 ±10° 弧线，1.3s | 管线证据 | ✅ |
+| 28 | body.sway / gentle | 躯干 ±8° 摆动，2.8s 可循环 | 管线证据 | ✅ |
+| 29 | reaction.celebrate / small | 挥拳+眯眼多曲线组合，1.3s | v1_peak | ✅ |
+| 30 | face.eyes_close / paired | eyes.pair blink 保持后睁开，1.2s | 管线证据 | ✅ |
+| 31 | head.tilt / gentle.screen_right | 头倾 +14° 保持，1.6s | 管线证据 | ✅ |
+| 32 | head.tilt / gentle.screen_left | 头倾 −14° 保持，1.6s | 管线证据 | ✅ |
+
+**实测符号语义（后续创作必读）**：左臂 raise 正值=向躯干内收（横越身前）、负值=向外展
+——与档案描述的直觉相反，以本轮冻结截图实测为准；右臂正值=前上举。
+
+### 管线验证明细
+
+- 首轮 18 草稿：11 通过 / 7 失败（5 个为验证脚本误用 legacy 预算 [0.4,2]s——改用
+  interaction 预算 [0.4,5]s；2 个前臂曲线 7 键超 ≤6 键预算——减一次摆动）
+- 复验 **18/18 全部通过**（含 chin_rest/celebrate 多曲线组合、breathe/sway 向量曲线、
+  eyes_close stepped 组合控制）

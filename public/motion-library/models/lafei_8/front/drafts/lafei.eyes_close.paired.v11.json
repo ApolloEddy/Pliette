@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.eyes_close.paired.v11",
+  "durationSec": 1.2,
+  "curves": [
+    {
+      "controlId": "face.eyes.pair",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": "open",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 0.3,
+          "value": "blink",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 0.9,
+          "value": "blink",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 1.2,
+          "value": "open"
+        }
+      ]
+    }
+  ]
+}

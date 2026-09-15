@@ -21,6 +21,7 @@ import { MockTts } from "../speech/adapter.js";
 import { parseControlProfile, type ControlProfile } from "../rig/controlProfile.js";
 import { assembleRequest } from "../motion/author/context.js";
 import { validateCandidate } from "../motion/author/validateV11.js";
+import { translateDraft } from "../motion/author/translate.js";
 import { MockAuthorClient, importCandidateFile, reidentityForOfflineImport } from "../motion/author/client.js";
 import { AuthorBroker, type PlaybackHooks } from "../motion/author/authorBroker.js";
 import { formatDiagnostic, type AuthorDiagnostic } from "../motion/author/diagnostics.js";
@@ -1639,6 +1640,41 @@ function applyBootParams(): Promise<void> {
     }
     const event = bootParams.get("event");
     if (event) setTimeout(() => emitEvent(event), 300);
+    const draftParam = bootParams.get("draft");
+    if (draftParam) {
+      // V1.1 草稿预览（受限 Author 创作循环）：fetch drafts/<name> → translateDraft → 编译 → 预览/冻结
+      fetch(`/motion-library/models/lafei_8/front/drafts/${draftParam}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then((v11) => {
+          if (!controlProfile || !flatView.skeletonData) throw new Error("档案或资产未就绪");
+          const tr = translateDraft(v11, controlProfile, currentRig.id);
+          if (!tr.draft) throw new Error("V1.1 翻译失败");
+          const { motion, diagnostics } = compileDraft(tr.draft, currentRig, flatView.skeletonData!);
+          renderDiagnostics(diagnostics);
+          if (!motion) throw new Error("编译失败");
+          ($("compile-info") as HTMLTextAreaElement).textContent =
+            `V1.1 草稿 ${v11.id ?? draftParam} · 写集：${motion.writes.join("、") || "无"}`;
+          playCompiledOnView(flatView, null, motion);
+          playCompiledOnView(actor.view, null, motion);
+          const poseAt = Number(bootParams.get("poseAt"));
+          if (Number.isFinite(poseAt) && poseAt > 0) {
+            for (const view of [flatView, actor.view]) {
+              let done = 0;
+              while (done < poseAt - 1e-9) {
+                const step = Math.min(1 / 60, poseAt - done);
+                view.state?.update(step);
+                done += step;
+              }
+              view.paused = true;
+            }
+            flatView.render(0);
+            log(`V1.1 草稿冻结于 t=${poseAt}s（${draftParam}）`);
+          } else {
+            log(`V1.1 草稿预览：${draftParam}（写集 ${motion.writes.join("、") || "无"}）`, "good");
+          }
+        })
+        .catch((e) => log(`V1.1 草稿加载失败：${(e as Error).message}`, "bad"));
+    }
     const motion = bootParams.get("motion");
     if (motion) {
       const loops = Math.max(1, Math.min(4, Number(bootParams.get("loops")) || 1));

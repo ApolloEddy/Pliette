@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.body_sway.gentle.v11",
+  "durationSec": 2.8,
+  "curves": [
+    {
+      "controlId": "torso.lean",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.7,
+          "value": 8,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.1,
+          "value": -8,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.8,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}
