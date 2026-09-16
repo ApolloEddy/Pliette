@@ -25,8 +25,8 @@ const catalogView = new CatalogView(loadCatalog(JSON.parse(readFileSync(resolve(
 describe("种子 manifest（§9.1 迁移备案）", () => {
   const manifest = loadManifest(JSON.parse(readFileSync(resolve(manifestPath), "utf-8")), catalogView.revision);
 
-  it("34 条条目全部通过目录引用/时间窗/参数交集语义校验", () => {
-    expect(manifest.entries.length).toBe(34);
+  it("全部条目（含并行批次新增）通过目录引用/时间窗/参数交集语义校验", () => {
+    expect(manifest.entries.length).toBeGreaterThanOrEqual(34); // Activation Pass 34 条为下限
     const issues = validateManifest(manifest, catalogView.catalog);
     expect(issues).toEqual([]);
   });
@@ -91,13 +91,21 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
     expect(touch.preconditions.requiredResources).toContain("scene:table.calibrated_0.27H");
   });
 
-  it("Activation Pass：34 条全部 approved（轨迹/视觉/评审时间齐备）且全部可播放命中", () => {
+  it("Activation Pass 批次（[activation@ 证据锚定）全部 approved 且可播放命中；后续批次不受影响", () => {
+    const activationEntries = manifest.entries.filter((e) =>
+      e.validation.evidenceRefs.some((r) => r.includes("[activation@")),
+    );
+    expect(activationEntries.length).toBe(34);
     for (const e of manifest.entries) {
+      if (!activationEntries.includes(e)) {
+        // Activation 之后的并行批次：状态合法即可（candidate/approved），其验收由自己的流程负责
+        expect(["candidate", "approved", "validated"]).toContain(e.status);
+        continue;
+      }
       expect(e.status, e.motionId).toBe("approved");
       expect(e.validation.trajectory, e.motionId).toBe("passed");
       expect(e.validation.visual, e.motionId).toBe("passed");
       expect(typeof e.validation.reviewedAt === "string" && e.validation.reviewedAt.length > 0, e.motionId).toBe(true);
-      expect(e.validation.evidenceRefs.some((r) => r.includes("[activation@")), e.motionId).toBe(true);
     }
     const rig = manifest.entries[0].rigRef;
     const index = new MotionIndex();
@@ -194,7 +202,7 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
       createTexture: dummyTexture,
     });
     const drafted = manifest.entries.filter((e) => e.source.kind === "draft");
-    expect(drafted.length).toBe(18); // 17 创作 + 1 转换
+    expect(drafted.length).toBeGreaterThanOrEqual(18); // 17 创作 + 1 转换（后续批次追加）
     for (const entry of drafted) {
       if (entry.source.kind !== "draft") continue;
       const draft = JSON.parse(readFileSync(resolve("public/motion-library/models/lafei_8/front", entry.source.path), "utf-8"));

@@ -63,7 +63,12 @@ npm run desktop:dev  # Electron 桌面窗口
 | `?probeControl=arm.upper.right\|rotate\|30&freezeAt=0.5` | 单控制标定探针（隔离实例 + setup 参考 + 定值冻结） |
 | `?scenario=a08` / `?scenario=touch` | 走向椅子坐下 / 触碰矮桌（含接触误差实测） |
 | `?eyes=eye_4_1,eye_4_2` | 眼部附件变体探针 |
-| `?event=greet` | 对话事件配方（Select 层） |
+| `?event=greet` | 旧事件名 → 登记逻辑键 → 走 Selector 新链路 |
+| `?chat=你好` | 完整对话链路（PlanAdapter→Selector→物化→Coordinator→播放）；配 `e2ePhases=0.3,0.9&shotDir=x` 做确定性相位采集 |
+| `?demo=1` | 一键演示：六轮对话顺序走完整链路（greet 配方/praise 双切片/深呼吸 repeats/歪头/害羞/挥手） |
+| `?recipe=lafei.routine_greet.default&phases=0.3,0.9&shotDir=x` | manifest 条目 materialization 视觉验收（不经 Selector） |
+| `?draftSeries=lafei.xxx.v11.json&phases=0.3,0.8&shotDir=x` / `?seriesAll=1` | 草稿相位序列 / 批量采集（清单 public/motion-library/activation-series.json） |
+| `?overlay=...&alphaRamp=1` | 切片混入改 alpha 0→1 渐升（保持型切片入场平滑；默认关闭） |
 | `?bench=1&benchSec=6` | 实时性能基准（CDP 计时） |
 
 ## 架构

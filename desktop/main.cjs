@@ -33,7 +33,8 @@ function createWindow() {
   });
 
   if (isDev) {
-    win.loadURL("http://localhost:5174/?asset=lafei_8&auto=1");
+    const devUrl = process.env.PLIETTE_DEV_URL || "http://localhost:5173/?asset=lafei_8&auto=1";
+    win.loadURL(devUrl);
   } else {
     win.loadFile(path.join(__dirname, "..", "dist", "index.html"), { hash: "/" });
   }

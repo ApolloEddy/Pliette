@@ -1582,9 +1582,25 @@ async function handleChatSend(): Promise<void> {
       requestId,
     });
   } catch (e) {
-    log(`语义规划失败：${(e as Error).message}`, "bad");
-    appendChat("char", "（脑子短路了一下，再说一遍？）");
-    return;
+    // LLM 超时/失败：回退确定性规则底座（诚实标注 adapter 来源），交互不中断
+    log(`语义规划失败（${(e as Error).message}）→ 回退规则规划`, "warn");
+    try {
+      const fallback = await createPlanAdapter(false).respond({
+        text,
+        context: { posture: currentPosture, busyChannels: Object.keys(scheduler.snapshot().ownership) as ChannelId[] },
+        catalog: planRt.catalog,
+        playableActions: planRt.playableActions(),
+        requestId,
+      });
+      appendChat("char", fallback.reply);
+      tts.speak(fallback.reply);
+      await routeAndPlay(planRt, fallback.reply, fallback.plan.description, fallback.plan.slices, requestId);
+      return;
+    } catch (e2) {
+      log(`规则规划回退也失败：${(e2 as Error).message}`, "bad");
+      appendChat("char", "（脑子短路了一下，再说一遍？）");
+      return;
+    }
   }
   appendChat("char", resp.reply);
   tts.speak(resp.reply);

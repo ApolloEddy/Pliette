@@ -152,6 +152,7 @@ export function buildPlanSystemPrompt(cards: string[]): string {
     '{"reply": string, "description": string, "slices": [...]}。',
     "reply=对用户说的话（可为空串）；description=整体动作说明（无动作时为空串且 slices=[]）。",
     "每个 slice 形状：{\"sliceId\":\"s1\",\"description\":\"…\",\"lookup\":{\"actionId\":\"…\",\"variantId\":\"…\",\"segmentId\":\"…\"},\"parameters\":{}}。",
+    'segmentId 一律填 "full"（卡片未列其他片段的动作只有 full）。',
     "actionId/variantId/segmentId 只能取自下方动作目录卡片中登记的键；",
     "没有合适登记语义时用 {\"actionId\":\"custom\",\"variantId\":\"custom\",\"segmentId\":\"full\"} 并在 description 写完整说明。",
     "slices 按数组顺序执行，最多 " + MAX_SLICES + " 个；不要发明并行依赖；不要输出时间数值。",
@@ -170,6 +171,8 @@ interface ParsedModelPlan {
 
 export class LlmPlanAdapter extends RulePlanAdapter {
   readonly name: string;
+  /** segmentId 空值归一化计数（诊断：模型输出完整性的观测口径） */
+  segmentNormalizations = 0;
 
   constructor(
     private cfg: LlmPlanConfig,
@@ -228,13 +231,26 @@ export class LlmPlanAdapter extends RulePlanAdapter {
       return { ok: false, error: "缺少 reply/description/slices 字段或类型不符" };
     }
     if (o.slices.length > MAX_SLICES) return { ok: false, error: `slices ${o.slices.length} 超过 ${MAX_SLICES}` };
+    // 确定性归一化：模型常把 segmentId 留空。仅当变体唯一登记片段就是 full 时补 full
+    // （无第二种解释，不构成语义改写）；其余留待 validateMotionPlan 如实拒绝。
+    let normalizedSegments = 0;
+    const slices = (o.slices as MotionSlice[]).map((slice) => {
+      if (slice.lookup.segmentId !== "") return slice;
+      const variant = input.catalog.variant(slice.lookup.actionId, slice.lookup.variantId);
+      if (variant && variant.segmentIds.length === 1 && variant.segmentIds[0] === "full") {
+        normalizedSegments += 1;
+        return { ...slice, lookup: { ...slice.lookup, segmentId: "full" } };
+      }
+      return slice;
+    });
+    if (normalizedSegments > 0) this.segmentNormalizations += normalizedSegments;
     const plan: MotionPlan = {
       schemaVersion: "pliette.motion-plan/1.0",
       requestId: input.requestId,
       catalogRevision: input.catalog.revision,
       reply: o.reply,
       description: o.description,
-      slices: o.slices as MotionSlice[],
+      slices,
     };
     const shape = parseMotionPlan(plan);
     if (shape.error || !shape.value) return { ok: false, error: shape.error ?? "形状不合法" };

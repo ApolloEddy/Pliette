@@ -253,7 +253,7 @@ describe("barge-in 打断与演示链路", () => {
 describe("Activation 断言：approved 投影与整条配方 E2E（B 组，promotion 后生效）", () => {
   it("manifest approved 与 catalog registered 投影一致（无 approved 悬挂在 planned 族上）", async () => {
     const rt = await makeRuntime();
-    expect(rt.snapshot().approved).toBe(34);
+    expect(rt.snapshot().approved).toBeGreaterThanOrEqual(34);
     for (const entry of rt.manifest.entries) {
       if (entry.status !== "approved") continue;
       const variant = rt.catalog.variant(entry.actionId, entry.variantId);
