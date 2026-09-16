@@ -1528,6 +1528,8 @@ async function routeAndPlay(planRtInstance: MotionLibraryRuntime, reply: string,
       sr.code === "HIT_READY" ? "good" : "warn",
     );
   }
+  const bargedIn = planRtInstance.cancelActivePlans("barge-in: 新对话计划");
+  if (bargedIn > 0) log(`打断：取消 ${bargedIn} 条进行中的计划（0.15s 混出交还）`);
   const summary = planRtInstance.beginPlan(route, authorStateVersion);
   log(
     `计划 ${summary.planId} 已受理：${route.slices.length} 切片` +
@@ -1604,7 +1606,8 @@ function wireChatPanel(): void {
   });
   $("btn-chat-cancel").addEventListener("click", () => {
     tts.cancel();
-    log("语音已打断（A10：取消同时失效旧的说话状态与气泡）");
+    const n = planRt?.cancelActivePlans("user-cancel") ?? 0;
+    log(`打断：语音已取消${n > 0 ? `，${n} 条动作计划已停（0.15s 混出交还）` : ""}（A10：取消同时失效旧的说话状态与气泡）`);
   });
   $("btn-a07").addEventListener("click", () => {
     setBase("sit", true);

@@ -31,14 +31,30 @@ export interface MaterializeOptions {
   /** 宿主解析的播放句柄（Lab planRuntime / 桌面壳实现；commitPrepared 原样交回播放钩子） */
   compiledHandle: unknown;
   validationReportRef?: string | null;
+  /** 语义规划切片参数（已过 validateMotionPlan 目录域校验）；此处做最后一道语义钳制 */
+  parameters?: Record<string, unknown>;
+}
+
+/**
+ * 解析循环参数：仅 entry 声明 loop.allowed 时生效，钳制到 [1, loop.maxRepeats]；
+ * 整循环重复不改变轨迹形状（同相位重复），是首个全链路打通的参数（catalog schema →
+ * plan 切片 → 物化时间轴 → 播放时长）。其余参数原样带入 resolvedParameters 供诊断。
+ */
+export function resolveLoopRepeats(entry: MotionEntry, parameters?: Record<string, unknown>): number {
+  const raw = parameters?.repeats;
+  if (!entry.loop.allowed) return 1;
+  const n = typeof raw === "number" && Number.isFinite(raw) ? Math.floor(raw) : 1;
+  return Math.max(1, Math.min(entry.loop.maxRepeats, n));
 }
 
 /** 由 entry 派生 PreparedMotion 的全部调度与权属字段（Spec §8.2）。 */
 export function preparedFromEntry(entry: MotionEntry, opts: MaterializeOptions): PreparedMotion {
   const segment = entry.segments.full;
+  const parameters = opts.parameters ? { ...opts.parameters } : {};
+  const repeats = resolveLoopRepeats(entry, parameters);
   const schedule: ResolvedSchedule = resolveSchedule({
     mixInMs: entry.transition.mixInMs,
-    contentMs: entry.durationMs,
+    contentMs: entry.durationMs * repeats,
     mixOutMs: entry.transition.mixOutMs,
   });
   const prepared: PreparedMotion = {
@@ -51,7 +67,7 @@ export function preparedFromEntry(entry: MotionEntry, opts: MaterializeOptions):
     profileDigest: entry.rigRef.profileDigest,
     expectedPrefixHash: opts.expectedPrefixHash,
     sourceRef: { motionId: entry.motionId, motionRevision: entry.motionRevision, contentDigest: entry.contentDigest },
-    resolvedParameters: {},
+    resolvedParameters: { ...parameters, repeats },
     compiledHandle: opts.compiledHandle,
     writes: [...entry.writes],
     channels: [...entry.channels] as MotionChannel[],

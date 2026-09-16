@@ -1,6 +1,6 @@
 {
   "schemaVersion": "pliette.motion-catalog/1.0",
-  "catalogRevision": "activation-2026-09-16.1",
+  "catalogRevision": "activation-2026-09-17.1",
   "description": "动作需求备案。所有条目 planned，所有能力名均为待映射的语义要求，不代表角色已有能力；不进入可播放索引。",
   "categories": [
     {
@@ -75,7 +75,14 @@
           ],
           "parameterSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "repeats": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 16,
+                "description": "循环次数（1–16，仅首尾同相位已验证的循环动作）"
+              }
+            },
             "additionalProperties": false
           },
           "authorable": "capability_check",
@@ -106,7 +113,14 @@
           ],
           "parameterSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "repeats": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8,
+                "description": "循环次数（1–8，仅首尾同相位已验证的循环动作）"
+              }
+            },
             "additionalProperties": false
           },
           "authorable": "capability_check",
@@ -2173,7 +2187,14 @@
           ],
           "parameterSchema": {
             "type": "object",
-            "properties": {},
+            "properties": {
+              "repeats": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8,
+                "description": "循环次数（1–8，仅首尾同相位已验证的循环动作）"
+              }
+            },
             "additionalProperties": false
           },
           "authorable": "capability_check",

@@ -22,7 +22,7 @@ import { routePlan, type PlanRoute, type SelectorDeps, type SliceRoute } from ".
 import { buildChannels, filterAnimation, playSlice, type ChannelDef, type OverlayHandle } from "../motion/library/overlay.js";
 import { CHANNEL_TRACK } from "../motion/runtime/gestureLayer.js";
 import { PlanCoordinator, type CommitResult } from "../motion/runtime/planCoordinator.js";
-import { expandRecipe, preparedFromEntry, type ExpandedRecipeStep } from "../motion/runtime/materialize.js";
+import { expandRecipe, preparedFromEntry, resolveLoopRepeats, type ExpandedRecipeStep } from "../motion/runtime/materialize.js";
 import type { PreparedMotion } from "../motion/runtime/prepared.js";
 import type { MotionScheduler } from "../motion/runtime/scheduler.js";
 
@@ -36,8 +36,8 @@ export type RuntimeHandle =
       mixOutSec: number;
       durationSec: number;
     }
-  | { kind: "clip"; animation: spine.Animation; loop: boolean }
-  | { kind: "compiled"; animation: spine.Animation; channel: ChannelId; mixInSec: number; mixOutSec: number; durationSec: number }
+  | { kind: "clip"; animation: spine.Animation; loop: boolean; repeats: number }
+  | { kind: "compiled"; animation: spine.Animation; channel: ChannelId; mixInSec: number; mixOutSec: number; durationSec: number; loop: boolean }
   | { kind: "recipe"; steps: { step: ExpandedRecipeStep; handle: RuntimeHandle }[]; durationMs: number };
 
 export interface PlanSummary {
@@ -172,7 +172,7 @@ export class MotionLibraryRuntime {
           summary.hits + summary.failed + summary.unsupported >= route.slices.length;
       };
       if (sliceRoute.code === "HIT_READY" && sliceRoute.match) {
-        this.materialize(sliceRoute.match.entry, { planId, sliceId: sliceRoute.slice.sliceId, unitIndex })
+        this.materialize(sliceRoute.match.entry, { planId, sliceId: sliceRoute.slice.sliceId, unitIndex }, sliceRoute.slice.parameters)
           .then((prepared) => {
             if (this.coordinator.noteReady(planId, unitIndex, prepared)) summary.hits += 1;
             else summary.failed += 1;
@@ -246,8 +246,9 @@ export class MotionLibraryRuntime {
   // 物化：MotionEntry → PreparedMotion（宿主句柄解析）
   // -------------------------------------------------------------------------
 
-  async materialize(entry: MotionEntry, ref: { planId: string; sliceId: string; unitIndex: number }): Promise<PreparedMotion> {
-    const handle = await this.materializeHandle(entry);
+  async materialize(entry: MotionEntry, ref: { planId: string; sliceId: string; unitIndex: number }, parameters?: Record<string, unknown>): Promise<PreparedMotion> {
+    const repeats = resolveLoopRepeats(entry, parameters);
+    const handle = await this.materializeHandle(entry, repeats);
     return preparedFromEntry(entry, {
       planId: ref.planId,
       sliceId: ref.sliceId,
@@ -257,6 +258,7 @@ export class MotionLibraryRuntime {
       expectedPrefixHash: "plan",
       clockMs: performance.now(),
       compiledHandle: handle,
+      parameters,
     });
   }
 
@@ -283,7 +285,7 @@ export class MotionLibraryRuntime {
     return this.manifest.entries.find((e) => e.motionId === motionId);
   }
 
-  async materializeHandle(entry: MotionEntry): Promise<RuntimeHandle> {
+  async materializeHandle(entry: MotionEntry, repeats = 1): Promise<RuntimeHandle> {
     const src = entry.source;
     if (src.kind === "native_slice") {
       const data = this.deps.skeletonData();
@@ -315,7 +317,7 @@ export class MotionLibraryRuntime {
       const data = this.deps.skeletonData();
       const animation = data.findAnimation(src.animationName);
       if (!animation) throw new Error(`源动画缺失：${src.animationName}`);
-      return { kind: "clip", animation, loop: entry.loop.allowed };
+      return { kind: "clip", animation, loop: entry.loop.allowed, repeats };
     }
     if (src.kind === "draft") {
       const compiled = await this.compiledDraft(entry);
@@ -326,7 +328,8 @@ export class MotionLibraryRuntime {
         channel,
         mixInSec: entry.transition.mixInMs / 1000,
         mixOutSec: entry.transition.mixOutMs / 1000,
-        durationSec: compiled.durationSec,
+        durationSec: compiled.durationSec * repeats,
+        loop: repeats > 1,
       };
     }
     // recipe：递归物化子步骤（冻结引用由 expandRecipe 核对）
@@ -419,7 +422,7 @@ export class MotionLibraryRuntime {
       const track = CHANNEL_TRACK[handle.channel];
       if (track == null) return;
       for (const state of states) {
-        const entry = state.setAnimationWith(track, handle.animation, false);
+        const entry = state.setAnimationWith(track, handle.animation, handle.loop);
         entry.mixDuration = Math.max(0, handle.mixInSec);
         state.addEmptyAnimation(track, handle.mixOutSec, Math.max(0, handle.durationSec - handle.mixOutSec));
       }
@@ -428,6 +431,33 @@ export class MotionLibraryRuntime {
     // recipe 顶层（直接物化验收用）：注册时间轴，无调度权（视觉验收模式）
     const id = `recipe-direct/${++this.seq}`;
     this.recipes.set(id, { steps: handle.steps, nextIndex: 0, elapsedMs: 0 });
+  }
+
+  /**
+   * 打断（barge-in）：新对话计划开始前调用——取消全部活跃计划的未提交单元，
+   * 并对已提交实例做调度取消 + 轨道局部混出（只清自己的通道，基础层与其他通道继续）。
+   * 返回被取消的计划数（诊断用）。
+   */
+  cancelActivePlans(reason: string): number {
+    let n = 0;
+    for (const [planId] of [...this.activePlans.keys()]) {
+      this.coordinator.cancelPlan(planId, reason);
+      this.activePlans.delete(planId);
+      n += 1;
+    }
+    const prefix = "plan/";
+    for (const inst of this.deps.scheduler.snapshot().active) {
+      if (!inst.requestId.startsWith(prefix)) continue;
+      this.deps.scheduler.cancel(inst.instanceId, reason);
+      for (const ch of inst.channels) {
+        const track = CHANNEL_TRACK[ch];
+        if (track == null) continue;
+        for (const state of this.deps.states()) state.setEmptyAnimation(track, 0.15);
+      }
+      this.recipes.delete(inst.instanceId);
+      n += 1;
+    }
+    return n;
   }
 
   /** 调试投影：Lab __labDebug / E2E 断言用。 */

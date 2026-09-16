@@ -104,6 +104,60 @@ describe("新链路机制：PlanAdapter → Selector → materialize → Coordin
     expect(handle.durationSec).toBeCloseTo(nod.durationMs / 1000, 6);
   });
 
+  it("参数传递端到端：深呼吸 → repeats=2 → 物化时间轴×2（catalog 域 → plan 切片 → PreparedMotion）", async () => {
+    const rt = await makeRuntime();
+    const adapter = new RulePlanAdapter();
+    const resp = await adapter.respond({
+      text: "深呼吸",
+      context: { posture: "standing", busyChannels: [] },
+      catalog: rt.catalog,
+      playableActions: rt.playableActions(),
+      requestId: "t-params",
+    });
+    expect(resp.plan.slices[0].lookup.actionId).toBe("life.breathe");
+    expect(resp.plan.slices[0].parameters).toEqual({ repeats: 2 });
+    // 切片参数必须先过目录域校验（validateMotionPlan 已在 Selector 上游执行）
+    const route = rt.route(resp.plan);
+    expect(route.allHit).toBe(true);
+    const entry = route.slices[0].match!.entry;
+    const prepared = await rt.materialize(entry, { planId: "t-params", sliceId: "s1", unitIndex: 0 }, resp.plan.slices[0].parameters);
+    expect(prepared.resolvedParameters).toEqual({ repeats: 2 });
+    expect(prepared.resolvedSchedule.contentMs).toBe(entry.durationMs * 2);
+    expect(prepared.resolvedSchedule.occupancyMs).toBe(entry.transition.mixInMs + entry.durationMs * 2 + entry.transition.mixOutMs);
+    const handle = prepared.compiledHandle as { kind: string; durationSec: number; loop: boolean };
+    expect(handle.loop).toBe(true);
+    expect(handle.durationSec).toBeCloseTo((entry.durationMs * 2) / 1000, 6);
+  });
+
+  it("参数域钳制：越界 repeats 拒绝（PARAM_RANGE）、非循环动作不接受参数（PARAM_NOT_ALLOWED）、物化钳制兜底", async () => {
+    const rt = await makeRuntime();
+    const breathe = rt.catalog.variant("life.breathe", "subtle")!;
+    const wave = rt.catalog.variant("gesture.wave", "small.screen_right")!;
+    // 越界：99 > 8
+    const plan = {
+      schemaVersion: "pliette.motion-plan/1.0" as const,
+      requestId: "t-range",
+      catalogRevision: rt.catalog.revision,
+      reply: "",
+      description: "",
+      slices: [{ sliceId: "s1", description: "", lookup: { actionId: "life.breathe", variantId: "subtle", segmentId: "full" }, parameters: { repeats: 99 } }],
+    };
+    const { validateMotionPlan } = await import("../src/motion/library/validate.js");
+    const issues = validateMotionPlan(plan, { catalog: rt.catalog.catalog });
+    expect(issues.some((i) => i.code === "PARAM_RANGE")).toBe(true);
+    void breathe;
+    // 非循环动作不接受任何额外参数（wave schema 为空）
+    const plan2 = { ...plan, requestId: "t-notallowed", slices: [{ sliceId: "s1", description: "", lookup: { actionId: "gesture.wave", variantId: "small.screen_right", segmentId: "full" }, parameters: { repeats: 2 } }] };
+    const issues2 = validateMotionPlan(plan2, { catalog: rt.catalog.catalog });
+    expect(issues2.some((i) => i.code === "PARAM_NOT_ALLOWED")).toBe(true);
+    void wave;
+    // 物化兜底钳制：非循环动作传 repeats 也恒为 1
+    const waveEntry = rt.manifest.entries.find((e) => e.motionId === "lafei.wave.small_screen_right")!;
+    const prepared = await rt.materialize(waveEntry, { planId: "t-clamp", sliceId: "s1", unitIndex: 0 }, { repeats: 5 });
+    expect(prepared.resolvedParameters.repeats).toBe(1);
+    expect(prepared.resolvedSchedule.contentMs).toBe(waveEntry.durationMs);
+  });
+
   it("Author 回退接线：generatable MISS 计数 + ready 回填后计划可启动", async () => {
     if (!lafeiAssetsAvailable) return;
     const rt = await makeRuntime();
@@ -144,6 +198,48 @@ describe("新链路机制：PlanAdapter → Selector → materialize → Coordin
     expect(summary.authorFallbacks).toBe(1);
     expect(rt.coordinator.plan("t-fallback")?.units[0].status).toBe("ready");
   });
+});
+
+describe("barge-in 打断与演示链路", () => {
+  it("新计划开始前取消进行中的计划：旧实例调度取消+单元失效，新计划正常提交", async () => {
+    const rt = await makeRuntime();
+    const adapter = new RulePlanAdapter();
+    const greet = await adapter.respond({
+      text: "你好", context: { posture: "standing", busyChannels: [] },
+      catalog: rt.catalog, playableActions: rt.playableActions(), requestId: "t-barge-a",
+    });
+    const routeA = rt.route(greet.plan);
+    rt.beginPlan(routeA, 1);
+    await new Promise((r) => setTimeout(r, 40));
+    rt.tick(0.016);
+    const instA = rt["deps"].scheduler.snapshot().active.find((i) => i.action.includes("routine_greet"));
+    expect(instA, "计划 A 已提交").toBeDefined();
+
+    const cancelled = rt.cancelActivePlans("barge-in: 测试");
+    // 单单元计划可能已提交完（activePlans 已移除），但仍在播的实例必须被计入并取消
+    expect(cancelled).toBeGreaterThanOrEqual(1);
+    expect(rt["deps"].scheduler.get(instA!.instanceId)?.status).toBe("cancelled");
+    const stA = rt.coordinator.plan("t-barge-a");
+    expect(stA?.cancelled).toBe(true);
+
+    // 新计划不受旧实例残留影响
+    const planB = {
+      schemaVersion: "pliette.motion-plan/1.0" as const,
+      requestId: "t-barge-b",
+      catalogRevision: rt.catalog.revision,
+      reply: "", description: "",
+      slices: [{ sliceId: "s1", description: "", lookup: { actionId: "life.breathe", variantId: "subtle", segmentId: "full" }, parameters: {} }],
+    };
+    const routeB = rt.route(planB);
+    expect(routeB.allHit).toBe(true);
+    const summaryB = rt.beginPlan(routeB, 1);
+    await new Promise((r) => setTimeout(r, 40));
+    rt.tick(0.016);
+    expect(summaryB.hits).toBe(1);
+    expect(rt.coordinator.plan("t-barge-b")?.committedCount).toBe(1);
+    // barge-in 不误伤非 plan 来源的实例（此处无，只要不抛错即可）
+  });
+
 });
 
 describe("Activation 断言：approved 投影与整条配方 E2E（B 组，promotion 后生效）", () => {

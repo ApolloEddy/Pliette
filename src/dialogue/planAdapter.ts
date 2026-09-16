@@ -48,7 +48,7 @@ export class PlanGenerationError extends Error {
 interface RuleEntry {
   keywords: string[];
   reply: string;
-  keys: { actionId: string; variantId: string; segmentId: string; description: string }[];
+  keys: { actionId: string; variantId: string; segmentId: string; description: string; parameters?: Record<string, unknown> }[];
   /** 坐姿不可用的动作（沿用旧规则语义：站姿表达不硬塞进坐姿） */
   standingOnly?: boolean;
 }
@@ -58,6 +58,12 @@ const RULES: RuleEntry[] = [
     keywords: ["你好", "hi", "hello", "在吗"],
     reply: "你好呀！我在哦～",
     keys: [{ actionId: "routine.greet", variantId: "default", segmentId: "full", description: "挥手并向用户点头问候" }],
+    standingOnly: true,
+  },
+  {
+    keywords: ["深呼吸", "呼吸", "冷静"],
+    reply: "呼——吸——，平静下来了～",
+    keys: [{ actionId: "life.breathe", variantId: "subtle", segmentId: "full", description: "深呼吸起伏两轮", parameters: { repeats: 2 } }],
   },
   {
     keywords: ["厉害", "棒", "真棒", "praise"],
@@ -105,7 +111,7 @@ export class RulePlanAdapter implements MotionPlanAdapter {
         lookup: registered
           ? { actionId: k.actionId, variantId: k.variantId, segmentId: k.segmentId }
           : { actionId: "custom", variantId: "custom", segmentId: "full" },
-        parameters: {},
+        parameters: registered ? { ...(k.parameters ?? {}) } : {},
       };
     });
     const plan = this.envelope(input, slices, reply, text);
