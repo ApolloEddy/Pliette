@@ -551,7 +551,17 @@ let lastFrame = performance.now();
 let fpsAccum = 0;
 let fpsCount = 0;
 
+/** 相位采集期间挂起主循环（RAF 不再推进状态，采集路径独占步进——消除相位漂移） */
+let captureHold = false;
+
 function frame(now: number): void {
+  if (captureHold) {
+    // 采集独占：仍渲染当前帧保持画面，但不推进任何时钟
+    flatView.render(0);
+    stage.render(0, actor);
+    requestAnimationFrame(frame);
+    return;
+  }
   if (benchParams.active) {
     benchParams.dts.push(now - lastFrame);
     lastFrame = now;
@@ -766,6 +776,15 @@ function wireOverlayPanel(): void {
  * URL: overlay=源:通道:t0:t1[:mixIn[:mixOut]]&phases=0.2,0.5,...&shotDir=<目录名>
  */
 async function captureOverlaySeries(mixOutOverride?: number): Promise<void> {
+  captureHold = true;
+  try {
+    await captureOverlaySeriesInner(mixOutOverride);
+  } finally {
+    captureHold = false;
+  }
+}
+
+async function captureOverlaySeriesInner(mixOutOverride?: number): Promise<void> {
   const alphaRamp = bootParams.get("alphaRamp") === "1";
   if (!channels || !flatView.skeletonData || !flatView.state) return;
   const sourceName = ($("overlay-source") as HTMLSelectElement).value;
@@ -1667,6 +1686,15 @@ async function waitFor(cond: () => boolean, timeoutMs = 8000): Promise<boolean> 
 }
 
 async function captureShots(title: string, phases: number[], dir: string, stepFn: (dt: number) => void): Promise<void> {
+  captureHold = true;
+  try {
+    await captureShotsInner(title, phases, dir, stepFn);
+  } finally {
+    captureHold = false;
+  }
+}
+
+async function captureShotsInner(title: string, phases: number[], dir: string, stepFn: (dt: number) => void): Promise<void> {
   flatView.render(0);
   actor.view.render(0);
   let t = 0;
@@ -2064,7 +2092,17 @@ function applyBootParams(): Promise<void> {
       // 一键演示：多轮对话顺序走完整链路（PlanAdapter→Selector→物化→Coordinator→播放）
       setTimeout(() => {
         void (async () => {
-          const lines = ["你好", "真棒", "深呼吸", "为什么", "害羞", "喝可乐"];
+          let lines = ["你好", "真棒", "深呼吸", "为什么", "害羞", "喝可乐"];
+          const custom = bootParams.get("demoScript");
+          if (custom) {
+            try {
+              const parsed = JSON.parse(decodeURIComponent(custom)) as unknown;
+              if (Array.isArray(parsed) && parsed.every((x) => typeof x === "string") && parsed.length > 0) lines = parsed;
+              else throw new Error("demoScript 需为非空字符串数组");
+            } catch (e) {
+              log(`demoScript 解析失败（使用默认序列）：${(e as Error).message}`, "warn");
+            }
+          }
           for (const line of lines) {
             if (planRt) planRt.cancelActivePlans("demo-next");
             ($("chat-input") as HTMLInputElement).value = line;
