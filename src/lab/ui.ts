@@ -309,6 +309,22 @@ function compileAndPreview(): void {
 
 /* ---------------- 资产加载 ---------------- */
 
+/** ?llm=1：从 config/llm.local.json（gitignored，仅 dev）注入 LLM 规划配置；不存在/失败则保持规则版。 */
+async function maybeInjectLlmConfig(): Promise<void> {
+  if (bootParams.get("llm") !== "1") return;
+  try {
+    const res = await fetch("/config/llm.local.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const cfg = (await res.json()) as { endpoint?: string; apiKey?: string; model?: string; deadlineMs?: number };
+    if (!cfg?.apiKey || !cfg?.endpoint || !cfg?.model) throw new Error("缺少 endpoint/apiKey/model");
+    (window as unknown as { __llmConfig?: unknown }).__llmConfig = cfg;
+    planAdapter = createPlanAdapter(true);
+    log(`LLM 语义规划已启用：${cfg.model}（${cfg.deadlineMs ?? 8000}ms deadline；超时/失败自动回退规则版）`, "good");
+  } catch (e) {
+    log(`LLM 配置未注入（${(e as Error).message}），继续使用规则版规划`, "warn");
+  }
+}
+
 async function loadAsset(entry: AssetEntry): Promise<void> {
   $("asset-status").textContent = "加载中…";
   try {
@@ -1430,7 +1446,7 @@ function touchReport(s: TouchState): string {
 
 /* ---------------- 对话（PlanAdapter → Selector → MotionLibrary）与语音（P4） ---------------- */
 
-const planAdapter: MotionPlanAdapter = createPlanAdapter(true);
+let planAdapter: MotionPlanAdapter = createPlanAdapter(true);
 const tts = new MockTts();
 let currentPosture: "standing" | "seated" = "standing";
 let planRt: MotionLibraryRuntime | null = null;
@@ -2197,6 +2213,7 @@ function applyBootParams(): Promise<void> {
     }
     return Promise.resolve();
   };
+  if (bootParams.get("llm") === "1") await maybeInjectLlmConfig();
   if (assetName) {
     const entry = ASSETS.find((a) => a.name === assetName);
     if (entry) {
