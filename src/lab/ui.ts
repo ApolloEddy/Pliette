@@ -381,6 +381,13 @@ async function loadAsset(entry: AssetEntry): Promise<void> {
 
   $("asset-status").textContent = `${entry.name} · 导出 ${lastReport.exportVersion} · ${lastReport.boneCount} 骨骼 · ${lastReport.animations.length} 动画`;
   log(`资产加载完成：${entry.label}（导出 ${lastReport.exportVersion}，运行时匹配 ${lastReport.versionMatch ? "✓" : "✗"}）`, "good");
+  if (bootParams.get("record") === "1" && !recorder.recording) {
+    recorder.start(flatCanvas, getHudText, () => {
+      $("btn-record").textContent = "开始录像";
+    });
+    $("btn-record").textContent = "停止录像";
+    log("record=1：自动录像已开始（WebM 在停止时下载）", "good");
+  }
 }
 
 /* ---------------- 探针 ---------------- */
@@ -2065,6 +2072,12 @@ function applyBootParams(): Promise<void> {
             await new Promise((r) => setTimeout(r, 5200));
           }
           log("演示序列完成", "good");
+          if (recorder.recording) {
+            recorder.stop();
+            $("btn-record").textContent = "开始录像";
+            $("record-status").textContent = "录像结束，WebM 已下载";
+            log("演示录像已停止并下载", "good");
+          }
         })();
       }, 800);
     }
