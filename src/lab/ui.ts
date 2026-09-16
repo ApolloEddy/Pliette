@@ -1923,9 +1923,9 @@ function runControlProbe(spec: string, freezeAt: number): void {
 }
 
 
-function applyBootParams(): Promise<void> {
+async function applyBootParams(): Promise<void> {
   const assetName = bootParams.get("asset");
-  const proceed = () => {
+  const proceed = async () => {
     if (bootParams.get("capture") === "1") {
       document.body.classList.add("capture-mode");
     }
