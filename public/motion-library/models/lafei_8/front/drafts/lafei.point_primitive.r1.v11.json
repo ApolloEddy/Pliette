@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.point_primitive.r1",
+  "durationSec": 1.4,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.35,
+          "value": 38,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.95,
+          "value": 38,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.4,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.35,
+          "value": -6,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.95,
+          "value": -6,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.4,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.body_straighten.small.v11",
+  "durationSec": 1.8,
+  "curves": [
+    {
+      "controlId": "torso.bob",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": [
+            0,
+            0
+          ]
+        },
+        {
+          "timeSec": 0.8,
+          "value": [
+            0,
+            0.008
+          ],
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.8,
+          "value": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

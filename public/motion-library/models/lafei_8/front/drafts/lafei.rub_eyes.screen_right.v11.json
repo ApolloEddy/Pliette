@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.rub_eyes.screen_right.v11",
+  "durationSec": 1.6,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": 58,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.1,
+          "value": 58,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": 20,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.8,
+          "value": 14,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.1,
+          "value": 20,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "face.eyes.pair",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": "open",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 0.5,
+          "value": "blink",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 1.1,
+          "value": "blink",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 1.6,
+          "value": "open"
+        }
+      ]
+    }
+  ]
+}

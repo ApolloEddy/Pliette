@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.shrink_shy.small.r1",
+  "durationSec": 1.8,
+  "curves": [
+    {
+      "controlId": "torso.lean",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": 5,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": 5,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": 10,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": 10,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.left.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": -12,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": -12,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": -12,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": -12,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.8,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

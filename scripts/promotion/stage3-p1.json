@@ -1,0 +1,57 @@
+{
+  "reviewedAt": "2026-09-17T02:10:00+08:00",
+  "catalogRevision": "activation-2026-09-17.1",
+  "rigRefAnchor": "lafei.wave.small_screen_right",
+  "draftDigestRefresh": [],
+  "contacts": {},
+  "evidence": {
+    "lafei.shrink_shy.small.r1": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts 全量循环（29 条 draft）",
+      "visual": "p1-shrink-shy（0.45/0.9/1.5s 相位冻结，2026-09-17 接手验收）",
+      "note": "body.shrink 为库中全新语义键（收缩害羞，与 reaction.shy 不同表达）；无同键竞争"
+    },
+    "lafei.listen_idle.r1": {
+      "decision": "approve",
+      "trajectory": "七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts 全量循环（29 条 draft）",
+      "visual": "p1-listen-idle（0.4/0.8/1.4s 相位冻结，2026-09-17 接手验收）",
+      "note": "life.listen_idle 为库中全新语义键（倾听待机）；无同键竞争"
+    },
+    "lafei.idle_subtle.r1": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.idle_subtle.r2": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.nod_primitive.r1": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.nod_primitive.r2": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.wave_primitive.r1": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.wave_primitive.r2": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.wave_primitive.r3": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.point_primitive.r1": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    },
+    "lafei.point_primitive.r2": {
+      "decision": "hold",
+      "reason": "同键已有 approved 实现（原动画切片版）；本批 r1/r2(/r3) 多版本未定稿，选版后由该批负责人再提请"
+    }
+  }
+}

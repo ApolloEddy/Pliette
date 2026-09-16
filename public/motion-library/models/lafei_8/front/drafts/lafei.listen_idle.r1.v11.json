@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.listen_idle.r1",
+  "durationSec": 1.6,
+  "curves": [
+    {
+      "controlId": "torso.lean",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.45,
+          "value": 7,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": 7,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.45,
+          "value": -3,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": -3,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

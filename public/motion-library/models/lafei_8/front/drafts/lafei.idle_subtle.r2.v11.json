@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.idle_subtle.r2",
+  "durationSec": 2.4,
+  "curves": [
+    {
+      "controlId": "torso.bob",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": [
+            0,
+            0
+          ],
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": [
+            0,
+            0.01
+          ],
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.4,
+          "value": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": 3,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.4,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

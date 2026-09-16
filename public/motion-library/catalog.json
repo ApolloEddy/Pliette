@@ -248,7 +248,7 @@
         "安静倾听待机"
       ],
       "priority": "P1",
-      "status": "planned",
+      "status": "registered",
       "variants": [
         {
           "variantId": "default",
@@ -267,7 +267,7 @@
             "additionalProperties": false
           },
           "authorable": "capability_check",
-          "status": "planned"
+          "status": "registered"
         }
       ],
       "productionNote": "保持少量变化，可做基础动作与头部配方"
@@ -1983,7 +1983,7 @@
         "缩身"
       ],
       "priority": "P1",
-      "status": "planned",
+      "status": "registered",
       "variants": [
         {
           "variantId": "small",
@@ -2001,7 +2001,7 @@
             "additionalProperties": false
           },
           "authorable": "capability_check",
-          "status": "planned"
+          "status": "registered"
         }
       ],
       "productionNote": "保持脚底和头身连贯"

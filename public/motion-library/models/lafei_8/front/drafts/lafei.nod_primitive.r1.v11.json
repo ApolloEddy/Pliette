@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.nod_primitive.r1",
+  "durationSec": 0.8,
+  "curves": [
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.28,
+          "value": 12,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.56,
+          "value": 2,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.8,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.point_primitive.r2",
+  "durationSec": 1.4,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.35,
+          "value": 40,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.95,
+          "value": 40,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.4,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.35,
+          "value": -6,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.95,
+          "value": -6,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.4,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.35,
+          "value": 5,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.95,
+          "value": 5,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.4,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "torso.lean",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.35,
+          "value": -2,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.95,
+          "value": -2,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.4,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

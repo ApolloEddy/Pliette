@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.body_stretch.both.v11",
+  "durationSec": 2.2,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.6,
+          "value": 60,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 60,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.2,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.left.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.6,
+          "value": 45,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 45,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.2,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.6,
+          "value": -6,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": -6,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.2,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

@@ -5090,6 +5090,2382 @@
         "reviewedAt": "2026-09-16T02:45:00+08:00"
       },
       "contentDigest": "sha256-9acb279d47159a4af8e03f77367b5d67ae9c3b1a452c76a70e7253ea7b959aa0"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.shrink_shy.small.r1",
+      "motionRevision": 1,
+      "actionId": "body.shrink",
+      "variantId": "small",
+      "status": "approved",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.shrink_shy.small.r1.v11.json",
+        "contentDigest": "sha256-a011a768c541270939fd9f9e98e0bc9469c11770cb71d7480f7a1dc34eda33a8",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1800,
+      "channels": [
+        "torso",
+        "head",
+        "leftArm",
+        "rightArm"
+      ],
+      "writes": [
+        "bone:body/rotate",
+        "bone:face/rotate",
+        "bone:hand_L/rotate",
+        "bone:hand_R/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/shrink_shy_c1.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "passed",
+        "visual": "passed",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.779Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证",
+          "[activation@2026-09-17T02:10:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts 全量循环（29 条 draft）; visual=p1-shrink-shy（0.45/0.9/1.5s 相位冻结，2026-09-17 接手验收）; note=body.shrink 为库中全新语义键（收缩害羞，与 reaction.shy 不同表达）；无同键竞争"
+        ],
+        "reviewedAt": "2026-09-17T02:10:00+08:00"
+      },
+      "contentDigest": "sha256-b9d4df685ca17bd6aa123772e6e2aebe4a1155c53c9935f3894f9666603ddabe"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.listen_idle.r1",
+      "motionRevision": 1,
+      "actionId": "life.listen_idle",
+      "variantId": "default",
+      "status": "approved",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.listen_idle.r1.v11.json",
+        "contentDigest": "sha256-d18abae32edca0c350692a0d7b6f6ea7bc02d85ce5ee8998bc5bb6da187ad0f3",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1600,
+      "channels": [
+        "torso",
+        "head"
+      ],
+      "writes": [
+        "bone:body/rotate",
+        "bone:face/rotate"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1600,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/lean_listen_c1.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "passed",
+        "visual": "passed",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.783Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证",
+          "[activation@2026-09-17T02:10:00+08:00] traj=七步管线（编译+隔离采样）零失败：tests/m5-seed-manifest.test.ts 全量循环（29 条 draft）; visual=p1-listen-idle（0.4/0.8/1.4s 相位冻结，2026-09-17 接手验收）; note=life.listen_idle 为库中全新语义键（倾听待机）；无同键竞争"
+        ],
+        "reviewedAt": "2026-09-17T02:10:00+08:00"
+      },
+      "contentDigest": "sha256-95d12d411330b02c2b5620ddcfc93352e2358df1fe20da8a08b1e2ece2b01f4a"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.idle_subtle.r1",
+      "motionRevision": 1,
+      "actionId": "life.idle_fidget",
+      "variantId": "default",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.idle_subtle.r1.v11.json",
+        "contentDigest": "sha256-bcaa6975e29f9c75ed3632f2b10ae1c608e8fb13b4540687ac30ece4b93a5802",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 2400,
+      "channels": [
+        "torso",
+        "head"
+      ],
+      "writes": [
+        "bone:body/translate",
+        "bone:face/rotate"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 2400,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/idle_subtle_c1.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.785Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-520bad6ec9995db6e4734c7f1b078595be5da841d3c5fd1241278d8e9dce8c1a"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.nod_primitive.r1",
+      "motionRevision": 1,
+      "actionId": "head.nod",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.nod_primitive.r1.v11.json",
+        "contentDigest": "sha256-2940f58ef0b1e3e5fbb290015d808847a685c30e81c054294c315bcdf5733ce1",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 800,
+      "channels": [
+        "head"
+      ],
+      "writes": [
+        "bone:face/rotate"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/nod_c1.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.786Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-01747db64087907df459c6afd2e08e87535d9d08e0e93a708d0195fc4964a850"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.nod_primitive.r2",
+      "motionRevision": 1,
+      "actionId": "head.nod",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.nod_primitive.r2.v11.json",
+        "contentDigest": "sha256-d15dc2ce7c1ad245b2e89bc11f89d77faeb86b771584a4766570642760a636fb",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 800,
+      "channels": [
+        "head",
+        "torso"
+      ],
+      "writes": [
+        "bone:body/rotate",
+        "bone:face/rotate"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/nod_c2.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.787Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-885626945069d8ceea2f07c84b5b6aaff945885aa3a118ba71a50a7534267be3"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.wave_primitive.r1",
+      "motionRevision": 1,
+      "actionId": "gesture.wave",
+      "variantId": "small.screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.wave_primitive.r1.v11.json",
+        "contentDigest": "sha256-3caa588632dc8651c615e1a4ad36328eabdbe85c286e623a59053cf13fbbf436",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1600,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1600,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/wave_right_primitive_c1.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.788Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-c5646a0f56c98950d10578ca6a5a270e9ceb11f797d26ff2776b4093e94b0e3f"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.point_primitive.r1",
+      "motionRevision": 1,
+      "actionId": "gesture.point",
+      "variantId": "screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.point_primitive.r1.v11.json",
+        "contentDigest": "sha256-583f82199a22596a211c919279211eb05ba7c28b308825944e8cfa6486bf1786",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1400,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1400,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/point_right_c1.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.791Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-209abe51f221b711478c5e02e281b347eef71afaf18ab3b3e4ab6e86f9b46756"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.point_primitive.r2",
+      "motionRevision": 1,
+      "actionId": "gesture.point",
+      "variantId": "screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.point_primitive.r2.v11.json",
+        "contentDigest": "sha256-ba05daba278b482fcb173205656b1799196944e02de0aa2cbb60214bc4e66fcf",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1400,
+      "channels": [
+        "rightArm",
+        "head",
+        "torso"
+      ],
+      "writes": [
+        "bone:body/rotate",
+        "bone:face/rotate",
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1400,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/point_right_c2.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:15:47.792Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-ebd3a3cac0d2c785a680e93563e28a308d1d5bb696c7f33800b3e4793bc490e8"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.idle_subtle.r2",
+      "motionRevision": 1,
+      "actionId": "life.idle_fidget",
+      "variantId": "default",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.idle_subtle.r2.v11.json",
+        "contentDigest": "sha256-b81678b61af4a8586e6e24c4cbfaa22edbe3facb6c626fb30c9cbabcc7fbf6fb",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 2400,
+      "channels": [
+        "torso",
+        "head"
+      ],
+      "writes": [
+        "bone:body/translate",
+        "bone:face/rotate"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 2400,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/idle_subtle_c2.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:18:03.925Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-1d56bfd3648d5b219e67abda857d497a0ad76fa6d88f6947b4f38c838a5acb03"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.wave_primitive.r2",
+      "motionRevision": 1,
+      "actionId": "gesture.wave",
+      "variantId": "small.screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.wave_primitive.r2.v11.json",
+        "contentDigest": "sha256-ddf9376d1dd505075dcd45b42e64f088088c1f4421e29475a307e1c4285c8768",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1391,
+      "channels": [
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1391,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/wave_right_primitive_c2.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:18:03.926Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-44b34fd78ac27cc7837f9197cf3892aaee540a0c7562ebd47c14a234cfab86f0"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.wave_primitive.r3",
+      "motionRevision": 1,
+      "actionId": "gesture.wave",
+      "variantId": "small.screen_right",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.wave_primitive.r3.v11.json",
+        "contentDigest": "sha256-6b420528c42d55c5de82aee3a59c2b5a5695743452a5b414d5bc7a240e5dc35f",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1400,
+      "channels": [
+        "rightArm",
+        "head",
+        "torso"
+      ],
+      "writes": [
+        "bone:body/rotate",
+        "bone:face/rotate",
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1400,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "public/motions/wave_right_primitive_c3.json（P1 已验收原稿 V1→V1.1 转换，管线重验证见测试）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "convert-p1@2026-09-16T17:19:54.632Z",
+          "tests/m5-seed-manifest.test.ts#全量管线重验证"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-63de0bfb69edd00b051dbc4735a940bfda1f006960e0e0567656124aae740641"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.eyes_open.paired",
+      "motionRevision": 1,
+      "actionId": "face.eyes_open",
+      "variantId": "paired",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.eyes_open.paired.v11.json",
+        "contentDigest": "sha256-86653a1e27579b4d92130ad01c2fed0bfa4a5e5a3a8c5791c143b8c51f5f3ad9",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1000,
+      "channels": [
+        "face"
+      ],
+      "writes": [
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1000,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.eyes_open.paired.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-78199905ad24293406b558a21359f25aeae8c6a2a839ac4793adf97abd4954e4"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.eyes_sleepy.paired",
+      "motionRevision": 1,
+      "actionId": "face.sleepy",
+      "variantId": "paired",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.eyes_sleepy.paired.v11.json",
+        "contentDigest": "sha256-2f80b89a1766df7b917197e39908ff43d8b8222c046e9adafc62879ae84b4d9c",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1600,
+      "channels": [
+        "face"
+      ],
+      "writes": [
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1600,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.eyes_sleepy.paired.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-d75aeb2a63fd49d1ea7ea34467fa2b578ff14f648ea03ca835a55f19f0ccf927"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.eyes_neutral.paired",
+      "motionRevision": 1,
+      "actionId": "face.neutral",
+      "variantId": "default",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.eyes_neutral.paired.v11.json",
+        "contentDigest": "sha256-6b2b85aa00135c0d179d4424cbe7203b4e50072669ccd452f2da64280e5d8229",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 800,
+      "channels": [
+        "face"
+      ],
+      "writes": [
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.eyes_neutral.paired.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-95dd32e5818310aa52c3956f31bece574a5ca5a43f8ef90a533016ba05c07eb2"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.body_straighten.small",
+      "motionRevision": 1,
+      "actionId": "body.straighten",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.body_straighten.small.v11.json",
+        "contentDigest": "sha256-d9c7e5bdf8e7bc40c2f8b5ed56b38ea4a800ba558b9fc56acecaffb467137fbc",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1800,
+      "channels": [
+        "torso"
+      ],
+      "writes": [
+        "bone:body/translate"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.body_straighten.small.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-2bc3585fc4b3eb5c43402ae3cdb4c05be51fe68faa8131ac3d8038f5ef119664"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.body_stretch.both",
+      "motionRevision": 1,
+      "actionId": "body.stretch",
+      "variantId": "both",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.body_stretch.both.v11.json",
+        "contentDigest": "sha256-2e7b3a51783f274f1443ddca174688fde72aa84a7b6af6ee1e11843de34bc466",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 2200,
+      "channels": [
+        "head",
+        "leftArm",
+        "rightArm"
+      ],
+      "writes": [
+        "bone:face/rotate",
+        "bone:hand_L/rotate",
+        "bone:hand_R/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 2200,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.body_stretch.both.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-85f132e4c29afe10ec04404c94fff3e8a527e9c62dff236f3013afaffdac1c69"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.rub_eyes.screen_right",
+      "motionRevision": 1,
+      "actionId": "contact.rub_eyes",
+      "variantId": "both",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.rub_eyes.screen_right.v11.json",
+        "contentDigest": "sha256-28fe149c49dc67d63008d541449d909320b38c838d9e5dd570212e75d34bd767",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1600,
+      "channels": [
+        "face",
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1600,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.rub_eyes.screen_right.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-8aaa14b0fd1e12869708826946120225276b01643746f2cf997cd6fb3e4bf4b2"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.cover_face.both",
+      "motionRevision": 1,
+      "actionId": "contact.cover_face",
+      "variantId": "both",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.cover_face.both.v11.json",
+        "contentDigest": "sha256-bb388a13d112824e9607d1953a9b7b804b2da05436794f7edfc1327de3310d7b",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1800,
+      "channels": [
+        "leftArm",
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_L/rotate",
+        "bone:hand_L3/rotate",
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.cover_face.both.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-7c5864d01ced2508e3da2cdc60c3b41af14dedc9d1cfe6a31305cbde9b23d89e"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.hug_self.both",
+      "motionRevision": 1,
+      "actionId": "contact.hug_self",
+      "variantId": "both",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.hug_self.both.v11.json",
+        "contentDigest": "sha256-bfa6fea6f7c921586b52cddd4d32824dabac9344e86df956ddecead9f8f022e3",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 2000,
+      "channels": [
+        "leftArm",
+        "rightArm"
+      ],
+      "writes": [
+        "bone:hand_L/rotate",
+        "bone:hand_L3/rotate",
+        "bone:hand_R/rotate",
+        "bone:hand_R3/rotate"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 2000,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.hug_self.both.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-dd568597ae1c51feef9c81f8f0469ef25c7eab65f1096c69ade393fc14a1c4c9"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.embarrassed.small",
+      "motionRevision": 1,
+      "actionId": "reaction.embarrassed",
+      "variantId": "small",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "draft",
+        "path": "drafts/lafei.embarrassed.small.v11.json",
+        "contentDigest": "sha256-38eb16a554a1ea6b9e8786841740477cc589b4256a82327d733c15c27c1154c5",
+        "draftSchemaVersion": "pliette.motion-draft/1.1"
+      },
+      "durationMs": 1800,
+      "channels": [
+        "face",
+        "head",
+        "rightArm"
+      ],
+      "writes": [
+        "bone:face/rotate",
+        "bone:hand_R/rotate",
+        "slot:eye_L/attachment",
+        "slot:eye_R/attachment"
+      ],
+      "dependsOn": [
+        "ancestor:body"
+      ],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "stand"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1800,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "setup-ref",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 120,
+        "mixOutMs": 150,
+        "maxBlendMs": 200,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "agent_offline",
+        "sourceRef": "lafei.embarrassed.small.v11.json（受限 Author 创作草稿）",
+        "generatorModel": "zcode-authored",
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "authored-draft@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-bb4d1029599430c901d1ee2842df4d6feb4c2c4e20eee172246db7dc136da868"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.walk.in_place",
+      "motionRevision": 1,
+      "actionId": "locomotion.walk",
+      "variantId": "in_place",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_clip",
+        "animationName": "move",
+        "sourceStartMs": 0,
+        "sourceEndMs": 6000
+      },
+      "durationMs": 6000,
+      "channels": [
+        "base"
+      ],
+      "writes": [
+        "bone:*(base 全段)"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "move"
+        ],
+        "requiredResources": [],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 6000,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": true
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "move@0",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "standing",
+          "snapshotRef": "move@6000",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": true,
+        "segmentId": "full",
+        "maxRepeats": 8
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "native",
+        "sourceRef": "move 全段封装 原地行走（move 全段封装，步幅标定 0.115H/s）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "native-clip@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-4572a2defb425db743bcc07a3f28c033adbcc87ba57075da6f7c4c1e92b89bb5"
+    },
+    {
+      "schemaVersion": "pliette.motion-entry/1.0",
+      "motionId": "lafei.sit_down.chair",
+      "motionRevision": 1,
+      "actionId": "posture.sit_down",
+      "variantId": "chair",
+      "status": "candidate",
+      "rigRef": {
+        "modelId": "lafei_8",
+        "profileId": "lafei_8.front.cp1",
+        "profileDigest": "fnv1a64-8e7352104ae97eb4",
+        "assetDigest": "sha256-a02373f5f4e32d5f098801ae4a5a5463d6882e43cee693e1eec27a098f4f52bf",
+        "referencePoseDigest": "fnv1a64-0a46aaf8232ef9e8",
+        "viewId": "front",
+        "skinId": "default",
+        "runtimeVersion": "3.6.53",
+        "adapterVersion": "control-profile/1.0"
+      },
+      "source": {
+        "kind": "native_clip",
+        "animationName": "sit",
+        "sourceStartMs": 0,
+        "sourceEndMs": 1330
+      },
+      "durationMs": 1330,
+      "channels": [
+        "base"
+      ],
+      "writes": [
+        "bone:*(base 全段)"
+      ],
+      "dependsOn": [],
+      "requiredCapabilities": [],
+      "preconditions": {
+        "postures": [
+          "standing"
+        ],
+        "baseAnimations": [
+          "sit"
+        ],
+        "requiredResources": [
+          "scene:seat.chair"
+        ],
+        "requiredContacts": []
+      },
+      "segments": {
+        "full": {
+          "startMs": 0,
+          "endMs": 1330,
+          "entryBoundaryId": "enter",
+          "exitBoundaryId": "exit",
+          "interruptibleAtEnd": false
+        }
+      },
+      "boundaries": {
+        "enter": {
+          "poseClass": "standing",
+          "snapshotRef": "sit@0",
+          "contacts": [],
+          "resources": []
+        },
+        "exit": {
+          "poseClass": "seated",
+          "snapshotRef": "sit@1330",
+          "contacts": [],
+          "resources": []
+        }
+      },
+      "parameterSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "retime": {
+        "minRate": 1,
+        "maxRate": 1
+      },
+      "loop": {
+        "allowed": false,
+        "segmentId": null,
+        "maxRepeats": 1
+      },
+      "transition": {
+        "mixInMs": 150,
+        "mixOutMs": 200,
+        "maxBlendMs": 250,
+        "continuousEligible": false
+      },
+      "events": [],
+      "provenance": {
+        "origin": "native",
+        "sourceRef": "sit 全段封装 坐下（sit 全段过渡；需 seat 接触资源）",
+        "generatorModel": null,
+        "promptDigest": null
+      },
+      "validation": {
+        "structural": "passed",
+        "trajectory": "pending",
+        "visual": "pending",
+        "evidenceRefs": [
+          "native-clip@2026-09-17"
+        ],
+        "reviewedAt": null
+      },
+      "contentDigest": "sha256-fc3f7e6716c5aa47a6e8c7886fa457dd735fe2a4ac876c874e697549df90a88e"
     }
   ]
 }

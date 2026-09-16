@@ -1,0 +1,29 @@
+npm warn Unknown project config "electron_mirror". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+ RUN  v3.2.7 D:/CodingProjects/Mixed_Language/Pliette
+
+ DEPRECATED  'basic' reporter is deprecated and will be removed in Vitest v3.
+Remove 'basic' from 'reporters' option. To match 'basic' reporter 100%, use configuration:
+{
+  "test": {
+    "reporters": [
+      [
+        "default",
+        {
+          "summary": false
+        }
+      ]
+    ]
+  }
+}
+Sourcemap for "D:/CodingProjects/Mixed_Language/Pliette/vendor/spine-ts/3.6/spine-webgl-esm.js" points to missing source files
+Sourcemap for "D:/CodingProjects/Mixed_Language/Pliette/vendor/spine-ts/3.6/spine-core-esm.js" points to missing source files
+ ✓ tests/m5-seed-manifest.test.ts (11 tests) 616ms
+   ✓ 种子 manifest（§9.1 迁移备案） > head.nod 草稿（V1→V1.1 转换）通过七步管线重验证：编译+隔离采样零失败  551ms
+
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  02:03:13
+   Duration  1.30s (transform 319ms, setup 0ms, collect 307ms, tests 616ms, environment 0ms, prepare 103ms)
+

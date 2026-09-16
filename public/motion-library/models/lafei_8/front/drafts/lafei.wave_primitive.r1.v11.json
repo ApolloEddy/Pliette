@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.wave_primitive.r1",
+  "durationSec": 1.6,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.3,
+          "value": 30,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": 30,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "arm.right.forearm",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.3,
+          "value": 18,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.75,
+          "value": 18,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": 18,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.6,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}
