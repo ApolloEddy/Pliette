@@ -208,19 +208,27 @@ describe("barge-in 打断与演示链路", () => {
       text: "你好", context: { posture: "standing", busyChannels: [] },
       catalog: rt.catalog, playableActions: rt.playableActions(), requestId: "t-barge-a",
     });
-    const routeA = rt.route(greet.plan);
+    // 两切片计划（praise = pump + happy）：单元 1 提交后仍在播、单元 2 待提交——真正的打断场景
+    const praise = await adapter.respond({
+      text: "真棒", context: { posture: "standing", busyChannels: [] },
+      catalog: rt.catalog, playableActions: rt.playableActions(), requestId: "t-barge-a",
+    });
+    expect(praise.plan.slices.length).toBe(2);
+    const routeA = rt.route(praise.plan);
     rt.beginPlan(routeA, 1);
     await new Promise((r) => setTimeout(r, 40));
     rt.tick(0.016);
-    const instA = rt["deps"].scheduler.snapshot().active.find((i) => i.action.includes("routine_greet"));
-    expect(instA, "计划 A 已提交").toBeDefined();
+    const stA0 = rt.coordinator.plan("t-barge-a");
+    expect(stA0?.committedCount).toBe(1); // 单元 1 已提交在播
+    const instA = rt["deps"].scheduler.snapshot().active.find((i) => i.action.includes("pump"));
+    expect(instA, "计划 A 单元 1 在播").toBeDefined();
 
     const cancelled = rt.cancelActivePlans("barge-in: 测试");
-    // 单单元计划可能已提交完（activePlans 已移除），但仍在播的实例必须被计入并取消
-    expect(cancelled).toBeGreaterThanOrEqual(1);
+    expect(cancelled).toBe(2); // 1 条未完成计划 + 1 个在播实例
     expect(rt["deps"].scheduler.get(instA!.instanceId)?.status).toBe("cancelled");
     const stA = rt.coordinator.plan("t-barge-a");
     expect(stA?.cancelled).toBe(true);
+    expect(stA?.units[1].status).toBe("cancelled"); // 未提交单元失效
 
     // 新计划不受旧实例残留影响
     const planB = {

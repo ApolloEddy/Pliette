@@ -1056,14 +1056,29 @@ function wireAuthorPanel(): void {
 
 /* ---------------- 自动待机行为（?auto=1）：stand 打底 + 随机表情/动作切片 ---------------- */
 
-const AUTO_GESTURES = ["happy", "shy", "dizzy", "fresh", "wave", "pump"];
+/** 自动待机的环境动作池（全部为 approved 库动作；经 Selector 链路播放，0 次 Author）。 */
+const AUTO_PLAN_KEYS: { actionId: string; variantId: string }[] = [
+  { actionId: "life.idle_fidget", variantId: "default" },
+  { actionId: "life.blink", variantId: "paired" },
+  { actionId: "reaction.happy", variantId: "small" },
+  { actionId: "head.shake", variantId: "normal" },
+  { actionId: "head.tilt", variantId: "gentle.screen_right" },
+  { actionId: "reaction.sleepy", variantId: "small" },
+];
 const autoState = { active: false, nextAt: 0 };
 
 function autoTick(logicalTime: number): void {
-  if (!autoState.active || !channels || !flatView.state) return;
+  if (!autoState.active || !planRt) return;
   if (logicalTime < autoState.nextAt) return;
-  const action = AUTO_GESTURES[Math.floor(Math.random() * AUTO_GESTURES.length)];
-  submitGesture(action, action === "wave" ? (Math.random() < 0.5 ? "right" : "auto") : undefined);
+  // 有计划实例在播时不打扰
+  if (scheduler.snapshot().active.some((i) => i.requestId.startsWith("plan/"))) {
+    autoState.nextAt = logicalTime + 2;
+    return;
+  }
+  const pool = AUTO_PLAN_KEYS.filter((k) => planRt!.playableActions().has(k.actionId));
+  const key = pool[Math.floor(Math.random() * pool.length)] ?? AUTO_PLAN_KEYS[0];
+  const lookups = [{ sliceId: "a1", description: `自动待机 ${key.actionId}`, lookup: { ...key, segmentId: "full" }, parameters: {} }];
+  void routeAndPlay(planRt, "", "auto ambience", lookups, `auto-${Date.now().toString(36)}`).catch(() => {});
   autoState.nextAt = logicalTime + 6 + Math.random() * 5;
 }
 
@@ -2021,6 +2036,21 @@ function applyBootParams(): Promise<void> {
       setTimeout(() => {
         void runDraftSeries(draftSeries, phases, bootParams.get("shotDir") ?? `draft-${Date.now().toString(36)}`);
       }, 500);
+    }
+    if (bootParams.get("demo") === "1") {
+      // 一键演示：多轮对话顺序走完整链路（PlanAdapter→Selector→物化→Coordinator→播放）
+      setTimeout(() => {
+        void (async () => {
+          const lines = ["你好", "真棒", "深呼吸", "为什么", "害羞", "喝可乐"];
+          for (const line of lines) {
+            if (planRt) planRt.cancelActivePlans("demo-next");
+            ($("chat-input") as HTMLInputElement).value = line;
+            await handleChatSend();
+            await new Promise((r) => setTimeout(r, 5200));
+          }
+          log("演示序列完成", "good");
+        })();
+      }, 800);
     }
     if (bootParams.get("seriesAll") === "1") {
       // Activation Pass 批量相位采集：一次导航顺序跑完 activation-series.json 全部条目

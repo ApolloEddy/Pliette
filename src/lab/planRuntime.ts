@@ -440,7 +440,7 @@ export class MotionLibraryRuntime {
    */
   cancelActivePlans(reason: string): number {
     let n = 0;
-    for (const [planId] of [...this.activePlans.keys()]) {
+    for (const planId of [...this.activePlans.keys()]) {
       this.coordinator.cancelPlan(planId, reason);
       this.activePlans.delete(planId);
       n += 1;
