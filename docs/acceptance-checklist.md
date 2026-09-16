@@ -14,11 +14,25 @@
 | A08 | 跑向椅子后坐下 | ✅ 出证 | `a08_scenario.mp4`：walk 到椅子锚点 → 刹停坐下（sit 末帧保持）→ 保持 → 起身 → 走回；确定性回放（1/24 步长重演真实混合）；**行走速度标定 0.115 H/s**（实测步幅 44.9 单位/1.17s 周期，原 0.567 为脚滑根因） |
 | 接触 | 触碰固定桌边（15.2 误差 ≤0.02H） | ✅ 出证 | 矮桌（0.27H，Q 版比例）+ victory[0.7-1.2] 右手稳定切片；**实测 max=0.0027H avg=0.0014H（4 采样，排除首尾）达标**；视频 `touch_table.mp4`；场景 `?scenario=touch&freezeAt=`；勘探脚本 mine-contact2.mjs |
 | A09 | 动作中切到背面再切回 | ⚠️ N-A | 资产仅正面（见 A01）；不镜像冒充背面，限制展示朝向 |
-| A10 | 暂停恢复、重复请求、语音取消 | ✅ 部分 | 暂停/恢复/逐帧 ✓（UI+Lab）；幂等 ✓（测试）；语音取消 ⏳ P4 |
+| A10 | 暂停恢复、重复请求、语音取消 | ✅ 部分 | 暂停/恢复/逐帧 ✓（UI+Lab）；幂等 ✓（测试）；语音取消 ✓（MockTts）+ 动作计划同步打断（barge-in，2026-09-17） |
 | A11 | 单参数变化与头部控制探针 | ✅ | 探针面板（±10°）+ 参数有效性测试（amplitude/tempo 域检查） |
 | A12 | 官方运行时数值采样 | ✅ | 0°→−72°→0° 线性采样、bezier/stepped 内部布局断言（tests/compiler.test.ts） |
 
 接触类误差：**已达标**（触碰矮桌 max=0.0027H，见上表）。
+
+## MotionLibrary 新链路验收（2026-09-16/17 Activation Pass + 参数/演示接入）
+
+| 项 | 状态 | 证据 |
+| --- | --- | --- |
+| 34 条 candidate 全量转正（trajectory/visual/reviewedAt 证据齐备） | ✅ | `scripts/promotion/*.json` 备案 + `scripts/promote-manifest.mjs`（幂等）；Selector registered+approved 命中条件首次真实成立 |
+| 对话完整链路：你好 → routine.greet 整条配方 HIT → 0 次 Author → wave+nod 合成播放 | ✅ | 浏览器相位证据 `tuning/act-e2e-greet/`；日志逐切片路由可审计 |
+| contact 三条转正前置门（手-脸接触锚点 + 0.02H 误差） | ✅ | `contacts.json` + `tests/contact-verification.test.ts`（0.0006/0.0003/0.0078H） |
+| 参数传递全链路（catalog 域 → plan 切片 → 物化 → 播放时长） | ✅ | `repeats`（breathe×2 实测 6.4s，`tuning/act-params-breathe/`）；越界/非循环动作拒绝有测试 |
+| 新消息打断（barge-in）+ 打断按钮停语音与动作 | ✅ | `tests/activation.test.ts` 打断场景（未完成计划失效 + 在播实例取消 + 新计划正常提交） |
+| 自动待机走动作库（?auto=1 随机 approved 动作经 Selector） | ✅ | `src/lab/ui.ts#autoTick`；有计划在播时让路 |
+| 一键演示（?demo=1 六轮对话） | ✅ | 浏览器实测 6/6 全 HIT、0 Author、0 失败（2026-09-17 日志） |
+| 真实 LLM 语义规划（MiMo 在线） | ✅ 协议层 | `tests/llm-plan-live.test.ts`（无密钥跳过）：plan 合法、Selector HIT、参数卡生效；**延迟 28-45s 超交互 deadline，在线回退规则底座（诚实标注）** |
+| 混入 alpha 渐升（保持型切片 infra TODO） | ✅ | `playSlice` opt-in `alphaRamp`；sleep 入场平滑实测 `tuning/act-alpha-sleep2/` |
 
 ## P3 验收状态（Spec 14）
 
