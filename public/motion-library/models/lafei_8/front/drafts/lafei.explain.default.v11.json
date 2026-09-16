@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.explain.default.v11",
+  "durationSec": 2.0,
+  "curves": [
+    {
+      "controlId": "arm.right.raise",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": 38,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.5,
+          "value": 38,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.0,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.5,
+          "value": 8,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.9,
+          "value": 2,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.3,
+          "value": 8,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 2.0,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

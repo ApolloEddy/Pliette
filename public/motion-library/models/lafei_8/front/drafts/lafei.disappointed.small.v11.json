@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "pliette.motion-draft/1.1",
+  "id": "lafei.disappointed.small.v11",
+  "durationSec": 1.8,
+  "curves": [
+    {
+      "controlId": "head.nod",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": 0,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 0.6,
+          "value": -18,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.2,
+          "value": -18,
+          "ease": "smooth"
+        },
+        {
+          "timeSec": 1.8,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "controlId": "face.eyes.pair",
+      "keys": [
+        {
+          "timeSec": 0,
+          "value": "open",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 0.6,
+          "value": "sleepy",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 1.2,
+          "value": "sleepy",
+          "ease": "stepped"
+        },
+        {
+          "timeSec": 1.8,
+          "value": "open"
+        }
+      ]
+    }
+  ]
+}
