@@ -1304,8 +1304,8 @@ let blinkEnabled = true;
 function blinkTick(logicalTime: number): void {
   if (!blinkEnabled || !channels) return;
   if (logicalTime < blinkState.nextAt) return;
-  if (scheduler.snapshot().ownership.head) {
-    // 头部通道被表情叠加占用时不闪（避免打架），稍后重试
+  if (scheduler.snapshot().ownership.head || scheduler.snapshot().ownership.face) {
+    // 头部/面部通道被叠加占用时不闪（eyes_close 等表情动作防打架），稍后重试
     blinkState.nextAt = logicalTime + 1;
     return;
   }

@@ -33,7 +33,7 @@ function adapter(): LlmPlanAdapter {
 }
 
 describe.skipIf(!available)("真实 LLM 语义规划（MiMo 在线；无密钥环境跳过）", () => {
-  it("问候 → 合法 plan → Selector HIT（greet 配方）", { timeout: 120_000 }, async () => {
+  it("问候 → 合法 plan → Selector HIT（greet 配方）", { timeout: 120_000, retry: 1 }, async () => {
     const llm = adapter();
     const result = await llm.respond({
       text: "你好呀",
@@ -50,7 +50,7 @@ describe.skipIf(!available)("真实 LLM 语义规划（MiMo 在线；无密钥�
     expect(llm.segmentNormalizations).toBeGreaterThanOrEqual(0);
   });
 
-  it("参数卡生效：深呼吸 → repeats 在目录域内且物化时间轴按倍数伸缩", { timeout: 120_000 }, async () => {
+  it("参数卡生效：深呼吸 → repeats 在目录域内且物化时间轴按倍数伸缩", { timeout: 120_000, retry: 1 }, async () => {
     const llm = adapter();
     const result = await llm.respond({
       text: "多深呼吸几次冷静一下",

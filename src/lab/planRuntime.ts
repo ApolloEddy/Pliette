@@ -217,6 +217,10 @@ export class MotionLibraryRuntime {
       }
       if (recipe.nextIndex >= recipe.steps.length) this.recipes.delete(id);
     }
+    // 每帧只取一次调度快照（busy 判定与占用集共用，避免重复对象分配）
+    const snap = this.deps.scheduler.snapshot();
+    const activePlanInstances = snap.active.filter((inst) => inst.requestId.startsWith("plan/"));
+    const occupied = new Set(Object.keys(snap.ownership));
     for (const planId of [...this.activePlans.keys()]) {
       const state = this.coordinator.plan(planId);
       if (!state || state.cancelled) {
@@ -225,11 +229,7 @@ export class MotionLibraryRuntime {
       }
       if (!this.coordinator.canStart(planId)) continue;
       // 本计划仍有活跃实例 → 等它结束（按序播放，不叠加）
-      const busy = this.deps.scheduler
-        .snapshot()
-        .active.some((inst) => inst.requestId.startsWith(`plan/${planId}/`));
-      if (busy) continue;
-      const occupied = new Set(Object.keys(this.deps.scheduler.snapshot().ownership));
+      if (activePlanInstances.some((inst) => inst.requestId.startsWith(`plan/${planId}/`))) continue;
       const result = this.coordinator.commitNext(planId, occupied);
       if (state.committedCount >= state.units.length) {
         this.activePlans.delete(planId);
