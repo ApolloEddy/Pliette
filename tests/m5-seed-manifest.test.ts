@@ -95,7 +95,7 @@ describe("种子 manifest（§9.1 迁移备案）", () => {
     const activationEntries = manifest.entries.filter((e) =>
       e.validation.evidenceRefs.some((r) => r.includes("[activation@")),
     );
-    expect(activationEntries.length).toBe(34);
+    expect(activationEntries.length).toBeGreaterThanOrEqual(34); // 原始 34 条 + 后续决策流新增（stage3 等）
     for (const e of manifest.entries) {
       if (!activationEntries.includes(e)) {
         // Activation 之后的并行批次：状态合法即可（candidate/approved），其验收由自己的流程负责
