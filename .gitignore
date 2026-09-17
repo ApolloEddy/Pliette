@@ -26,3 +26,7 @@ experiments/motion-library/tuning/**
 .edge-headless-profile/
 .edge-hl-p2/
 .edge-hl-fresh/
+.edge-hl-run/
+.edge-hl-p2/
+.edge-headless-profile/
+.edge-hl-fresh/
