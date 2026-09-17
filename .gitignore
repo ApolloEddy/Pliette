@@ -22,3 +22,7 @@ config/*.local.json
 experiments/motion-library/tuning/**
 !experiments/motion-library/tuning/**/
 !experiments/motion-library/tuning/**/*.md
+
+.edge-headless-profile/
+.edge-hl-p2/
+.edge-hl-fresh/

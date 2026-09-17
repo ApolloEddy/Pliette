@@ -120,6 +120,23 @@ native_slice（14）/ native_clip（1）/ draft（1）三种载体；配方族�
 - 复验 **18/18 全部通过**（含 chin_rest/celebrate 多曲线组合、breathe/sway 向量曲线、
   eyes_close stepped 组合控制）
 
+## P1 转换 + 补充创作视觉验收（2026-09-17，无头 Edge 批量冻结截图）
+
+方法：`msedge --headless=old --screenshot` + 专属 profile + `--virtual-time-budget`，
+零干扰脚本化采集（不触碰用户窗口/其他项目进程）；每条冻结于保持相位，逐帧评估
+自然度与字段语义；chin_rest/wave 另取 3D 场景默认机位复核。
+
+| 组 | 条目 | 结果 |
+|---|---|---|
+| P1 转换 11 条 | shrink_shy r1（双臂抱胸缩身）、listen_idle r1（倾身侧头）、idle_subtle r1/r2、nod_primitive r1/r2（快倾+躯干随动）、wave_primitive r1/r2/r3（持瓶举臂摆动，r2 前臂钳制后幅度略减）、point_primitive r1/r2（前伸指向+头随动） | ✅ 全部自然、语义符合 |
+| 补充创作 12 条 | eyes_open（睁眼恢复）、eyes_sleepy、eyes_neutral、body_straighten（bob 降速重时后达标）、body_stretch（双臂展开）、rub_eyes（手至眼部+闭眼）、cover_face（掩面）、hug_self（双臂交叉抱胸）、embarrassed（挠头+倦眼）、disappointed（低头倦眼）、explain（展示手+双点头） | ✅ 全部自然、语义符合 |
+| 3D 场景抽检 | chin_rest / wave_primitive r1 | ✅ 房间透视机位下姿态成立 |
+
+**环境注意**：Windows 更新重启后旧 headless profile 损坏导致批量 MISS——换新 profile 目录即恢复；
+曾为清锁误杀全机 Edge 进程（影响其他项目，已纠正：今后只换 profile 目录，不做全局进程操作）。
+并行会话同期独立完成了 stop/present/hands_reset/breathe/shift_weight/lean/sway/eyes_close/
+head_tilt 等的 act-* 相位序列截图（同目录），两组证据互为补充。
+
 ## Activation Pass（2026-09-16：candidate → approved 全量转正）
 
 目标：把"框架已搭好但未进入可用状态"的 34 条 candidate 全量完成 promotion，并把 Lab 实际
